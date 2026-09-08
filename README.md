@@ -11,21 +11,6 @@ backend-pluralistic systems expressible at all.
 
 Design spec: see `../draft.md` (§5 Design Specification, §6 Work Plan).
 
-## Status
-
-Early development. Milestones M0–M6 track the master implementation plan.
-
-- **M0 (committed):** artifact models I1–I9, canonical JSON + content addressing,
-  content-addressed store with Merkle tree, append-only guarantee ledger (G0–G4),
-  theory and semantics-model registries, JSON Schema export, `uvil` CLI skeleton.
-- **M1 (this snapshot):** minimal viable interchange — Boogie-subset import adapter
-  (parser + pinned Dafny wrapper), SMT adapter (deterministic SMT-LIB2 encoding,
-  pinned z3 backend + optional cvc5), I6 counterexamples, R2 spec-strength hook,
-  `uvil check` with discipline enforcement and solver-verdict G1 ledger entries,
-  and a 525-obligation corpus with expected verdicts (see `corpora/`).
-  Exit criterion (draft P1): Boogie/Dafny program → UVIL obligations → solver
-  verdict + counterexample → ledger G1, end to end — see
-  `examples/dafny_to_cvc5/`.
 
 ## Install
 
