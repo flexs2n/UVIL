@@ -1,0 +1,286 @@
+# serializer version: 1
+# name: TestI6Goldens.test_common_json[counterspec]
+  dict({
+    'backend_witness': dict({
+      'format': 'shadow-probe',
+    }),
+    'counter_spec': dict({
+      'args': list([
+        dict({
+          'args': list([
+            'cap',
+          ]),
+          'op': 'var',
+        }),
+        dict({
+          'args': list([
+            0,
+          ]),
+          'op': 'const',
+        }),
+      ]),
+      'op': 'lt',
+    }),
+    'kind': 'counterspec',
+    'obligation_ref': 'obl:x',
+    'scenario': None,
+    'trace': None,
+    'uvil_type': 'counterexample',
+    'valuation': None,
+  })
+# ---
+# name: TestI6Goldens.test_common_json[scenario]
+  dict({
+    'backend_witness': dict({
+      'format': 'tlc-scenario',
+    }),
+    'counter_spec': None,
+    'kind': 'scenario',
+    'obligation_ref': 'obl:x',
+    'scenario': list([
+      dict({
+        'loc': 'Init',
+        'vars': dict({
+          'balance': '100',
+          'state': 'idle',
+        }),
+      }),
+      dict({
+        'loc': 'Next',
+        'vars': dict({
+          'balance': '60',
+          'state': 'withdrawn',
+        }),
+      }),
+    ]),
+    'trace': None,
+    'uvil_type': 'counterexample',
+    'valuation': None,
+  })
+# ---
+# name: TestI6Goldens.test_common_json[trace]
+  dict({
+    'backend_witness': dict({
+      'format': 'esbmc-trace',
+    }),
+    'counter_spec': None,
+    'kind': 'trace',
+    'obligation_ref': 'obl:x',
+    'scenario': None,
+    'trace': list([
+      dict({
+        'loc': 'init',
+        'vars': dict({
+          'pc': 'entry',
+          'x': '0',
+        }),
+      }),
+      dict({
+        'loc': None,
+        'vars': dict({
+          'pc': 'loop.head',
+          'x': '1',
+        }),
+      }),
+      dict({
+        'loc': 'done',
+        'vars': dict({
+          'pc': 'exit',
+          'x': '2',
+        }),
+      }),
+    ]),
+    'uvil_type': 'counterexample',
+    'valuation': None,
+  })
+# ---
+# name: TestI6Goldens.test_common_json[valuation]
+  dict({
+    'backend_witness': None,
+    'counter_spec': None,
+    'kind': 'valuation',
+    'obligation_ref': 'obl:x',
+    'scenario': None,
+    'trace': None,
+    'uvil_type': 'counterexample',
+    'valuation': dict({
+      'cap': dict({
+        'args': list([
+          2,
+        ]),
+        'op': 'const',
+      }),
+      'len': dict({
+        'args': list([
+          3,
+        ]),
+        'op': 'const',
+      }),
+    }),
+  })
+# ---
+# name: TestI6Goldens.test_human[counterspec]
+  '''
+  [unverified human rendering]
+  counter_spec: (< cap 0)
+  '''
+# ---
+# name: TestI6Goldens.test_human[scenario]
+  '''
+  [unverified human rendering]
+  scenario:
+    State 1: balance = 100, state = idle @ Init
+    State 2: balance = 60, state = withdrawn @ Next
+  '''
+# ---
+# name: TestI6Goldens.test_human[trace]
+  '''
+  [unverified human rendering]
+  trace:
+    step 1: x = 0, pc = entry @ init
+    step 2: x = 1, pc = loop.head
+    step 3: x = 2, pc = exit @ done
+  '''
+# ---
+# name: TestI6Goldens.test_human[valuation]
+  '''
+  [unverified human rendering]
+  valuation:
+    cap = 2
+    len = 3
+  '''
+# ---
+# name: TestI7Goldens.test_common_json[parse]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': '''
+      unexpected token ';'
+        assert x > 0;;
+    ''',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_common_json[semantic-mismatch]
+  dict({
+    'kind': 'semantic-mismatch',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': 'spec feature unsupported by target profile uvil.core@1',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_common_json[timeout]
+  dict({
+    'kind': 'timeout',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': 'backend z3 returned timeout within budget 300ms',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_common_json[unknown]
+  dict({
+    'kind': 'unknown',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': 'backend z3 returned unknown within budget 1000ms',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_common_json[unproved]
+  dict({
+    'kind': 'unproved',
+    'llm_explanation': dict({
+      'text': 'the asserted constant looks wrong for all inputs',
+      'unverified': True,
+    }),
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': 'failed to prove: x + x == 3 * x',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_common_json[vacuous]
+  dict({
+    'kind': 'vacuous',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'examples/vec_push/vec_push.bpl',
+      'line': 3,
+      'symbol': 'p',
+    }),
+    'native_message': 'shadow probe: spec context forces the counter-hypothesis (vacuous)',
+    'obligation_ref': 'obl:x',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: TestI7Goldens.test_human[parse]
+  '''
+  [unverified human rendering]
+  parse@examples/vec_push/vec_push.bpl:3: unexpected token ';'
+    assert x > 0;;
+  '''
+# ---
+# name: TestI7Goldens.test_human[semantic-mismatch]
+  '''
+  [unverified human rendering]
+  semantic-mismatch@examples/vec_push/vec_push.bpl:3: spec feature unsupported by target profile uvil.core@1
+  '''
+# ---
+# name: TestI7Goldens.test_human[timeout]
+  '''
+  [unverified human rendering]
+  timeout@examples/vec_push/vec_push.bpl:3: backend z3 returned timeout within budget 300ms
+  '''
+# ---
+# name: TestI7Goldens.test_human[unknown]
+  '''
+  [unverified human rendering]
+  unknown@examples/vec_push/vec_push.bpl:3: backend z3 returned unknown within budget 1000ms
+  '''
+# ---
+# name: TestI7Goldens.test_human[unproved]
+  '''
+  [unverified human rendering]
+  unproved@examples/vec_push/vec_push.bpl:3: failed to prove: x + x == 3 * x
+    llm_explanation (unverified): the asserted constant looks wrong for all inputs
+  '''
+# ---
+# name: TestI7Goldens.test_human[vacuous]
+  '''
+  [unverified human rendering]
+  vacuous@examples/vec_push/vec_push.bpl:3: shadow probe: spec context forces the counter-hypothesis (vacuous)
+  '''
+# ---

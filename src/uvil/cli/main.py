@@ -1,6 +1,7 @@
 """`uvil` CLI entrypoint (typer).
 
-Commands: init | put | get | schema | ledger append/verify/diff | roots.
+Commands: init | put | get | render | schema | check | shadows | ledger
+append/verify/diff | roots.
 """
 
 from __future__ import annotations
@@ -82,6 +83,51 @@ def get(
         err.print(f"[red]error[/red] {e}")
         raise typer.Exit(code=1) from e
     typer.echo(json.dumps(model.model_dump(mode="json"), sort_keys=True))
+
+
+@app.command()
+def render(
+    target: str = typer.Argument(
+        ..., help="Artifact id (uvil:<type>@<version>:<hash>) or path to an envelope JSON file."
+    ),
+    form: str = typer.Option("json", "--form", help="Output form: json (common-JSON) or human."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Render an I6/I7 artifact as common JSON (machine) or human text."""
+    from ..artifacts import Counterexample, Diagnostic
+
+    path = Path(target)
+    model: object
+    if path.exists():
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            model = parse_artifact(data)
+        except (OSError, json.JSONDecodeError, ValueError, KeyError) as e:
+            err.print(f"[red]error[/red] cannot load artifact from {path}: {e}")
+            raise typer.Exit(code=1) from e
+    else:
+        store = ContentStore(_store_dir(state))
+        try:
+            model = store.get_artifact(target)
+        except (KeyError, ValueError) as e:
+            err.print(f"[red]error[/red] {e}")
+            raise typer.Exit(code=1) from e
+    if not isinstance(model, (Counterexample, Diagnostic)):
+        err.print(
+            f"[red]error[/red] render supports I6 counterexample / I7 diagnostic only, "
+            f"got {type(model).__name__}"
+        )
+        raise typer.Exit(code=1)
+
+    from ..render import to_common_json, to_human
+
+    if form == "json":
+        typer.echo(json.dumps(to_common_json(model), sort_keys=True))
+    elif form == "human":
+        typer.echo(to_human(model))
+    else:
+        err.print(f"[red]error[/red] unknown form {form!r} (expected 'json' or 'human')")
+        raise typer.Exit(code=1)
 
 
 @app.command("schema")

@@ -13,6 +13,8 @@ from uvil.artifacts import (
     Specification,
     Translation,
 )
+from uvil.artifacts.counterexample import BackendWitness, SharedRender, TraceState
+from uvil.artifacts.diagnostic import DiagnosticKind, Loc
 from uvil.artifacts.obligation import Sequent
 from uvil.artifacts.terms import (
     Term,
@@ -21,9 +23,12 @@ from uvil.artifacts.terms import (
     t_eq,
     t_ge,
     t_le,
+    t_lt,
     t_sub,
     var,
 )
+
+COUNTEREXAMPLE_REF = "obl:x"
 
 
 def make_intent() -> Intent:
@@ -126,6 +131,52 @@ def make_counterexample(obligation_ref: str) -> Counterexample:
     )
 
 
+def make_trace_counterexample(obligation_ref: str) -> Counterexample:
+    return Counterexample(
+        obligation_ref=obligation_ref,
+        kind="trace",
+        trace=[
+            TraceState(vars={"x": "0", "pc": "entry"}, loc="init"),
+            TraceState(vars={"x": "1", "pc": "loop.head"}),
+            TraceState(vars={"x": "2", "pc": "exit"}, loc="done"),
+        ],
+        shared_render=SharedRender(
+            human_summary="[unverified human rendering]\ntrace with 3 steps"
+        ),
+        backend_witness=BackendWitness(format="esbmc-trace", payload=None),
+    )
+
+
+def make_scenario_counterexample(obligation_ref: str) -> Counterexample:
+    return Counterexample(
+        obligation_ref=obligation_ref,
+        kind="scenario",
+        scenario=[
+            TraceState(vars={"balance": "100", "state": "idle"}, loc="Init"),
+            TraceState(vars={"balance": "60", "state": "withdrawn"}, loc="Next"),
+        ],
+        shared_render=SharedRender(
+            human_summary="[unverified human rendering]\nscenario with 2 states"
+        ),
+        backend_witness=BackendWitness(format="tlc-scenario", payload=None),
+    )
+
+
+def make_counterspec_counterexample(obligation_ref: str) -> Counterexample:
+    return Counterexample(
+        obligation_ref=obligation_ref,
+        kind="counterspec",
+        counter_spec=t_lt(var("cap"), const(0)),
+        shared_render=SharedRender(
+            human_summary=(
+                "[unverified human rendering]\nshadow probe: the spec forces the "
+                "counter-hypothesis (vacuous)"
+            )
+        ),
+        backend_witness=BackendWitness(format="shadow-probe", payload=None),
+    )
+
+
 def make_diagnostic(obligation_ref: str) -> Diagnostic:
     return Diagnostic(
         obligation_ref=obligation_ref,
@@ -133,6 +184,33 @@ def make_diagnostic(obligation_ref: str) -> Diagnostic:
         loc={"file": "src/collections/vec.rs", "line": 87, "symbol": "push"},
         native_message="failed to prove: len + 1 <= cap",
         llm_explanation={"text": "likely missing cap increment before write", "unverified": True},
+    )
+
+
+_DIAGNOSTIC_MESSAGES: dict[str, str] = {
+    "unproved": "failed to prove: x + x == 3 * x",
+    "vacuous": "shadow probe: spec context forces the counter-hypothesis (vacuous)",
+    "timeout": "backend z3 returned timeout within budget 300ms",
+    "parse": "unexpected token ';'\n  assert x > 0;;",
+    "semantic-mismatch": "spec feature unsupported by target profile uvil.core@1",
+    "unknown": "backend z3 returned unknown within budget 1000ms",
+}
+
+
+def make_diagnostic_of_kind(
+    kind: DiagnosticKind, obligation_ref: str | None = COUNTEREXAMPLE_REF
+) -> Diagnostic:
+    """Representative I7 builder for every diagnostic kind (renderer fixtures)."""
+    return Diagnostic(
+        obligation_ref=obligation_ref,
+        kind=kind,
+        loc=Loc(file="examples/vec_push/vec_push.bpl", line=3, symbol="p"),
+        native_message=_DIAGNOSTIC_MESSAGES[kind],
+        llm_explanation=(
+            {"text": "the asserted constant looks wrong for all inputs", "unverified": True}
+            if kind == "unproved"
+            else None
+        ),
     )
 
 
@@ -164,15 +242,20 @@ def vec_goal_term() -> Term:
 
 
 __all__ = [
+    "COUNTEREXAMPLE_REF",
     "Sequent",
     "make_counterexample",
+    "make_counterspec_counterexample",
     "make_diagnostic",
+    "make_diagnostic_of_kind",
     "make_intent",
     "make_obligation",
     "make_program",
     "make_proof",
     "make_run",
+    "make_scenario_counterexample",
     "make_spec",
+    "make_trace_counterexample",
     "make_translation",
     "vec_goal_term",
 ]
