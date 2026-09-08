@@ -19,7 +19,7 @@ from .obligation import Obligation, ObligationStatus
 from .program import Program
 from .proof import Proof
 from .registry import artifact_types, get_artifact_class
-from .run import Run
+from .run import Run, Verdict
 from .spec import Specification
 from .terms import Term, term_vars, to_smt
 from .translation import SoundnessDiscipline, Translation
@@ -38,6 +38,7 @@ __all__ = [
     "Specification",
     "Term",
     "Translation",
+    "Verdict",
     "artifact_id",
     "artifact_type_of",
     "artifact_types",

@@ -187,6 +187,56 @@ def _emit_import(result: ImportResult, out: Path | None, state: Path) -> None:
                 console.print(f"wrote {out / name}")
 
 
+@app.command()
+def check(
+    files: list[Path] = typer.Argument(
+        ..., exists=True, readable=True, help="Boogie files (.bpl)."
+    ),
+    backend: str = typer.Option("z3", "--backend", help="SMT backend: z3 or cvc5."),
+    timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-obligation budget."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Boogie input -> obligations -> SMT check -> verdict table + ledger G1."""
+    from ..adapters.boogie.lower import import_module as boogie_import
+
+    obligations = []
+    for file in files:
+        imported = boogie_import(file.read_text(encoding="utf-8"), filename=file.name)
+        for d in imported.diagnostics:
+            err.print(f"[red]I7 parse diagnostic[/red] {file}:{d.loc.line}: {d.native_message}")
+        if not imported.ok:
+            raise typer.Exit(code=1)
+        obligations.extend(imported.obligations)
+    if not obligations:
+        err.print("[red]error[/red] no obligations found in input")
+        raise typer.Exit(code=1)
+
+    from ..check.core import check as run_check
+    from ..check.core import record
+
+    timeout_ms = int(timeout_s * 1000) if timeout_s is not None else None
+    checked = run_check(obligations, backend=backend, timeout_ms=timeout_ms)
+    record(checked, ContentStore(_store_dir(state)), _load_ledger(state))
+
+    assert checked.run is not None
+    table = Table(title=f"verdicts ({backend})")
+    table.add_column("obligation")
+    table.add_column("status")
+    table.add_column("ms")
+    for verdict in checked.run.verdicts:
+        table.add_row(
+            verdict.obligation_ref.rsplit(":", 1)[-1][:16],
+            verdict.status,
+            str(verdict.time_ms) if verdict.time_ms is not None else "-",
+        )
+    console.print(table)
+    counts: dict[str, int] = {}
+    for v in checked.run.verdicts:
+        counts[v.status] = counts.get(v.status, 0) + 1
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+    typer.echo(f"run stored; ledger G1 appended ({summary})")
+
+
 @ledger_app.command("append")
 def ledger_append(
     refs: list[str] = typer.Option(..., "--ref", help="Artifact reference (repeatable)."),
