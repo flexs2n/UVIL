@@ -1,0 +1,36 @@
+# serializer version: 1
+# name: test_build_counterexample_snapshot
+  dict({
+    'backend_witness': dict({
+      'format': 'smt-lib2-model',
+      'payload': '((define-fun len () Int 3) (define-fun cap () Int 2))',
+    }),
+    'counter_spec': None,
+    'kind': 'valuation',
+    'obligation_ref': 'uvil:obligation@1:80a30e8dc47e8c8460f4f78bb13cad5d61e5bebcef61570c79d7bed3d2100632',
+    'scenario': None,
+    'shared_render': dict({
+      'human_summary': '''
+        [unverified human rendering]
+        len = 3
+        cap = 2
+      ''',
+      'smt_lib_valuation': '((define-fun len () Int 3) (define-fun cap () Int 2))',
+    }),
+    'trace': None,
+    'valuation': dict({
+      'cap': dict({
+        'args': list([
+          2,
+        ]),
+        'op': 'const',
+      }),
+      'len': dict({
+        'args': list([
+          3,
+        ]),
+        'op': 'const',
+      }),
+    }),
+  })
+# ---

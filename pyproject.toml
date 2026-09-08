@@ -27,7 +27,7 @@ dependencies = [
 uvil = "uvil.cli.main:app"
 
 [project.optional-dependencies]
-smt = ["z3-solver>=4.13"]
+smt = ["z3-solver==5.1.0.0"]
 dev = [
     "pytest>=8",
     "hypothesis>=6",
@@ -36,7 +36,7 @@ dev = [
     "ruff>=0.5",
     "mypy>=1.10",
     "pre-commit>=3.7",
-    "z3-solver>=4.13",
+    "z3-solver==5.1.0.0",
 ]
 
 [tool.hatch.build.targets.wheel]

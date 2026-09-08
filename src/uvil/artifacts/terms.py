@@ -202,3 +202,20 @@ def to_smt(term: Term) -> str:
         else:
             raise ValueError(f"unsupported argument for {op!r}: {a!r}")
     return f"({smt_op} {' '.join(rendered)})"
+
+
+def term_vars(term: Term) -> set[str]:
+    """Free variables of a term (quantifier-bound names excluded)."""
+    out: set[str] = set()
+    if term.op == "var" and term.args and isinstance(term.args[0], str):
+        out.add(term.args[0])
+        return out
+    if term.op in ("forall", "exists"):
+        bound = term.args[0] if term.args and isinstance(term.args[0], str) else None
+        body = term.args[2] if len(term.args) > 2 else None
+        inner = term_vars(body) if isinstance(body, Term) else set()
+        return {v for v in inner if v != bound}
+    for a in term.args:
+        if isinstance(a, Term):
+            out |= term_vars(a)
+    return out

@@ -1,0 +1,13 @@
+# serializer version: 1
+# name: test_encode_assertions_snapshot
+  '''
+  (set-logic ALL)
+  (declare-const cap Int)
+  (declare-const len Int)
+  (assert (>= cap 0))
+  (assert (<= len cap))
+  (assert (< len cap))
+  (assert (not (<= (+ len 1) cap)))
+  
+  '''
+# ---

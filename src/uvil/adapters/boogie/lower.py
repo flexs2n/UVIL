@@ -15,7 +15,7 @@ from ...artifacts import Obligation, Program, Specification, artifact_id
 from ...artifacts.diagnostic import Diagnostic, Loc
 from ...artifacts.obligation import CostBudget, Sequent
 from ...artifacts.spec import Contracts
-from ...artifacts.terms import Term, TermArg
+from ...artifacts.terms import Term, TermArg, term_vars  # term_vars re-exported for callers
 from ...semmodels.registry import WHY3_MEMORY_V1
 from .parser import (
     BOOGIE_TARGET_PROFILE,
@@ -71,23 +71,6 @@ def substitute(term: Term, mapping: dict[str, Term]) -> Term:
     for a in args:
         new_args.append(substitute(a, mapping) if isinstance(a, Term) else a)
     return Term(op=op, args=new_args)
-
-
-def term_vars(term: Term) -> set[str]:
-    """Free variables of a term (quantifier-bound names excluded)."""
-    out: set[str] = set()
-    if term.op == "var" and term.args and isinstance(term.args[0], str):
-        out.add(term.args[0])
-        return out
-    if term.op in ("forall", "exists"):
-        bound = term.args[0] if term.args and isinstance(term.args[0], str) else None
-        body = term.args[2] if len(term.args) > 2 else None
-        inner = term_vars(body) if isinstance(body, Term) else set()
-        return {v for v in inner if v != bound}
-    for a in term.args:
-        if isinstance(a, Term):
-            out |= term_vars(a)
-    return out
 
 
 def _mentions(term: Term, names: set[str]) -> bool:

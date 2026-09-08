@@ -21,7 +21,7 @@ from .proof import Proof
 from .registry import artifact_types, get_artifact_class
 from .run import Run
 from .spec import Specification
-from .terms import Term, to_smt
+from .terms import Term, term_vars, to_smt
 from .translation import SoundnessDiscipline, Translation
 
 __all__ = [
@@ -47,5 +47,6 @@ __all__ = [
     "get_artifact_class",
     "parse_artifact",
     "sha256_hex",
+    "term_vars",
     "to_smt",
 ]
