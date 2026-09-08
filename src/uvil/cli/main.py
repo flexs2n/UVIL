@@ -7,6 +7,8 @@ append/verify/diff | roots.
 from __future__ import annotations
 
 import json
+import subprocess
+import tempfile
 from pathlib import Path
 
 import typer
@@ -284,6 +286,180 @@ def check(
         counts[v.status] = counts.get(v.status, 0) + 1
     summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
     typer.echo(f"run stored; ledger G1 appended ({summary})")
+
+
+@app.command("check-lean")
+def check_lean_cmd(
+    files: list[Path] = typer.Argument(
+        ..., exists=True, readable=True, help="Boogie files (.bpl)."
+    ),
+    timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-compile budget."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Boogie input -> obligations -> Lean twin -> pinned-kernel attestation.
+
+    Attested obligations become I5 proofs + ledger G1 (kernel attestation,
+    offline-replayable via `uvil attest`); failed/unsupported obligations stay
+    open with I7 diagnostics - a failed proof search is never a refutation.
+    Skips cleanly (exit 0) when elan is not installed.
+    """
+    from ..adapters.boogie.lower import import_module as boogie_import
+    from ..adapters.lean.backend import PINNED_LEAN, LeanNotInstalled, LeanVersionMismatch
+
+    obligations = []
+    for file in files:
+        imported = boogie_import(file.read_text(encoding="utf-8"), filename=file.name)
+        for d in imported.diagnostics:
+            err.print(f"[red]I7 parse diagnostic[/red] {file}:{d.loc.line}: {d.native_message}")
+        if not imported.ok:
+            raise typer.Exit(code=1)
+        obligations.extend(imported.obligations)
+    if not obligations:
+        err.print("[red]error[/red] no obligations found in input")
+        raise typer.Exit(code=1)
+
+    from ..check.lean import check_lean as run_lean_check
+    from ..check.lean import record_lean
+
+    try:
+        result = run_lean_check(obligations, check_timeout_s=timeout_s)
+    except LeanNotInstalled as e:
+        err.print(f"[yellow]skip[/yellow] Lean is not installed (pin: PINNED_LEAN): {e}")
+        raise typer.Exit(code=0) from None
+    except LeanVersionMismatch as e:
+        err.print(f"[red]version mismatch[/red] {e}")
+        raise typer.Exit(code=1) from e
+
+    store = ContentStore(_store_dir(state))
+    record_lean(result, store, _load_ledger(state))
+
+    assert result.run is not None
+    by_obligation = {p.obligation_ref: p for p in result.proofs}
+    table = Table(title=f"verdicts (lean4 {PINNED_LEAN})")
+    table.add_column("obligation")
+    table.add_column("status")
+    table.add_column("ms")
+    table.add_column("kernel")
+    for verdict in result.run.verdicts:
+        proof = by_obligation.get(verdict.obligation_ref)
+        table.add_row(
+            verdict.obligation_ref.rsplit(":", 1)[-1][:16],
+            verdict.status,
+            str(verdict.time_ms) if verdict.time_ms is not None else "-",
+            (proof.backend.kernel_hash or "-")[:16] if proof else "-",
+        )
+    console.print(table)
+    counts: dict[str, int] = {}
+    for diag in result.diagnostics:
+        counts[diag.kind] = counts.get(diag.kind, 0) + 1
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items())) or "no diagnostics"
+    attested = len(result.proofs)
+    typer.echo(
+        f"run stored; ledger {'G1' if attested else 'G0'} appended "
+        f"({attested} kernel-attested; {summary})"
+    )
+
+
+@app.command("attest")
+def attest(
+    target: str = typer.Argument(
+        ...,
+        help="A stored proof artifact id, or a .lean file path to (re-)attest.",
+    ),
+    expect_hash: str | None = typer.Option(
+        None, "--expect-hash", help="Verify the recomputed kernel hash against this value."
+    ),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Offline kernel attestation replay.
+
+    For a stored proof artifact ref: re-runs the pinned Lean kernel on the
+    stored inline proof file and verifies the recorded kernel_hash. For a
+    .lean file path: compiles it and prints the computed kernel hash (attach
+    --expect-hash to verify). No UVIL code participates in the verification
+    itself - only the pinned toolchain.
+    """
+    from ..adapters.lean.backend import (
+        TOOLCHAIN_ID,
+        LeanBackend,
+        LeanNotInstalled,
+        LeanVersionMismatch,
+        kernel_hash,
+    )
+    from ..artifacts import Proof
+
+    path = Path(target)
+    inline: str
+    recorded: str | None = None
+    if path.exists() and path.suffix == ".lean":
+        inline = path.read_text(encoding="utf-8")
+        if inline.endswith("\n"):  # stored payloads carry no trailing newline
+            inline = inline[:-1]
+    else:
+        store = ContentStore(_store_dir(state))
+        try:
+            model = store.get_artifact(target)
+        except (KeyError, ValueError) as e:
+            err.print(f"[red]error[/red] {e}")
+            raise typer.Exit(code=1) from e
+        if not isinstance(model, Proof):
+            err.print(
+                f"[red]error[/red] attest requires a proof artifact, got {type(model).__name__}"
+            )
+            raise typer.Exit(code=1)
+        if model.payload.inline is None or model.payload.format != "lean-proof-term":
+            err.print(
+                f"[red]error[/red] only lean-proof-term inline payloads are replayable, "
+                f"got format={model.payload.format!r}"
+            )
+            raise typer.Exit(code=1)
+        inline = model.payload.inline
+        recorded = model.backend.kernel_hash
+
+    try:
+        backend = LeanBackend()
+    except LeanNotInstalled as e:
+        err.print(f"[yellow]skip[/yellow] {e}")
+        raise typer.Exit(code=0) from None
+    except LeanVersionMismatch as e:
+        err.print(f"[red]version mismatch[/red] {e}")
+        raise typer.Exit(code=1) from e
+
+    with tempfile.NamedTemporaryFile(
+        "w", suffix="-attest.lean", delete=False, encoding="utf-8"
+    ) as f:
+        f.write(inline)
+        proof_file = Path(f.name)
+    try:
+        proc = subprocess.run(
+            [backend.executable, proof_file.name],
+            capture_output=True,
+            text=True,
+            check=False,
+            env=backend.env(),
+            timeout=120,
+            cwd=proof_file.parent,
+        )
+    finally:
+        proof_file.unlink(missing_ok=True)
+
+    computed = kernel_hash(inline)
+    exit0 = proc.returncode == 0
+    checks: list[tuple[str, bool]] = [("kernel exit-0", exit0)]
+    expected = recorded or expect_hash
+    if expected is not None:
+        checks.append(("kernel hash match", computed == expected))
+    table = Table(title=f"attestation replay ({TOOLCHAIN_ID})")
+    table.add_column("check")
+    table.add_column("result")
+    for name, ok in checks:
+        table.add_row(name, "[green]ok[/green]" if ok else "[red]FAILED[/red]")
+    table.add_row("kernel_hash", computed)
+    console.print(table)
+    if not all(ok for _, ok in checks):
+        err.print((proc.stdout or "") + (proc.stderr or ""))
+        raise typer.Exit(code=1)
+    typer.echo("attestation verified; the pinned kernel accepts this proof file offline")
 
 
 @app.command()
