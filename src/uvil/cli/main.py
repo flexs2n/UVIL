@@ -237,6 +237,66 @@ def check(
     typer.echo(f"run stored; ledger G1 appended ({summary})")
 
 
+corpus_app = typer.Typer(help="Corpus operations")
+app.add_typer(corpus_app, name="corpus")
+
+
+@corpus_app.command("verify")
+def corpus_verify(
+    corpus_dir: Path = typer.Argument(
+        Path("corpora/boogie"), exists=True, help="Corpus directory with expected.json."
+    ),
+) -> None:
+    """Recompute obligation identities for every corpus entry and check them
+    against expected.json (no solving)."""
+    expected_path = corpus_dir / "expected.json"
+    if not expected_path.exists():
+        err.print(f"[red]error[/red] missing {expected_path}")
+        raise typer.Exit(code=1)
+    expected: dict[str, dict[str, str]] = json.loads(expected_path.read_text(encoding="utf-8"))[
+        "expected"
+    ]
+
+    from ..adapters.boogie.lower import import_module as boogie_import
+    from ..store import obligation_identity
+
+    problems = 0
+    seen: set[str] = set()
+    for rel_path in sorted({e["file"] for e in expected.values()}):
+        path = corpus_dir / rel_path
+        if not path.exists():
+            err.print(f"[red]missing corpus file[/red] {path}")
+            problems += 1
+            continue
+        result = boogie_import(path.read_text(encoding="utf-8"), filename=path.name)
+        if not result.ok:
+            for d in result.diagnostics:
+                err.print(f"[red]I7 parse diagnostic[/red] {path}:{d.loc.line}: {d.native_message}")
+            problems += 1
+            continue
+        for proc in result.procedures.values():
+            (obl,) = proc.obligations
+            obl_id = obligation_identity(
+                spec=obl.spec_ref,
+                semantics_model=obl.semantics_model,
+                program_fragment=proc.program.fragment or proc.name,
+                profile_version=obl.target_profile.rsplit("@", 1)[-1],
+            )
+            seen.add(obl_id)
+            if obl_id not in expected:
+                err.print(f"[red]unknown identity[/red] {path}/{proc.name}")
+                problems += 1
+    for obl_id in expected:
+        if obl_id not in seen:
+            err.print(f"[red]stale manifest entry[/red] {obl_id}")
+            problems += 1
+    if problems:
+        failed = f"{problems} problem(s), {len(seen)}/{len(expected)} identities verified"
+        err.print(f"[red]FAILED[/red] {failed}")
+        raise typer.Exit(code=1)
+    console.print(f"[green]ok[/green] {len(seen)} identities match expected.json")
+
+
 @ledger_app.command("append")
 def ledger_append(
     refs: list[str] = typer.Option(..., "--ref", help="Artifact reference (repeatable)."),

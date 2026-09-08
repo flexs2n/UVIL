@@ -803,18 +803,30 @@ class Parser:
                 if self.accept(":="):
                     value = self._parse_expr()
                     self.expect("]")
-                    term = Term(op="store", args=[term, index, value])
+                    term = Term(op=self._update_op(term), args=[term, index, value])
                 else:
                     self.expect("]")
                     term = self._index_term(term, index)
             else:
                 return term
 
+    def _expr_sort(self, term: Term) -> str | None:
+        """Lightweight sort propagation for collection operators (M1 inference)."""
+        if term.op == "var" and term.args and isinstance(term.args[0], str):
+            found = self.lookup(term.args[0])
+            return found.sort if found is not None else None
+        if term.op in ("seq.update", "seq.nth", "seq.cons", "seq.empty"):
+            return "seq"
+        if term.op in ("select", "store"):
+            return "array"
+        return None
+
+    def _update_op(self, base: Term) -> str:
+        return "seq.update" if self._expr_sort(base) == "seq" else "store"
+
     def _index_term(self, base: Term, index: Term) -> Term:
-        if base.op == "var" and base.args and isinstance(base.args[0], str):
-            found = self.lookup(base.args[0])
-            if found is not None and found.sort == "seq":
-                return Term(op="seq.nth", args=[base, index])
+        if self._expr_sort(base) == "seq":
+            return Term(op="seq.nth", args=[base, index])
         return Term(op="select", args=[base, index])
 
     def _parse_primary(self) -> Term:

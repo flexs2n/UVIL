@@ -68,4 +68,7 @@ init_typed = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = "-q -m 'not slow'"
+markers = [
+    "slow: corpus timeout cases (deselected by default; run with -m slow)",
+]
