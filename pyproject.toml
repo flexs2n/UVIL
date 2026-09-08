@@ -49,6 +49,8 @@ src = ["src", "tests"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+# `∨` is Lean's disjunction operator, emitted in generated theorems
+allowed-confusables = ["∨"]
 ignore = [
     "SIM108",
     "B008",  # typer.Option/Field in argument defaults is the framework idiom

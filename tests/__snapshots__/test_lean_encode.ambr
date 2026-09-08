@@ -1,0 +1,31 @@
+# serializer version: 1
+# name: test_divmod_corpus_family_encodes_via_pin_propagation
+  'theorem uvil_obl_02d3bb73a9bc : ∀ (a : Int), (7 = 7) → ((((a / 7) * 7) + (a % 7)) = a) := by omega'
+# ---
+# name: test_golden_fixture_obligation
+  'theorem uvil_obl_80a30e8dc47e : ∀ (cap : Int) (len : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((len + 1) ≤ cap) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[arith]
+  'theorem uvil_obl_dca5a9e79464 : ∀ (cap : Int) (len : Int) (x : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((x + 1) = cap) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[bool-props]
+  'theorem uvil_obl_32d491e3ca4e : ∀ (cap : Int) (len : Int) (p : Bool) (q : Bool), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((p = true ∨ q = true) ∧ (¬p = true)) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[exists]
+  'theorem uvil_obl_0f9097118182 : ∀ (cap : Int) (len : Int) (n : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → (∃ j : Int, ((j + n) = 0)) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[forall]
+  'theorem uvil_obl_447aa16e57f1 : ∀ (cap : Int) (len : Int) (n : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → (∀ i : Int, ((i + 1) ≤ n)) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[implies-neq]
+  'theorem uvil_obl_d5efb487795d : ∀ (cap : Int) (len : Int) (x : Int) (y : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((x ≥ 0) → (y ≠ 3)) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[ite-mul]
+  'theorem uvil_obl_146d895766de : ∀ (cap : Int) (len : Int) (x : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((if (x < 0) then (2 * x) else x) = 5) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[negative-const]
+  'theorem uvil_obl_1960063fd26e : ∀ (cap : Int) (len : Int) (x : Int) (y : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((x - y) < (-2)) := by omega'
+# ---
+# name: test_golden_theorem_per_shape[not-or]
+  'theorem uvil_obl_219a1dfddfae : ∀ (cap : Int) (len : Int) (x : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → (¬((x ≤ 0) ∨ (x > 9))) := by omega'
+# ---
