@@ -293,6 +293,24 @@ def theorem_name(obl: Obligation) -> str:
     return "uvil_obl_" + artifact_id(obl).rsplit(":", 1)[-1][:12]
 
 
+def lean_statement(obl: Obligation) -> str:
+    """The Lean statement text of an obligation (binders + sequent, no name
+    and no proof) - the recorded claim the BEq probe checks for faithfulness."""
+    context, goal = _pin_constants(obl)
+    encoder = _Encoder(dict(obl.sequent.var_sorts))
+
+    hypothesis_props = [encoder.prop(c) for c in context]
+    goal_prop = encoder.prop(goal)
+
+    names = sorted(term_vars(goal) | {v for c in context for v in term_vars(c)})
+    binders = " ".join(f"({name} : {encoder.sort_of(name)})" for name in names)
+    if binders:
+        binders = f"∀ {binders}, "
+
+    sequent = "".join(f"{h} → " for h in hypothesis_props) + goal_prop
+    return f"{binders}{sequent}"
+
+
 def to_lean_theorem(obl: Obligation) -> str:
     """Encode an obligation as a standalone Lean 4 theorem discharged by omega.
 
@@ -310,16 +328,4 @@ def to_lean_theorem(obl: Obligation) -> str:
                 Term(op="var", args=[name]),
             )
 
-    context, goal = _pin_constants(obl)
-    encoder = _Encoder(dict(obl.sequent.var_sorts))
-
-    hypothesis_props = [encoder.prop(c) for c in context]
-    goal_prop = encoder.prop(goal)
-
-    names = sorted(term_vars(goal) | {v for c in context for v in term_vars(c)})
-    binders = " ".join(f"({name} : {encoder.sort_of(name)})" for name in names)
-    if binders:
-        binders = f"∀ {binders}, "
-
-    sequent = "".join(f"{h} → " for h in hypothesis_props) + goal_prop
-    return f"theorem {theorem_name(obl)} : {binders}{sequent} := by omega"
+    return f"theorem {theorem_name(obl)} : {lean_statement(obl)} := by omega"
