@@ -1,0 +1,4 @@
+# serializer version: 1
+# name: test_canonical_bytes_snapshot
+  '{"cost_budget":{"kernel_ms":500,"solver_ms":2000},"origin_backend":null,"program_ref":"prog:collections vec push","semantics_model":"model:why3-memory.v1","sequent":{"context":[{"args":[{"args":["cap"],"op":"var"},{"args":[0],"op":"const"}],"op":"ge"},{"args":[{"args":["len"],"op":"var"},{"args":["cap"],"op":"var"}],"op":"le"},{"args":[{"args":["len"],"op":"var"},{"args":["cap"],"op":"var"}],"op":"lt"}],"goal":{"args":[{"args":[{"args":["len"],"op":"var"},{"args":[1],"op":"const"}],"op":"add"},{"args":["cap"],"op":"var"}],"op":"le"}},"spec_ref":"spec:collections vec push requires capacity","status":"open","target_profile":"uvil.verus@1","theories":["uvil.core.int@1"]}'
+# ---
