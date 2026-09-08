@@ -42,6 +42,14 @@
         },
         "goal": {
           "$ref": "#/$defs/Term"
+        },
+        "var_sorts": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Var Sorts",
+          "type": "object"
         }
       },
       "required": [

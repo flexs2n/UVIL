@@ -1,0 +1,1045 @@
+# serializer version: 1
+# name: test_obligations_json_snapshot
+  list([
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:7d1a52f6629e3a8ddf06ee1a6f0b84443a30c86331dc97d8042c712c388d2b7d',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          100,
+                        ]),
+                        'op': 'const',
+                      }),
+                    ]),
+                    'op': 'neg',
+                  }),
+                ]),
+                'op': 'ge',
+              }),
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      100,
+                    ]),
+                    'op': 'const',
+                  }),
+                ]),
+                'op': 'le',
+              }),
+            ]),
+            'op': 'and',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'y',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    dict({
+                      'args': list([
+                        'x',
+                      ]),
+                      'op': 'var',
+                    }),
+                    dict({
+                      'args': list([
+                        0,
+                      ]),
+                      'op': 'const',
+                    }),
+                  ]),
+                  'op': 'ge',
+                }),
+                dict({
+                  'args': list([
+                    'x',
+                  ]),
+                  'op': 'var',
+                }),
+                dict({
+                  'args': list([
+                    dict({
+                      'args': list([
+                        'x',
+                      ]),
+                      'op': 'var',
+                    }),
+                  ]),
+                  'op': 'neg',
+                }),
+              ]),
+              'op': 'ite',
+            }),
+            dict({
+              'args': list([
+                100,
+              ]),
+              'op': 'const',
+            }),
+          ]),
+          'op': 'le',
+        }),
+        'var_sorts': dict({
+          'x': 'Int',
+          'y': 'Int',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:c77d4796da588d1e6b390dd38b276a22fa82ada551e993df1459701875522105',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:7d1a52f6629e3a8ddf06ee1a6f0b84443a30c86331dc97d8042c712c388d2b7d',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          100,
+                        ]),
+                        'op': 'const',
+                      }),
+                    ]),
+                    'op': 'neg',
+                  }),
+                ]),
+                'op': 'ge',
+              }),
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      100,
+                    ]),
+                    'op': 'const',
+                  }),
+                ]),
+                'op': 'le',
+              }),
+            ]),
+            'op': 'and',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'y',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                'y',
+              ]),
+              'op': 'var',
+            }),
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    1000,
+                  ]),
+                  'op': 'const',
+                }),
+              ]),
+              'op': 'neg',
+            }),
+          ]),
+          'op': 'ge',
+        }),
+        'var_sorts': dict({
+          'x': 'Int',
+          'y': 'Int',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:c77d4796da588d1e6b390dd38b276a22fa82ada551e993df1459701875522105',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:7d1a52f6629e3a8ddf06ee1a6f0b84443a30c86331dc97d8042c712c388d2b7d',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          100,
+                        ]),
+                        'op': 'const',
+                      }),
+                    ]),
+                    'op': 'neg',
+                  }),
+                ]),
+                'op': 'ge',
+              }),
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      100,
+                    ]),
+                    'op': 'const',
+                  }),
+                ]),
+                'op': 'le',
+              }),
+            ]),
+            'op': 'and',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'y',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                'y',
+              ]),
+              'op': 'var',
+            }),
+            dict({
+              'args': list([
+                0,
+              ]),
+              'op': 'const',
+            }),
+          ]),
+          'op': 'gt',
+        }),
+        'var_sorts': dict({
+          'x': 'Int',
+          'y': 'Int',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:c77d4796da588d1e6b390dd38b276a22fa82ada551e993df1459701875522105',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:7d1a52f6629e3a8ddf06ee1a6f0b84443a30c86331dc97d8042c712c388d2b7d',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          100,
+                        ]),
+                        'op': 'const',
+                      }),
+                    ]),
+                    'op': 'neg',
+                  }),
+                ]),
+                'op': 'ge',
+              }),
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'x',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      100,
+                    ]),
+                    'op': 'const',
+                  }),
+                ]),
+                'op': 'le',
+              }),
+            ]),
+            'op': 'and',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'y',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                'y',
+              ]),
+              'op': 'var',
+            }),
+            dict({
+              'args': list([
+                0,
+              ]),
+              'op': 'const',
+            }),
+          ]),
+          'op': 'ge',
+        }),
+        'var_sorts': dict({
+          'x': 'Int',
+          'y': 'Int',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:c77d4796da588d1e6b390dd38b276a22fa82ada551e993df1459701875522105',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:0273648a9af0e74838e409f3416b44e54baf9c894a7f63bfcb81776f74e18f44',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      'a',
+                    ]),
+                    'op': 'var',
+                  }),
+                  dict({
+                    'args': list([
+                      0,
+                    ]),
+                    'op': 'const',
+                  }),
+                ]),
+                'op': 'select',
+              }),
+              dict({
+                'args': list([
+                  1,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    'a',
+                  ]),
+                  'op': 'var',
+                }),
+                dict({
+                  'args': list([
+                    5,
+                  ]),
+                  'op': 'const',
+                }),
+              ]),
+              'op': 'select',
+            }),
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    'a',
+                  ]),
+                  'op': 'var',
+                }),
+                dict({
+                  'args': list([
+                    5,
+                  ]),
+                  'op': 'const',
+                }),
+              ]),
+              'op': 'select',
+            }),
+          ]),
+          'op': 'eq',
+        }),
+        'var_sorts': dict({
+          'a': '(Array Int Int)',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:d1f4a8a3cf5a9b843a6c3a629b89219c2ddaa24ce13e3790518ec25f3b347b02',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+        'uvil.core.array@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:aa8adf773cc152e8d436e1b839f79443d1da68400825651b31d38fbcdf71ac58',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      's',
+                    ]),
+                    'op': 'var',
+                  }),
+                ]),
+                'op': 'seq.len',
+              }),
+              dict({
+                'args': list([
+                  1,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    's',
+                  ]),
+                  'op': 'var',
+                }),
+                dict({
+                  'args': list([
+                    0,
+                  ]),
+                  'op': 'const',
+                }),
+              ]),
+              'op': 'seq.nth',
+            }),
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    's',
+                  ]),
+                  'op': 'var',
+                }),
+                dict({
+                  'args': list([
+                    0,
+                  ]),
+                  'op': 'const',
+                }),
+              ]),
+              'op': 'seq.nth',
+            }),
+          ]),
+          'op': 'eq',
+        }),
+        'var_sorts': dict({
+          's': '(Seq Int)',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:be0ce499c843f3cd5ad07923bfaf95e4855126f847b29d1138783cdecd42ecb8',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+        'uvil.core.seq@1',
+      ]),
+    }),
+    dict({
+      'cost_budget': dict({
+        'kernel_ms': None,
+        'solver_ms': 2000,
+      }),
+      'origin_backend': 'boogie-m1',
+      'program_ref': 'uvil:program@1:bc786155b30069b89f7c421f1741be43460b62223a7671c7db8c6e2fc1a5149c',
+      'semantics_model': 'model:why3-memory.v1',
+      'sequent': dict({
+        'context': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'MAX',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  100,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'eq',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'n',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  1,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              'i',
+              'Int',
+              dict({
+                'args': list([
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          dict({
+                            'args': list([
+                              0,
+                            ]),
+                            'op': 'const',
+                          }),
+                          dict({
+                            'args': list([
+                              'i',
+                            ]),
+                            'op': 'var',
+                          }),
+                        ]),
+                        'op': 'le',
+                      }),
+                      dict({
+                        'args': list([
+                          dict({
+                            'args': list([
+                              'i',
+                            ]),
+                            'op': 'var',
+                          }),
+                          dict({
+                            'args': list([
+                              'n',
+                            ]),
+                            'op': 'var',
+                          }),
+                        ]),
+                        'op': 'lt',
+                      }),
+                    ]),
+                    'op': 'and',
+                  }),
+                  dict({
+                    'args': list([
+                      dict({
+                        'args': list([
+                          'i',
+                        ]),
+                        'op': 'var',
+                      }),
+                      dict({
+                        'args': list([
+                          'n',
+                        ]),
+                        'op': 'var',
+                      }),
+                    ]),
+                    'op': 'le',
+                  }),
+                ]),
+                'op': 'implies',
+              }),
+            ]),
+            'op': 'forall',
+          }),
+        ]),
+        'goal': dict({
+          'args': list([
+            'j',
+            'Int',
+            dict({
+              'args': list([
+                dict({
+                  'args': list([
+                    dict({
+                      'args': list([
+                        dict({
+                          'args': list([
+                            0,
+                          ]),
+                          'op': 'const',
+                        }),
+                        dict({
+                          'args': list([
+                            'j',
+                          ]),
+                          'op': 'var',
+                        }),
+                      ]),
+                      'op': 'le',
+                    }),
+                    dict({
+                      'args': list([
+                        dict({
+                          'args': list([
+                            'j',
+                          ]),
+                          'op': 'var',
+                        }),
+                        dict({
+                          'args': list([
+                            'n',
+                          ]),
+                          'op': 'var',
+                        }),
+                      ]),
+                      'op': 'lt',
+                    }),
+                  ]),
+                  'op': 'and',
+                }),
+                dict({
+                  'args': list([
+                    dict({
+                      'args': list([
+                        'j',
+                      ]),
+                      'op': 'var',
+                    }),
+                    dict({
+                      'args': list([
+                        dict({
+                          'args': list([
+                            'n',
+                          ]),
+                          'op': 'var',
+                        }),
+                        dict({
+                          'args': list([
+                            1,
+                          ]),
+                          'op': 'const',
+                        }),
+                      ]),
+                      'op': 'add',
+                    }),
+                  ]),
+                  'op': 'lt',
+                }),
+              ]),
+              'op': 'implies',
+            }),
+          ]),
+          'op': 'forall',
+        }),
+        'var_sorts': dict({
+          'n': 'Int',
+        }),
+      }),
+      'spec_ref': 'uvil:specification@1:0917b58762577cc6b136e373251529e49ecaa1cc36196c1faab895b8f651c8ba',
+      'status': 'open',
+      'target_profile': 'uvil.boogie@1',
+      'theories': list([
+        'uvil.core.int@1',
+      ]),
+    }),
+  ])
+# ---

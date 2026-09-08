@@ -24,6 +24,11 @@ ObligationStatus = Literal["open", "discharged", "refuted", "timeout", "vacuous"
 class Sequent(BaseModel):
     context: list[Term] = []
     goal: Term
+    # Name -> SMT-LIB sort for free variables of the sequent (e.g. {"x": "Int"}).
+    # Empty means "unknown": SMT encoders must then default to Int and may
+    # refuse boolean/collection variables. Populated by adapters that know the
+    # source types (e.g. the Boogie importer).
+    var_sorts: dict[str, str] = {}
 
 
 class CostBudget(BaseModel):

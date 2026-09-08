@@ -12,6 +12,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
+from ..adapters.boogie.lower import ImportResult, import_module
 from ..artifacts import parse_artifact
 from ..ledger import GUARANTEE_CLASSES, Attestation, Ledger
 from ..schemas import build_schema
@@ -129,6 +130,61 @@ def roots(
     table.add_column("merkle root")
     table.add_row(str(len(digests)), merkle_root(digests) if digests else "-")
     console.print(table)
+
+
+@app.command()
+def translate(
+    file: Path = typer.Argument(..., exists=True, readable=True, help="Dafny source (.dfy)."),
+    out: Path | None = typer.Option(None, "--out", help="Write artifact JSONs here."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Dafny -> Boogie text (pinned wrapper) -> I2/I4 artifacts.
+
+    Skips with a clear message (exit 0) when Dafny is not installed; hard-fails
+    on a version mismatch with PINNED_DAFNY (ADR 0002).
+    """
+    from ..adapters.boogie.dafny import DafnyFrontend, DafnyNotInstalled, DafnyVersionMismatch
+
+    frontend = DafnyFrontend()
+    try:
+        boogie_text = frontend.translate(file)
+    except DafnyNotInstalled:
+        err.print("[yellow]skip[/yellow] Dafny is not installed (pin: PINNED_DAFNY)")
+        raise typer.Exit(code=0) from None
+    except DafnyVersionMismatch as e:
+        err.print(f"[red]version mismatch[/red] {e}")
+        raise typer.Exit(code=1) from e
+    except Exception as e:
+        err.print(f"[red]translate failed[/red] {e}")
+        raise typer.Exit(code=1) from e
+
+    result = import_module(boogie_text, filename=file.name)
+    _emit_import(result, out, state)
+
+
+def _emit_import(result: ImportResult, out: Path | None, state: Path) -> None:
+    for d in result.diagnostics:
+        err.print(f"[red]I7 parse diagnostic[/red] {d.loc.file}:{d.loc.line}: {d.native_message}")
+    if not result.procedures and result.diagnostics:
+        raise typer.Exit(code=1)
+    store = ContentStore(_store_dir(state)) if out is None else None
+    if out is not None:
+        out.mkdir(parents=True, exist_ok=True)
+    for proc in result.procedures.values():
+        for model in (proc.program, proc.spec, *proc.obligations):
+            if store is not None:
+                typer.echo(store.put_artifact(model))
+            else:
+                assert out is not None
+                payload = {
+                    "uvil_type": model.uvil_type,
+                    "schema_version": model.schema_version,
+                    "artifact": model.model_dump(mode="json"),
+                }
+                name = f"{proc.name}.{model.uvil_type}.{len(list(out.iterdir()))}.json"
+                text = json.dumps(payload, indent=2, sort_keys=True)
+                (out / name).write_text(text, encoding="utf-8")
+                console.print(f"wrote {out / name}")
 
 
 @ledger_app.command("append")

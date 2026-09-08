@@ -31,11 +31,23 @@ WHY3_MEMORY_V1 = SemanticsModelEntry(
     name="why3-memory",
     version="v1",
     description=(
-        "Why3-style typed memory model: heap as a mutable store keyed by "
-        "references, with separation between program variables and the heap map. "
-        "Minimal seed entry; refined in M1."
+        "Why3-style typed memory model (M1 refinement): program variables are "
+        "separate from a mutable heap store keyed by references; Boogie-style "
+        "arrays/maps `[T1,..,Tn]T` map to `uvil.core.array` (`select`/`store`), "
+        "sequence types `seq<T>` map to `uvil.core.seq` (`seq.len`/`seq.nth`/…), "
+        "and scalar globals live directly in the store with no aliasing between "
+        "untracked references. Covers the array/heap operations the M1 corpus "
+        "actually exercises; deeper heap frames and region separation stay out "
+        "of scope until a later model version."
     ),
-    theories=("uvil.core.int@1", "uvil.core.array@1", "uvil.core.seq@1"),
+    theories=(
+        "uvil.core.int@1",
+        "uvil.core.bool@1",
+        "uvil.core.real@1",
+        "uvil.core.array@1",
+        "uvil.core.seq@1",
+    ),
+    profiles=("uvil.boogie@1",),
     citation="Bobot, Filliâtre, Marché, Paskevich. Why3. VSTTE 2011.",
 )
 
