@@ -1,0 +1,27 @@
+{
+  "uvil_type": "obligation",
+  "schema_version": "1",
+  "artifact": {
+    "spec_ref": "spec:collections vec push requires capacity",
+    "program_ref": "prog:collections vec push",
+    "semantics_model": "model:why3-memory.v1",
+    "sequent": {
+      "context": [
+        { "op": "ge", "args": [{ "op": "var", "args": ["cap"] }, { "op": "const", "args": [0] }] },
+        { "op": "le", "args": [{ "op": "var", "args": ["len"] }, { "op": "var", "args": ["cap"] }] },
+        { "op": "lt", "args": [{ "op": "var", "args": ["len"] }, { "op": "var", "args": ["cap"] }] }
+      ],
+      "goal": {
+        "op": "le",
+        "args": [
+          { "op": "add", "args": [{ "op": "var", "args": ["len"] }, { "op": "const", "args": [1] }] },
+          { "op": "var", "args": ["cap"] }
+        ]
+      }
+    },
+    "theories": ["uvil.core.int@1"],
+    "target_profile": "uvil.verus@1",
+    "status": "open",
+    "cost_budget": { "solver_ms": 2000, "kernel_ms": 500 }
+  }
+}

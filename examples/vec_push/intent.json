@@ -1,0 +1,13 @@
+{
+  "uvil_type": "intent",
+  "schema_version": "1",
+  "artifact": {
+    "title": "Vec push respects capacity",
+    "requirements": [
+      "A push never exceeds the declared capacity of the vector.",
+      "Length is always bounded by capacity."
+    ],
+    "constraints": ["amortized O(1) push"],
+    "forbidden_behaviors": ["out-of-bounds write"]
+  }
+}

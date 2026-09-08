@@ -1,0 +1,213 @@
+{
+  "$defs": {
+    "BackendWitness": {
+      "properties": {
+        "format": {
+          "title": "Format",
+          "type": "string"
+        },
+        "payload": {
+          "default": null,
+          "title": "Payload"
+        }
+      },
+      "required": [
+        "format"
+      ],
+      "title": "BackendWitness",
+      "type": "object"
+    },
+    "SharedRender": {
+      "properties": {
+        "human_summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Human Summary"
+        },
+        "smt_lib_valuation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Smt Lib Valuation"
+        }
+      },
+      "title": "SharedRender",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "description": "A term in the core assertion language.\n\n- `op=\"var\"`: args = [name]\n- `op=\"const\"`: args = [scalar] (int/float/bool)\n- `op=\"opaque\"`: args = [ty, axiom_id] - the `Opaque(ty, axiom_id)` escape hatch\n- quantifiers: `op=\"forall\"|\"exists\"`, args = [var_name, sort, body]\n- anything else: op is a core operator, args are operands",
+      "properties": {
+        "args": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Term"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Args",
+          "type": "array"
+        },
+        "op": {
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "title": "Term",
+      "type": "object"
+    },
+    "TraceState": {
+      "properties": {
+        "loc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Loc"
+        },
+        "vars": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Vars",
+          "type": "object"
+        }
+      },
+      "title": "TraceState",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.counterexample.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "backend_witness": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BackendWitness"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "counter_spec": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Term"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "kind": {
+      "enum": [
+        "valuation",
+        "trace",
+        "scenario",
+        "counterspec"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "obligation_ref": {
+      "title": "Obligation Ref",
+      "type": "string"
+    },
+    "scenario": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/TraceState"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scenario"
+    },
+    "shared_render": {
+      "$ref": "#/$defs/SharedRender"
+    },
+    "trace": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/TraceState"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Trace"
+    },
+    "valuation": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "$ref": "#/$defs/Term"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valuation"
+    }
+  },
+  "required": [
+    "obligation_ref",
+    "kind"
+  ],
+  "title": "uvil.counterexample@1",
+  "type": "object"
+}

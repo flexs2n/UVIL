@@ -1,0 +1,11 @@
+{
+  "uvil_type": "program",
+  "schema_version": "1",
+  "artifact": {
+    "language": "rust",
+    "source_ref": "src/collections/vec.rs#push",
+    "symbol": "push",
+    "fragment": "fn push(&mut self, v: T) { self.buf[self.len] = v; self.len += 1; }",
+    "semantics_model": "model:why3-memory.v1"
+  }
+}

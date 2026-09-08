@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "uvil"
+version = "0.1.0"
+description = "UVIL: Universal Verification Interchange Layer - reference implementation"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+authors = [{ name = "UVIL contributors" }]
+keywords = ["formal-methods", "verification", "interchange", "SMT", "Lean", "Dafny"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = [
+    "pydantic>=2.7",
+    "typer>=0.12",
+    "rich>=13",
+]
+
+[project.scripts]
+uvil = "uvil.cli.main:app"
+
+[project.optional-dependencies]
+smt = ["z3-solver>=4.13"]
+dev = [
+    "pytest>=8",
+    "hypothesis>=6",
+    "syrupy>=4",
+    "jsonschema>=4.22",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "pre-commit>=3.7",
+    "z3-solver>=4.13",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/uvil"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+ignore = [
+    "SIM108",
+    "B008",  # typer.Option/Field in argument defaults is the framework idiom
+    "RUF012", # pydantic models allow mutable defaults safely
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+explicit_package_bases = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

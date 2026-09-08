@@ -1,0 +1,132 @@
+{
+  "$defs": {
+    "BackendDescriptor": {
+      "properties": {
+        "kernel_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kernel Hash"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "BackendDescriptor",
+      "type": "object"
+    },
+    "Checker": {
+      "properties": {
+        "entry": {
+          "title": "Entry",
+          "type": "string"
+        },
+        "independent": {
+          "default": false,
+          "title": "Independent",
+          "type": "boolean"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        }
+      },
+      "required": [
+        "entry"
+      ],
+      "title": "Checker",
+      "type": "object"
+    },
+    "ProofPayload": {
+      "properties": {
+        "format": {
+          "title": "Format",
+          "type": "string"
+        },
+        "inline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inline"
+        },
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Location"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "default": {},
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "format"
+      ],
+      "title": "ProofPayload",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.proof.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "backend": {
+      "$ref": "#/$defs/BackendDescriptor"
+    },
+    "checker": {
+      "$ref": "#/$defs/Checker"
+    },
+    "obligation_ref": {
+      "title": "Obligation Ref",
+      "type": "string"
+    },
+    "payload": {
+      "$ref": "#/$defs/ProofPayload"
+    }
+  },
+  "required": [
+    "obligation_ref",
+    "backend",
+    "payload",
+    "checker"
+  ],
+  "title": "uvil.proof@1",
+  "type": "object"
+}

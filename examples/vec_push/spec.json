@@ -1,0 +1,30 @@
+{
+  "uvil_type": "specification",
+  "schema_version": "1",
+  "artifact": {
+    "profile": "uvil.verus@1",
+    "theories": ["uvil.core.int@1", "uvil.core.seq@1"],
+    "semantics_model": "model:why3-memory.v1",
+    "subject": "collections.vec.push",
+    "contracts": {
+      "requires": [{ "op": "le", "args": [{ "op": "var", "args": ["len"] }, { "op": "var", "args": ["cap"] }] }],
+      "ensures": [
+        {
+          "op": "and",
+          "args": [
+            { "op": "le", "args": [{ "op": "var", "args": ["len'"] }, { "op": "var", "args": ["cap"] }] },
+            { "op": "ge", "args": [{ "op": "var", "args": ["len'"] }, { "op": "const", "args": [0] }] }
+          ]
+        }
+      ],
+      "modifies": ["heap"]
+    },
+    "shadows": [
+      {
+        "name": "cap-nonneg-counter",
+        "formula": { "op": "lt", "args": [{ "op": "var", "args": ["cap"] }, { "op": "const", "args": [0] }] },
+        "expect": "refute"
+      }
+    ]
+  }
+}

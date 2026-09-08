@@ -1,0 +1,98 @@
+{
+  "$defs": {
+    "Residuals": {
+      "properties": {
+        "assumptions_added": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Assumptions Added",
+          "type": "array"
+        },
+        "dropped_fragments": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Dropped Fragments",
+          "type": "array"
+        },
+        "residual_obligations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Residual Obligations",
+          "type": "array"
+        }
+      },
+      "title": "Residuals",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.translation.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "mapping": {
+      "default": [],
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Mapping",
+      "type": "array"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "residuals": {
+      "$ref": "#/$defs/Residuals"
+    },
+    "soundness_discipline": {
+      "enum": [
+        "kernel-checked",
+        "roundtrip-validated",
+        "shadow-validated",
+        "lossy",
+        "unverified"
+      ],
+      "title": "Soundness Discipline",
+      "type": "string"
+    },
+    "source_artifact": {
+      "title": "Source Artifact",
+      "type": "string"
+    },
+    "source_kind": {
+      "title": "Source Kind",
+      "type": "string"
+    },
+    "target_artifact": {
+      "title": "Target Artifact",
+      "type": "string"
+    },
+    "target_kind": {
+      "title": "Target Kind",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_artifact",
+    "target_artifact",
+    "source_kind",
+    "target_kind",
+    "soundness_discipline"
+  ],
+  "title": "uvil.translation@1",
+  "type": "object"
+}

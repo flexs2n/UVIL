@@ -1,0 +1,168 @@
+{
+  "$defs": {
+    "CostBudget": {
+      "properties": {
+        "kernel_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kernel Ms"
+        },
+        "solver_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Solver Ms"
+        }
+      },
+      "title": "CostBudget",
+      "type": "object"
+    },
+    "Sequent": {
+      "properties": {
+        "context": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Term"
+          },
+          "title": "Context",
+          "type": "array"
+        },
+        "goal": {
+          "$ref": "#/$defs/Term"
+        }
+      },
+      "required": [
+        "goal"
+      ],
+      "title": "Sequent",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "description": "A term in the core assertion language.\n\n- `op=\"var\"`: args = [name]\n- `op=\"const\"`: args = [scalar] (int/float/bool)\n- `op=\"opaque\"`: args = [ty, axiom_id] - the `Opaque(ty, axiom_id)` escape hatch\n- quantifiers: `op=\"forall\"|\"exists\"`, args = [var_name, sort, body]\n- anything else: op is a core operator, args are operands",
+      "properties": {
+        "args": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Term"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Args",
+          "type": "array"
+        },
+        "op": {
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "title": "Term",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.obligation.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "cost_budget": {
+      "$ref": "#/$defs/CostBudget",
+      "default": {
+        "kernel_ms": null,
+        "solver_ms": null
+      }
+    },
+    "origin_backend": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Origin Backend"
+    },
+    "program_ref": {
+      "title": "Program Ref",
+      "type": "string"
+    },
+    "semantics_model": {
+      "title": "Semantics Model",
+      "type": "string"
+    },
+    "sequent": {
+      "$ref": "#/$defs/Sequent"
+    },
+    "spec_ref": {
+      "title": "Spec Ref",
+      "type": "string"
+    },
+    "status": {
+      "default": "open",
+      "enum": [
+        "open",
+        "discharged",
+        "refuted",
+        "timeout",
+        "vacuous"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "target_profile": {
+      "title": "Target Profile",
+      "type": "string"
+    },
+    "theories": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Theories",
+      "type": "array"
+    }
+  },
+  "required": [
+    "spec_ref",
+    "program_ref",
+    "semantics_model",
+    "sequent",
+    "theories",
+    "target_profile"
+  ],
+  "title": "uvil.obligation@1",
+  "type": "object"
+}

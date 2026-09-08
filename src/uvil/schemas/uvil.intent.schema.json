@@ -1,0 +1,72 @@
+{
+  "$id": "https://uvil.dev/schemas/uvil.intent.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "constraints": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Constraints",
+      "type": "array"
+    },
+    "forbidden_behaviors": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Forbidden Behaviors",
+      "type": "array"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    },
+    "priority": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Priority"
+    },
+    "refines": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Refines",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Requirements",
+      "type": "array"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "requirements"
+  ],
+  "title": "uvil.intent@1",
+  "type": "object"
+}

@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "KernelAttestation": {
+      "properties": {
+        "backend": {
+          "title": "Backend",
+          "type": "string"
+        },
+        "checked": {
+          "default": false,
+          "title": "Checked",
+          "type": "boolean"
+        },
+        "kernel_hash": {
+          "title": "Kernel Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "backend",
+        "kernel_hash"
+      ],
+      "title": "KernelAttestation",
+      "type": "object"
+    },
+    "ToolDescriptor": {
+      "properties": {
+        "flags": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "ToolDescriptor",
+      "type": "object"
+    },
+    "Verdict": {
+      "properties": {
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "obligation_ref": {
+          "title": "Obligation Ref",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "discharged",
+            "refuted",
+            "timeout",
+            "vacuous"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "time_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time Ms"
+        }
+      },
+      "required": [
+        "obligation_ref",
+        "status"
+      ],
+      "title": "Verdict",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.run.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "config": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Config",
+      "type": "object"
+    },
+    "kernel_attestations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/KernelAttestation"
+      },
+      "title": "Kernel Attestations",
+      "type": "array"
+    },
+    "ledger_seq": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ledger Seq"
+    },
+    "parent_run": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Run"
+    },
+    "resource_stats": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Resource Stats",
+      "type": "object"
+    },
+    "tool": {
+      "$ref": "#/$defs/ToolDescriptor"
+    },
+    "verdicts": {
+      "items": {
+        "$ref": "#/$defs/Verdict"
+      },
+      "minItems": 1,
+      "title": "Verdicts",
+      "type": "array"
+    }
+  },
+  "required": [
+    "tool",
+    "verdicts"
+  ],
+  "title": "uvil.run@1",
+  "type": "object"
+}

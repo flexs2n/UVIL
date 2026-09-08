@@ -1,0 +1,251 @@
+{
+  "$defs": {
+    "Contracts": {
+      "properties": {
+        "decreases": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Term"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ensures": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Term"
+          },
+          "title": "Ensures",
+          "type": "array"
+        },
+        "invariants": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Term"
+          },
+          "title": "Invariants",
+          "type": "array"
+        },
+        "modifies": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Modifies",
+          "type": "array"
+        },
+        "requires": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Term"
+          },
+          "title": "Requires",
+          "type": "array"
+        }
+      },
+      "title": "Contracts",
+      "type": "object"
+    },
+    "OpaqueAxiom": {
+      "properties": {
+        "axiom_id": {
+          "title": "Axiom Id",
+          "type": "string"
+        },
+        "statement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Statement"
+        },
+        "ty": {
+          "title": "Ty",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ty",
+        "axiom_id"
+      ],
+      "title": "OpaqueAxiom",
+      "type": "object"
+    },
+    "ShadowHypothesis": {
+      "properties": {
+        "expect": {
+          "enum": [
+            "refute",
+            "accept"
+          ],
+          "title": "Expect",
+          "type": "string"
+        },
+        "formula": {
+          "$ref": "#/$defs/Term"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "formula",
+        "expect"
+      ],
+      "title": "ShadowHypothesis",
+      "type": "object"
+    },
+    "TemporalFormula": {
+      "properties": {
+        "formula": {
+          "title": "Formula",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "ltl",
+            "tla"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "formula"
+      ],
+      "title": "TemporalFormula",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "description": "A term in the core assertion language.\n\n- `op=\"var\"`: args = [name]\n- `op=\"const\"`: args = [scalar] (int/float/bool)\n- `op=\"opaque\"`: args = [ty, axiom_id] - the `Opaque(ty, axiom_id)` escape hatch\n- quantifiers: `op=\"forall\"|\"exists\"`, args = [var_name, sort, body]\n- anything else: op is a core operator, args are operands",
+      "properties": {
+        "args": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/Term"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Args",
+          "type": "array"
+        },
+        "op": {
+          "title": "Op",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "title": "Term",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.specification.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "contracts": {
+      "$ref": "#/$defs/Contracts",
+      "default": {
+        "decreases": null,
+        "ensures": [],
+        "invariants": [],
+        "modifies": [],
+        "requires": []
+      }
+    },
+    "intent_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Intent Ref"
+    },
+    "opaque_axioms": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/OpaqueAxiom"
+      },
+      "title": "Opaque Axioms",
+      "type": "array"
+    },
+    "profile": {
+      "default": "uvil.core@1",
+      "title": "Profile",
+      "type": "string"
+    },
+    "semantics_model": {
+      "title": "Semantics Model",
+      "type": "string"
+    },
+    "shadows": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ShadowHypothesis"
+      },
+      "title": "Shadows",
+      "type": "array"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string"
+    },
+    "temporal": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/TemporalFormula"
+      },
+      "title": "Temporal",
+      "type": "array"
+    },
+    "theories": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Theories",
+      "type": "array"
+    }
+  },
+  "required": [
+    "theories",
+    "semantics_model",
+    "subject"
+  ],
+  "title": "uvil.specification@1",
+  "type": "object"
+}

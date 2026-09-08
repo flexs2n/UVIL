@@ -1,0 +1,141 @@
+{
+  "$defs": {
+    "LlmExplanation": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "unverified": {
+          "const": true,
+          "default": true,
+          "title": "Unverified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "LlmExplanation",
+      "type": "object"
+    },
+    "Loc": {
+      "properties": {
+        "col": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Col"
+        },
+        "file": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "symbol": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Symbol"
+        }
+      },
+      "title": "Loc",
+      "type": "object"
+    }
+  },
+  "$id": "https://uvil.dev/schemas/uvil.diagnostic.schema.json",
+  "additionalProperties": false,
+  "properties": {
+    "kind": {
+      "enum": [
+        "unproved",
+        "vacuous",
+        "timeout",
+        "parse",
+        "semantic-mismatch",
+        "unknown"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "llm_explanation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LlmExplanation"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "loc": {
+      "$ref": "#/$defs/Loc"
+    },
+    "native_message": {
+      "title": "Native Message",
+      "type": "string"
+    },
+    "obligation_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Obligation Ref"
+    },
+    "run_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Run Ref"
+    }
+  },
+  "required": [
+    "kind",
+    "native_message"
+  ],
+  "title": "uvil.diagnostic@1",
+  "type": "object"
+}
