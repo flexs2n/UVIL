@@ -13,21 +13,26 @@ from ..adapters.smt.backends import (
 )
 from ..adapters.smt.cex import build_counterexample
 from ..adapters.smt.encode import OpaqueTermError, encode_assertions, encode_script
+from ..adapters.smt.roundtrip import roundtrip_validate
 from ..artifacts import (
     Counterexample,
     Diagnostic,
     Obligation,
     Run,
+    Translation,
     Verdict,
     artifact_id,
     canonical_bytes,
     sha256_hex,
 )
 from ..artifacts.run import ToolDescriptor
+from ..artifacts.translation import Residuals
 from ..ledger import Attestation, Ledger
 from ..store import ContentStore
 
 _G1_DETAIL = "solver-verdict G1: no certificates attached (Alethe/LFSC upgrade path M4+)"
+
+Discipline = str  # "none" | "roundtrip" (validated at runtime, fail-loud)
 
 
 @dataclass
@@ -35,6 +40,7 @@ class CheckResult:
     obligations: list[Obligation] = field(default_factory=list)
     counterexamples: list[Counterexample] = field(default_factory=list)
     diagnostics: list[Diagnostic] = field(default_factory=list)
+    translations: list[Translation] = field(default_factory=list)
     run: Run | None = None
 
 
@@ -64,8 +70,16 @@ def check(
     obligations: list[Obligation],
     backend: str = "z3",
     timeout_ms: int | None = None,
+    discipline: Discipline = "none",
 ) -> CheckResult:
-    """Dispatch obligations to an SMT backend; collect verdicts, I6s, I7s, I8."""
+    """Dispatch obligations to an SMT backend; collect verdicts, I6s, I7s, I8.
+
+    `discipline="roundtrip"` additionally runs the D2 round-trip validation on
+    every obligation before solving: the resulting I9 `Translation` is recorded
+    as evidence (non-gating by design - divergences never block the check).
+    """
+    if discipline not in ("none", "roundtrip"):
+        raise ValueError(f"unknown discipline: {discipline!r} (expected 'none' or 'roundtrip')")
     if not obligations:
         raise ValueError("check() requires at least one obligation")
     engine = SmtBackend(backend)
@@ -73,6 +87,22 @@ def check(
     verdicts: list[Verdict] = []
 
     for obl in obligations:
+        if discipline == "roundtrip":
+            try:
+                result.translations.append(roundtrip_validate(obl).translation)
+            except (OpaqueTermError, ValueError) as e:
+                # Fail loud as evidence: record a lossy I9 and keep checking.
+                result.translations.append(
+                    Translation(
+                        source_artifact=artifact_id(obl),
+                        target_artifact=f"roundtrip-error:{sha256_hex(str(e).encode('utf-8'))}",
+                        source_kind="obligation",
+                        target_kind="smt-lib2-assertions",
+                        soundness_discipline="lossy",
+                        residuals=Residuals(dropped_fragments=[str(e)]),
+                        notes="round-trip validation could not run",
+                    )
+                )
         budget = timeout_ms or obl.cost_budget.solver_ms
         try:
             verdict = engine.run(obl, budget)
@@ -128,7 +158,7 @@ def check(
 
     result.run = Run(
         tool=ToolDescriptor(name=backend, version=engine.version, flags=[]),
-        config={"backend": backend, "timeout_ms": timeout_ms},
+        config={"backend": backend, "timeout_ms": timeout_ms, "discipline": discipline},
         verdicts=verdicts,
     )
     return result
@@ -146,6 +176,9 @@ def record(result: CheckResult, store: ContentStore, ledger: Ledger) -> list[str
         refs.append(store.put_artifact(cex))
     for diag in result.diagnostics:
         refs.append(store.put_artifact(diag.model_copy(update={"run_ref": run_aid})))
+    for translation in result.translations:
+        if translation is not None:
+            refs.append(store.put_artifact(translation))
     ledger.append(
         refs,
         guarantee_class="G1",

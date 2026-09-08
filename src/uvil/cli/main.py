@@ -240,6 +240,9 @@ def check(
     ),
     backend: str = typer.Option("z3", "--backend", help="SMT backend: z3 or cvc5."),
     timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-obligation budget."),
+    discipline: str = typer.Option(
+        "none", "--discipline", help="Soundness discipline evidence: none or roundtrip."
+    ),
     state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
 ) -> None:
     """Boogie input -> obligations -> SMT check -> verdict table + ledger G1."""
@@ -261,7 +264,7 @@ def check(
     from ..check.core import record
 
     timeout_ms = int(timeout_s * 1000) if timeout_s is not None else None
-    checked = run_check(obligations, backend=backend, timeout_ms=timeout_ms)
+    checked = run_check(obligations, backend=backend, timeout_ms=timeout_ms, discipline=discipline)
     record(checked, ContentStore(_store_dir(state)), _load_ledger(state))
 
     assert checked.run is not None
