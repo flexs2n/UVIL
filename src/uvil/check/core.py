@@ -94,6 +94,20 @@ def check(
             result.obligations.append(obl.model_copy(update={"status": status}))
             if verdict.status == "sat" and verdict.model is not None:
                 result.counterexamples.append(build_counterexample(obl, verdict.model))
+                # A refutation is a first-class failure: emit an I7 `unproved`
+                # alongside the I6 witness. Deterministic text - no solver
+                # timing or session ids inside the message.
+                result.diagnostics.append(
+                    Diagnostic(
+                        obligation_ref=artifact_id(obl),
+                        kind="unproved",
+                        native_message=(
+                            f"obligation refuted: backend {backend} satisfied the "
+                            "negated goal; a counterexample valuation (I6) "
+                            "accompanies this diagnostic"
+                        ),
+                    )
+                )
             if verdict.status in ("unknown", "timeout"):
                 result.diagnostics.append(
                     Diagnostic(

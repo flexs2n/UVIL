@@ -59,6 +59,23 @@ def test_check_refuted_produces_i6() -> None:
     assert cex.obligation_ref == artifact_id(obl)
     assert cex.shared_render.smt_lib_valuation
 
+    # M2: a refutation is also an I7 `unproved`, paired with the I6 witness.
+    assert len(result.diagnostics) == 1
+    diag = result.diagnostics[0]
+    assert diag.kind == "unproved"
+    assert diag.obligation_ref == artifact_id(obl)
+    assert "counterexample" in diag.native_message
+    # deterministic text: no solver timing or session ids inside the message
+    assert "ms" not in diag.native_message
+
+
+def test_check_discharged_still_has_no_diagnostics() -> None:
+    (obl,) = _obligations(PROVABLE_SRC)
+    result = check([obl], backend="z3")
+    assert result.obligations[0].status == "discharged"
+    assert not result.diagnostics
+    assert not result.counterexamples
+
 
 def test_no_code_path_upgrades_unknown_or_timeout() -> None:
     # The invariant: a fabricated backend verdict of unknown/timeout can never

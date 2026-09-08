@@ -14,7 +14,7 @@ from rich.console import Console
 from rich.table import Table
 
 from ..adapters.boogie.lower import ImportResult, import_module
-from ..artifacts import parse_artifact
+from ..artifacts import artifact_id, parse_artifact
 from ..ledger import GUARANTEE_CLASSES, Attestation, Ledger
 from ..schemas import build_schema
 from ..store import ContentStore, merkle_root
@@ -281,6 +281,58 @@ def check(
         counts[v.status] = counts.get(v.status, 0) + 1
     summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
     typer.echo(f"run stored; ledger G1 appended ({summary})")
+
+
+@app.command()
+def shadows(
+    spec_file: Path = typer.Argument(
+        ..., exists=True, readable=True, help="Specification artifact envelope JSON."
+    ),
+    backend: str = typer.Option("z3", "--backend", help="SMT backend: z3 or cvc5."),
+    timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-probe budget."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory; records I6/I7 into the CAS."),
+) -> None:
+    """Evaluate a spec's shadow set (R4): vacuity probes per shadow hypothesis."""
+    import dataclasses
+
+    from ..artifacts import Specification
+
+    try:
+        data = json.loads(spec_file.read_text(encoding="utf-8"))
+        model = parse_artifact(data, expected_type="specification")
+    except (OSError, json.JSONDecodeError, ValueError, KeyError) as e:
+        err.print(f"[red]error[/red] cannot load specification from {spec_file}: {e}")
+        raise typer.Exit(code=1) from e
+    assert isinstance(model, Specification)
+
+    from ..check.shadows import evaluate_shadows
+
+    timeout_ms = int(timeout_s * 1000) if timeout_s is not None else None
+    result = evaluate_shadows(model, backend=backend, timeout_ms=timeout_ms)
+
+    table = Table(title=f"shadow set ({backend})")
+    table.add_column("shadow")
+    table.add_column("expect")
+    table.add_column("status")
+    table.add_column("detail")
+    for outcome in result.outcomes:
+        table.add_row(outcome.name, outcome.expect, outcome.status, outcome.detail)
+    console.print(table)
+
+    store = ContentStore(_store_dir(state))
+    stored = [store.put_artifact(a) for a in (*result.counterexamples, *result.diagnostics)]
+    typer.echo(
+        json.dumps(
+            {
+                "ok": result.ok,
+                "outcomes": [dataclasses.asdict(o) for o in result.outcomes],
+                "counterexamples": [artifact_id(a) for a in result.counterexamples],
+                "diagnostics": [artifact_id(a) for a in result.diagnostics],
+                "stored": stored,
+            },
+            sort_keys=True,
+        )
+    )
 
 
 corpus_app = typer.Typer(help="Corpus operations")
