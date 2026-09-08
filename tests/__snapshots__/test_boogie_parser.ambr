@@ -93,6 +93,23 @@
             'args': list([
               dict({
                 'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  50,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'le',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
                   'y',
                 ]),
                 'op': 'var',
@@ -261,6 +278,23 @@
             'args': list([
               dict({
                 'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  50,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'le',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
                   'y',
                 ]),
                 'op': 'var',
@@ -401,6 +435,23 @@
             'args': list([
               dict({
                 'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  50,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'le',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
                   'y',
                 ]),
                 'op': 'var',
@@ -408,6 +459,23 @@
               dict({
                 'args': list([
                   0,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'ge',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  1,
                 ]),
                 'op': 'const',
               }),
@@ -531,6 +599,23 @@
               }),
             ]),
             'op': 'and',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  50,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'le',
           }),
           dict({
             'args': list([

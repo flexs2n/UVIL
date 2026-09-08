@@ -257,13 +257,14 @@ def build_generated_programs() -> list[CorpusProgram]:
             )
         )
 
-    # 15. observed + slow: quintic Fermat shape, tiny budget, never fast to decide
+    # 15. observed + slow: Fermat n=5 shape (valid but never decidable fast);
+    # z3 must prove unsatisfiability of x^5+y^5==z^5 over positive ints
     programs.append(
         CorpusProgram(
             "gen_timeout_000",
             _procedure(
                 "p", "x: int, y: int, z: int", ["x >= 1 && y >= 1 && z >= 1"],
-                "x * x * x * x * x + y * y * y * y * y == z * z * z * z * z",
+                "x * x * x * x * x + y * y * y * y * y != z * z * z * z * z",
             ),
             family="timeout",
             expected=None,

@@ -123,6 +123,22 @@ procedure h(x: int)
     assert not any(">= 5" in r and "x" in r for r in rendered), rendered
 
 
+def test_assumes_join_the_context() -> None:
+    src = """
+procedure a(x: int)
+{
+  assume x >= 5;
+  assert x >= 3;
+}
+"""
+    result = import_module(src, "a.bpl")
+    obl = result.procedures["a"].obligations[0]
+    from uvil.artifacts import to_smt
+
+    rendered = [to_smt(c) for c in obl.sequent.context]
+    assert "(>= x 5)" in rendered, rendered
+
+
 def test_var_sorts_populated() -> None:
     result = import_module(FULL_MODULE, "full.bpl")
     arrays = result.procedures["arrays"].obligations[0]

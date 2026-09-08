@@ -390,6 +390,12 @@
       "file": "generated/gen_arr_store_sel_019.bpl",
       "proc": "p"
     },
+    "oblid:217ef45b5b9fb7f67bd3bdda4eea4df30e366dd132b30b28dc78b3fe592a118d": {
+      "expected": "timeout",
+      "family": "timeout",
+      "file": "generated/gen_timeout_000.bpl",
+      "proc": "p"
+    },
     "oblid:21f817aa1d1d1f602392ca43c20b7b89ff4e0ff7db0765cd0ce131710a624dd9": {
       "expected": "discharged",
       "family": "abs-bound",
@@ -461,12 +467,6 @@
       "family": "arr-store-other",
       "file": "array_store_select.bpl",
       "proc": "store_same"
-    },
-    "oblid:28a4ec7abfc27847f98abd7a0bca51aea7c30215eb13900e1a32467c8fd9f712": {
-      "expected": "refuted",
-      "family": "timeout",
-      "file": "generated/gen_timeout_000.bpl",
-      "proc": "p"
     },
     "oblid:29407e4b7d764266a5cdeff580d94fc905744ce60756c630b3df4efe1e204d72": {
       "expected": "discharged",
@@ -1607,12 +1607,6 @@
       "family": "arr-store-other",
       "file": "generated/gen_arr_store_other_022.bpl",
       "proc": "p"
-    },
-    "oblid:8b5f77274968ebc92a87d2e5798dd176aade529cf72f032447e97e6bb9d56ad3": {
-      "expected": "refuted",
-      "family": "timeout",
-      "file": "timeout_case.bpl",
-      "proc": "fermat5"
     },
     "oblid:8beb582a0b027c8f9e2a070315afe88444a30b48d4194649949b4f05dc745e11": {
       "expected": "discharged",
@@ -3071,6 +3065,12 @@
       "family": "distrib",
       "file": "generated/gen_distrib_015.bpl",
       "proc": "p"
+    },
+    "oblid:fb217a525e805f31e77f9d9be74991d15ed83d81c83dd70ee30347322f7fced7": {
+      "expected": "timeout",
+      "family": "timeout",
+      "file": "timeout_case.bpl",
+      "proc": "fermat5"
     },
     "oblid:fc87e473be35cb773e8c0c37dbaf28f503513824e1194a0d5199000cb7299c31": {
       "expected": "refuted",

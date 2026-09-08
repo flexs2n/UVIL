@@ -21,6 +21,7 @@ from .parser import (
     BOOGIE_TARGET_PROFILE,
     AssertStmt,
     AssignStmt,
+    AssumeStmt,
     BoogieModule,
     BoogieParseError,
     FunctionDecl,
@@ -293,6 +294,8 @@ def _collect_context(
     """
     for stmt in stmts:
         match stmt:
+            case AssumeStmt(term=term):
+                assumptions.append(term)
             case HavocStmt(names=names):
                 assumptions[:] = [a for a in assumptions if not _mentions(a, set(names))]
             case WhileStmt(invariants=invs, body=body):
@@ -302,3 +305,5 @@ def _collect_context(
                 goals.append(stmt)
             case VarStmt() | ReturnStmt() | AssignStmt():
                 pass
+            case _:  # pragma: no cover - all subset statements are handled above
+                raise AssertionError(f"unhandled statement: {stmt!r}")
