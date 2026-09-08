@@ -1,0 +1,220 @@
+# serializer version: 1
+# name: test_golden_standardized_i7_per_family[parse-call]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'gen_parse_call_000.bpl',
+      'line': 3,
+      'symbol': None,
+    }),
+    'native_message': '''
+      procedure calls are outside the accepted M1 subset
+      call helper_0(x);
+    ''',
+    'obligation_ref': None,
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[parse-if]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'gen_parse_if_000.bpl',
+      'line': 3,
+      'symbol': None,
+    }),
+    'native_message': '''
+      'if' is outside the accepted M1 subset (straight-line + while only)
+      if x > 1 {
+    ''',
+    'obligation_ref': None,
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[parse-stray]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'gen_parse_stray_000.bpl',
+      'line': 3,
+      'symbol': None,
+    }),
+    'native_message': '''
+      expected identifier
+      assert x > 1;;
+    ''',
+    'obligation_ref': None,
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[parse-type]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'gen_parse_type_000.bpl',
+      'line': 1,
+      'symbol': None,
+    }),
+    'native_message': '''
+      type 'multiset' is outside the accepted subset (use int/bool/real/[T]T/seq<T>)
+      procedure p_type_0(v: multiset<int>)
+    ''',
+    'obligation_ref': None,
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[parse-uninterp]
+  dict({
+    'kind': 'parse',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': 'gen_parse_uninterp_000.bpl',
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': "uninterpreted function 'f_0' has no definition body; calling definition-less functions is outside the accepted M1 subset",
+    'obligation_ref': None,
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[refuted-bound]
+  dict({
+    'kind': 'unproved',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'obligation refuted: backend z3 satisfied the negated goal; a counterexample valuation (I6) accompanies this diagnostic',
+    'obligation_ref': 'uvil:obligation@1:c341a47f7742997d1d8d1b00afd35e8cc3cfaea54a9ef59b7ccb942e25b02f58',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[refuted-linear]
+  dict({
+    'kind': 'unproved',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'obligation refuted: backend z3 satisfied the negated goal; a counterexample valuation (I6) accompanies this diagnostic',
+    'obligation_ref': 'uvil:obligation@1:5dbb612be4cf08d9999da805ca4497d6e7ffcd73a97fda46624f818db2c52c76',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_standardized_i7_per_family[unknown-nonlinear]
+  dict({
+    'kind': 'timeout',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'backend z3 returned timeout within budget 1000ms',
+    'obligation_ref': 'uvil:obligation@1:d4c418cbc43325bd3f87da6b6533353cbf9be64eee519c14db335880b8d63d0d',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_golden_timeout_i7_family
+  dict({
+    'kind': 'timeout',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'backend z3 returned timeout within budget 300ms',
+    'obligation_ref': 'uvil:obligation@1:2aa177409ec2902865e6166d26fdfcc9f2366692dd488c9a36797003f5de2817',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_refuted_entries_produce_i6_and_i7_through_check[refuted-bound]
+  dict({
+    'backend_witness': dict({
+      'format': 'smt-lib2-model',
+    }),
+    'counter_spec': None,
+    'kind': 'valuation',
+    'obligation_ref': 'uvil:obligation@1:c341a47f7742997d1d8d1b00afd35e8cc3cfaea54a9ef59b7ccb942e25b02f58',
+    'scenario': None,
+    'trace': None,
+    'uvil_type': 'counterexample',
+    'valuation': dict({
+      'x': dict({
+        'args': list([
+          0,
+        ]),
+        'op': 'const',
+      }),
+    }),
+  })
+# ---
+# name: test_refuted_entries_produce_i6_and_i7_through_check[refuted-bound].1
+  dict({
+    'kind': 'unproved',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'obligation refuted: backend z3 satisfied the negated goal; a counterexample valuation (I6) accompanies this diagnostic',
+    'obligation_ref': 'uvil:obligation@1:c341a47f7742997d1d8d1b00afd35e8cc3cfaea54a9ef59b7ccb942e25b02f58',
+    'uvil_type': 'diagnostic',
+  })
+# ---
+# name: test_refuted_entries_produce_i6_and_i7_through_check[refuted-linear]
+  dict({
+    'backend_witness': dict({
+      'format': 'smt-lib2-model',
+    }),
+    'counter_spec': None,
+    'kind': 'valuation',
+    'obligation_ref': 'uvil:obligation@1:5dbb612be4cf08d9999da805ca4497d6e7ffcd73a97fda46624f818db2c52c76',
+    'scenario': None,
+    'trace': None,
+    'uvil_type': 'counterexample',
+    'valuation': dict({
+      'a': dict({
+        'args': list([
+          1,
+        ]),
+        'op': 'const',
+      }),
+    }),
+  })
+# ---
+# name: test_refuted_entries_produce_i6_and_i7_through_check[refuted-linear].1
+  dict({
+    'kind': 'unproved',
+    'llm_explanation': None,
+    'loc': dict({
+      'col': None,
+      'file': None,
+      'line': None,
+      'symbol': None,
+    }),
+    'native_message': 'obligation refuted: backend z3 satisfied the negated goal; a counterexample valuation (I6) accompanies this diagnostic',
+    'obligation_ref': 'uvil:obligation@1:5dbb612be4cf08d9999da805ca4497d6e7ffcd73a97fda46624f818db2c52c76',
+    'uvil_type': 'diagnostic',
+  })
+# ---

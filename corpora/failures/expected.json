@@ -1,0 +1,1240 @@
+{
+  "expected": {
+    "parse/gen_parse_call_000.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_000.bpl"
+    },
+    "parse/gen_parse_call_001.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_001.bpl"
+    },
+    "parse/gen_parse_call_002.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_002.bpl"
+    },
+    "parse/gen_parse_call_003.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_003.bpl"
+    },
+    "parse/gen_parse_call_004.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_004.bpl"
+    },
+    "parse/gen_parse_call_005.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_005.bpl"
+    },
+    "parse/gen_parse_call_006.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_006.bpl"
+    },
+    "parse/gen_parse_call_007.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_007.bpl"
+    },
+    "parse/gen_parse_call_008.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_008.bpl"
+    },
+    "parse/gen_parse_call_009.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_009.bpl"
+    },
+    "parse/gen_parse_call_010.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_010.bpl"
+    },
+    "parse/gen_parse_call_011.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_011.bpl"
+    },
+    "parse/gen_parse_call_012.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_012.bpl"
+    },
+    "parse/gen_parse_call_013.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_013.bpl"
+    },
+    "parse/gen_parse_call_014.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_014.bpl"
+    },
+    "parse/gen_parse_call_015.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_015.bpl"
+    },
+    "parse/gen_parse_call_016.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_016.bpl"
+    },
+    "parse/gen_parse_call_017.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_017.bpl"
+    },
+    "parse/gen_parse_call_018.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_018.bpl"
+    },
+    "parse/gen_parse_call_019.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-call",
+      "file": "parse/gen_parse_call_019.bpl"
+    },
+    "parse/gen_parse_if_000.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_000.bpl"
+    },
+    "parse/gen_parse_if_001.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_001.bpl"
+    },
+    "parse/gen_parse_if_002.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_002.bpl"
+    },
+    "parse/gen_parse_if_003.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_003.bpl"
+    },
+    "parse/gen_parse_if_004.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_004.bpl"
+    },
+    "parse/gen_parse_if_005.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_005.bpl"
+    },
+    "parse/gen_parse_if_006.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_006.bpl"
+    },
+    "parse/gen_parse_if_007.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_007.bpl"
+    },
+    "parse/gen_parse_if_008.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_008.bpl"
+    },
+    "parse/gen_parse_if_009.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_009.bpl"
+    },
+    "parse/gen_parse_if_010.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_010.bpl"
+    },
+    "parse/gen_parse_if_011.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_011.bpl"
+    },
+    "parse/gen_parse_if_012.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_012.bpl"
+    },
+    "parse/gen_parse_if_013.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_013.bpl"
+    },
+    "parse/gen_parse_if_014.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_014.bpl"
+    },
+    "parse/gen_parse_if_015.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_015.bpl"
+    },
+    "parse/gen_parse_if_016.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_016.bpl"
+    },
+    "parse/gen_parse_if_017.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_017.bpl"
+    },
+    "parse/gen_parse_if_018.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_018.bpl"
+    },
+    "parse/gen_parse_if_019.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-if",
+      "file": "parse/gen_parse_if_019.bpl"
+    },
+    "parse/gen_parse_stray_000.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_000.bpl"
+    },
+    "parse/gen_parse_stray_001.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_001.bpl"
+    },
+    "parse/gen_parse_stray_002.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_002.bpl"
+    },
+    "parse/gen_parse_stray_003.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_003.bpl"
+    },
+    "parse/gen_parse_stray_004.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_004.bpl"
+    },
+    "parse/gen_parse_stray_005.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_005.bpl"
+    },
+    "parse/gen_parse_stray_006.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_006.bpl"
+    },
+    "parse/gen_parse_stray_007.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_007.bpl"
+    },
+    "parse/gen_parse_stray_008.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_008.bpl"
+    },
+    "parse/gen_parse_stray_009.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_009.bpl"
+    },
+    "parse/gen_parse_stray_010.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_010.bpl"
+    },
+    "parse/gen_parse_stray_011.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_011.bpl"
+    },
+    "parse/gen_parse_stray_012.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_012.bpl"
+    },
+    "parse/gen_parse_stray_013.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_013.bpl"
+    },
+    "parse/gen_parse_stray_014.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-stray",
+      "file": "parse/gen_parse_stray_014.bpl"
+    },
+    "parse/gen_parse_type_000.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_000.bpl"
+    },
+    "parse/gen_parse_type_001.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_001.bpl"
+    },
+    "parse/gen_parse_type_002.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_002.bpl"
+    },
+    "parse/gen_parse_type_003.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_003.bpl"
+    },
+    "parse/gen_parse_type_004.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_004.bpl"
+    },
+    "parse/gen_parse_type_005.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_005.bpl"
+    },
+    "parse/gen_parse_type_006.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_006.bpl"
+    },
+    "parse/gen_parse_type_007.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_007.bpl"
+    },
+    "parse/gen_parse_type_008.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_008.bpl"
+    },
+    "parse/gen_parse_type_009.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_009.bpl"
+    },
+    "parse/gen_parse_type_010.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_010.bpl"
+    },
+    "parse/gen_parse_type_011.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_011.bpl"
+    },
+    "parse/gen_parse_type_012.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_012.bpl"
+    },
+    "parse/gen_parse_type_013.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_013.bpl"
+    },
+    "parse/gen_parse_type_014.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_014.bpl"
+    },
+    "parse/gen_parse_type_015.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_015.bpl"
+    },
+    "parse/gen_parse_type_016.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_016.bpl"
+    },
+    "parse/gen_parse_type_017.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_017.bpl"
+    },
+    "parse/gen_parse_type_018.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_018.bpl"
+    },
+    "parse/gen_parse_type_019.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-type",
+      "file": "parse/gen_parse_type_019.bpl"
+    },
+    "parse/gen_parse_uninterp_000.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_000.bpl"
+    },
+    "parse/gen_parse_uninterp_001.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_001.bpl"
+    },
+    "parse/gen_parse_uninterp_002.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_002.bpl"
+    },
+    "parse/gen_parse_uninterp_003.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_003.bpl"
+    },
+    "parse/gen_parse_uninterp_004.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_004.bpl"
+    },
+    "parse/gen_parse_uninterp_005.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_005.bpl"
+    },
+    "parse/gen_parse_uninterp_006.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_006.bpl"
+    },
+    "parse/gen_parse_uninterp_007.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_007.bpl"
+    },
+    "parse/gen_parse_uninterp_008.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_008.bpl"
+    },
+    "parse/gen_parse_uninterp_009.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_009.bpl"
+    },
+    "parse/gen_parse_uninterp_010.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_010.bpl"
+    },
+    "parse/gen_parse_uninterp_011.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_011.bpl"
+    },
+    "parse/gen_parse_uninterp_012.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_012.bpl"
+    },
+    "parse/gen_parse_uninterp_013.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_013.bpl"
+    },
+    "parse/gen_parse_uninterp_014.bpl": {
+      "backend": "boogie-parser",
+      "expected": "parse",
+      "family": "parse-uninterp",
+      "file": "parse/gen_parse_uninterp_014.bpl"
+    },
+    "smt/gen_refuted_bound_000.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_000.bpl"
+    },
+    "smt/gen_refuted_bound_001.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_001.bpl"
+    },
+    "smt/gen_refuted_bound_002.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_002.bpl"
+    },
+    "smt/gen_refuted_bound_003.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_003.bpl"
+    },
+    "smt/gen_refuted_bound_004.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_004.bpl"
+    },
+    "smt/gen_refuted_bound_005.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_005.bpl"
+    },
+    "smt/gen_refuted_bound_006.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_006.bpl"
+    },
+    "smt/gen_refuted_bound_007.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_007.bpl"
+    },
+    "smt/gen_refuted_bound_008.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_008.bpl"
+    },
+    "smt/gen_refuted_bound_009.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_009.bpl"
+    },
+    "smt/gen_refuted_bound_010.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_010.bpl"
+    },
+    "smt/gen_refuted_bound_011.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_011.bpl"
+    },
+    "smt/gen_refuted_bound_012.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_012.bpl"
+    },
+    "smt/gen_refuted_bound_013.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_013.bpl"
+    },
+    "smt/gen_refuted_bound_014.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_014.bpl"
+    },
+    "smt/gen_refuted_bound_015.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_015.bpl"
+    },
+    "smt/gen_refuted_bound_016.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_016.bpl"
+    },
+    "smt/gen_refuted_bound_017.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_017.bpl"
+    },
+    "smt/gen_refuted_bound_018.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_018.bpl"
+    },
+    "smt/gen_refuted_bound_019.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_019.bpl"
+    },
+    "smt/gen_refuted_bound_020.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_020.bpl"
+    },
+    "smt/gen_refuted_bound_021.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_021.bpl"
+    },
+    "smt/gen_refuted_bound_022.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_022.bpl"
+    },
+    "smt/gen_refuted_bound_023.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_023.bpl"
+    },
+    "smt/gen_refuted_bound_024.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_024.bpl"
+    },
+    "smt/gen_refuted_bound_025.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_025.bpl"
+    },
+    "smt/gen_refuted_bound_026.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_026.bpl"
+    },
+    "smt/gen_refuted_bound_027.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_027.bpl"
+    },
+    "smt/gen_refuted_bound_028.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_028.bpl"
+    },
+    "smt/gen_refuted_bound_029.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_029.bpl"
+    },
+    "smt/gen_refuted_bound_030.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_030.bpl"
+    },
+    "smt/gen_refuted_bound_031.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_031.bpl"
+    },
+    "smt/gen_refuted_bound_032.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_032.bpl"
+    },
+    "smt/gen_refuted_bound_033.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_033.bpl"
+    },
+    "smt/gen_refuted_bound_034.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_034.bpl"
+    },
+    "smt/gen_refuted_bound_035.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_035.bpl"
+    },
+    "smt/gen_refuted_bound_036.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_036.bpl"
+    },
+    "smt/gen_refuted_bound_037.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_037.bpl"
+    },
+    "smt/gen_refuted_bound_038.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_038.bpl"
+    },
+    "smt/gen_refuted_bound_039.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-bound",
+      "file": "smt/gen_refuted_bound_039.bpl"
+    },
+    "smt/gen_refuted_linear_000.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_000.bpl"
+    },
+    "smt/gen_refuted_linear_001.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_001.bpl"
+    },
+    "smt/gen_refuted_linear_002.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_002.bpl"
+    },
+    "smt/gen_refuted_linear_003.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_003.bpl"
+    },
+    "smt/gen_refuted_linear_004.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_004.bpl"
+    },
+    "smt/gen_refuted_linear_005.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_005.bpl"
+    },
+    "smt/gen_refuted_linear_006.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_006.bpl"
+    },
+    "smt/gen_refuted_linear_007.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_007.bpl"
+    },
+    "smt/gen_refuted_linear_008.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_008.bpl"
+    },
+    "smt/gen_refuted_linear_009.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_009.bpl"
+    },
+    "smt/gen_refuted_linear_010.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_010.bpl"
+    },
+    "smt/gen_refuted_linear_011.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_011.bpl"
+    },
+    "smt/gen_refuted_linear_012.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_012.bpl"
+    },
+    "smt/gen_refuted_linear_013.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_013.bpl"
+    },
+    "smt/gen_refuted_linear_014.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_014.bpl"
+    },
+    "smt/gen_refuted_linear_015.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_015.bpl"
+    },
+    "smt/gen_refuted_linear_016.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_016.bpl"
+    },
+    "smt/gen_refuted_linear_017.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_017.bpl"
+    },
+    "smt/gen_refuted_linear_018.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_018.bpl"
+    },
+    "smt/gen_refuted_linear_019.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_019.bpl"
+    },
+    "smt/gen_refuted_linear_020.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_020.bpl"
+    },
+    "smt/gen_refuted_linear_021.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_021.bpl"
+    },
+    "smt/gen_refuted_linear_022.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_022.bpl"
+    },
+    "smt/gen_refuted_linear_023.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_023.bpl"
+    },
+    "smt/gen_refuted_linear_024.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_024.bpl"
+    },
+    "smt/gen_refuted_linear_025.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_025.bpl"
+    },
+    "smt/gen_refuted_linear_026.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_026.bpl"
+    },
+    "smt/gen_refuted_linear_027.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_027.bpl"
+    },
+    "smt/gen_refuted_linear_028.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_028.bpl"
+    },
+    "smt/gen_refuted_linear_029.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_029.bpl"
+    },
+    "smt/gen_refuted_linear_030.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_030.bpl"
+    },
+    "smt/gen_refuted_linear_031.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_031.bpl"
+    },
+    "smt/gen_refuted_linear_032.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_032.bpl"
+    },
+    "smt/gen_refuted_linear_033.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_033.bpl"
+    },
+    "smt/gen_refuted_linear_034.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_034.bpl"
+    },
+    "smt/gen_refuted_linear_035.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_035.bpl"
+    },
+    "smt/gen_refuted_linear_036.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_036.bpl"
+    },
+    "smt/gen_refuted_linear_037.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_037.bpl"
+    },
+    "smt/gen_refuted_linear_038.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_038.bpl"
+    },
+    "smt/gen_refuted_linear_039.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_039.bpl"
+    },
+    "smt/gen_refuted_linear_040.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_040.bpl"
+    },
+    "smt/gen_refuted_linear_041.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_041.bpl"
+    },
+    "smt/gen_refuted_linear_042.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_042.bpl"
+    },
+    "smt/gen_refuted_linear_043.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_043.bpl"
+    },
+    "smt/gen_refuted_linear_044.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_044.bpl"
+    },
+    "smt/gen_refuted_linear_045.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_045.bpl"
+    },
+    "smt/gen_refuted_linear_046.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_046.bpl"
+    },
+    "smt/gen_refuted_linear_047.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_047.bpl"
+    },
+    "smt/gen_refuted_linear_048.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_048.bpl"
+    },
+    "smt/gen_refuted_linear_049.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_049.bpl"
+    },
+    "smt/gen_refuted_linear_050.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_050.bpl"
+    },
+    "smt/gen_refuted_linear_051.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_051.bpl"
+    },
+    "smt/gen_refuted_linear_052.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_052.bpl"
+    },
+    "smt/gen_refuted_linear_053.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_053.bpl"
+    },
+    "smt/gen_refuted_linear_054.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_054.bpl"
+    },
+    "smt/gen_refuted_linear_055.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_055.bpl"
+    },
+    "smt/gen_refuted_linear_056.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_056.bpl"
+    },
+    "smt/gen_refuted_linear_057.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_057.bpl"
+    },
+    "smt/gen_refuted_linear_058.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_058.bpl"
+    },
+    "smt/gen_refuted_linear_059.bpl": {
+      "backend": "z3",
+      "expected": "refuted",
+      "family": "refuted-linear",
+      "file": "smt/gen_refuted_linear_059.bpl"
+    },
+    "smt/gen_timeout_fermat_000.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "timeout-fermat",
+      "file": "smt/gen_timeout_fermat_000.bpl"
+    },
+    "smt/gen_timeout_fermat_001.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "timeout-fermat",
+      "file": "smt/gen_timeout_fermat_001.bpl"
+    },
+    "smt/gen_timeout_fermat_002.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "timeout-fermat",
+      "file": "smt/gen_timeout_fermat_002.bpl"
+    },
+    "smt/gen_timeout_fermat_003.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "timeout-fermat",
+      "file": "smt/gen_timeout_fermat_003.bpl"
+    },
+    "smt/gen_unknown_nonlinear_000.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_000.bpl"
+    },
+    "smt/gen_unknown_nonlinear_001.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_001.bpl"
+    },
+    "smt/gen_unknown_nonlinear_002.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_002.bpl"
+    },
+    "smt/gen_unknown_nonlinear_003.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_003.bpl"
+    },
+    "smt/gen_unknown_nonlinear_004.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_004.bpl"
+    },
+    "smt/gen_unknown_nonlinear_005.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_005.bpl"
+    },
+    "smt/gen_unknown_nonlinear_006.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_006.bpl"
+    },
+    "smt/gen_unknown_nonlinear_007.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_007.bpl"
+    },
+    "smt/gen_unknown_nonlinear_008.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_008.bpl"
+    },
+    "smt/gen_unknown_nonlinear_009.bpl": {
+      "backend": "z3",
+      "expected": "timeout",
+      "family": "unknown-nonlinear",
+      "file": "smt/gen_unknown_nonlinear_009.bpl"
+    }
+  },
+  "meta": {
+    "budget_ms_default": 2000,
+    "budget_ms_timeout": 300,
+    "budget_ms_unknown": 1000,
+    "note": "expected statuses / I7 kinds were observed with the pinned z3 at generation time; refutation families additionally match their by-construction verdicts. The cvc5 arm re-checks smt/* entries through Cvc5Backend when UVIL_CVC5 is set (tests skip if absent). Unknown/timeout-family entries never discharge: they stay open or timeout with a matching I7 (this backend reports budget exhaustion as timeout; plain unknown is recorded identically).",
+    "required_backends": [
+      "z3",
+      "boogie-parser"
+    ],
+    "seed": 20260908,
+    "z3_pin": "5.1.0"
+  }
+}
