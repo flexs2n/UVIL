@@ -16,8 +16,10 @@
   `cd lean && lake build UVIL uvil-translate-prove`.
 - `pool/lakefile.toml` — OPTIONAL separate project for the Pantograph warm
   pool (`src/uvil/adapters/lean/pool.py`, enabled via `UVIL_PANTOGRAPH`).
-  Kept separate in M4: Pantograph does not currently build on Windows and its
-  upstream moved; a broken optional dependency must not block the D1 targets.
+  Kept separate in M4: a broken optional dependency must not block the D1
+  targets. Re-pinned 2026-09-09 to the canonical mirror
+  `leanprover/Pantograph` @ `dev` head `92d4818` (the old
+  `streesha/pantograph` @ `master` pin was invalid - repo 404).
 
 ## Build the D1 targets
 
@@ -31,7 +33,20 @@ lake build UVIL uvil-translate-prove
 ```
 cd lean/pool
 lake update
-lake build
-# the REPL binary lands under .lake/.../bin/pantograph-repl
-# point UVIL_PANTOGRAPH at it, or wrap it in a script
+lake build Pantograph repl
 ```
+
+Build-probe status (2026-09-09): the pinned Pantograph dev head builds
+cleanly on Windows under the shared `v4.33.1` toolchain, but the pool is
+NOT yet wired end-to-end:
+
+- the binary is `.lake/packages/Pantograph/.lake/build/bin/repl.exe`
+  (named `repl`, not `pantograph-repl`); on Windows, put
+  `~/.elan/toolchains/leanprover--lean4---v4.33.1/bin` on `PATH` first
+  (the exe needs `libleanshared.dll`).
+- wire-protocol drift: REPL 0.3.19 speaks `goal.start` / `goal.tactic` /
+  `goal.print`; `pool.py` pins protocol v1 (`setup` / `proof_start` /
+  `goals`), which matches no upstream release. Until `pool.py` adopts the
+  current command names (M5 candidate), the live pool arm stays
+  skip-if-absent: do not set `UVIL_PANTOGRAPH` to this binary and expect
+  the live tests to pass.

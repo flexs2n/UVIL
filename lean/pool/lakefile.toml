@@ -1,17 +1,41 @@
 # OPTIONAL Lake project for the warm-backend pool (M3 commit 4).
 
-# Separated from the root lean/ project in M4: Pantograph's upstream moved
-# (the old pin no longer resolves) and it does not currently build on
-# Windows - keeping it here means a broken/moved dependency never blocks the
-# D1 translator targets (lean/UVIL/, uvil-translate-prove).
-# Build:  cd lean/pool && lake update && lake build
-# The REPL binary lands under .lake/.../bin/pantograph-repl; point
-# UVIL_PANTOGRAPH at it, or wrap it in a script.
+# Separated from the root lean/ project in M4: a broken/moved optional
+# dependency must never block the D1 translator targets (lean/UVIL/,
+# uvil-translate-prove).
+#
+# Pin history: the original pin (streesha/pantograph @ master) was invalid -
+# that repository no longer exists (404 as of 2026-09-09) and blocked `lake
+# update` for the whole root project, which is why Pantograph was quarantined
+# into this pool directory (commit 5a0cd53). Canonical upstream is
+# git.leni.sh/aniva/Pantograph; we pin the GitHub mirror (leanprover/
+# Pantograph, default branch `dev`) because GitHub is reachable from CI and
+# the mirror tracks upstream. Rev pinned to a specific dev-branch commit
+# (same pin discipline as Strata), not to the branch name.
+#
+# Build probe (2026-09-09, pinned rev above, Lean v4.33.1): `lake update` +
+# `lake build Pantograph repl` SUCCEED on Windows (44 targets; the M3
+# no-build finding does not reproduce with the canonical pin). Two runtime
+# caveats:
+#   1. The binary is `repl` (not `pantograph-repl`):
+#      .lake/packages/Pantograph/.lake/build/bin/repl.exe - and on Windows it
+#      needs the toolchain DLL dir on PATH (add
+#      ~/.elan/toolchains/leanprover--lean4---v4.33.1/bin) or it exits
+#      0xC0000135 (STATUS_DLL_NOT_FOUND).
+#   2. WIRE-PROTOCOL DRIFT: REPL 0.3.19 dispatches `goal.start` /
+#      `goal.tactic` / `goal.print` / ...; uvil pool.py's pinned protocol v1
+#      (`setup` / `proof_start` / `goals`) matches no Pantograph release
+#      (the underscore naming never existed upstream - pre-0.2.18 used
+#      `proof.start`, renamed to `goal.*` in a6e337a). The live pool arm
+#      therefore stays skip-if-absent until pool.py's protocol is updated
+#      (M5 candidate); the transport is stub-tested in the meantime.
+#
+# Build:  cd lean/pool && lake update && lake build Pantograph repl
 
 name = "uvil-pool"
 version = "0.1.0"
 
 [[require]]
 name = "Pantograph"
-git = "https://github.com/streesha/pantograph.git"
-rev = "master"
+git = "https://github.com/leanprover/Pantograph.git"
+rev = "92d4818a4b343d7be293731e03359a19e8082626"
