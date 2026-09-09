@@ -662,6 +662,79 @@ def import_strata_cmd(
         raise typer.Exit(code=1)
 
 
+@app.command("check-isabelle")
+def check_isabelle_cmd(
+    files: list[Path] = typer.Argument(
+        ..., exists=True, readable=True, help="Boogie files (.bpl)."
+    ),
+    timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-build budget."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """Boogie input -> obligations -> Isabelle/HOL twin -> pinned-bundle attestation.
+
+    The cross-language symmetric of `check-lean` (Boogie in, HOL twin out).
+    Attested obligations become I5 proofs + ledger G1 (kernel attestation,
+    offline-replayable via the pinned bundle); out-of-boundary obligations
+    stay open with an I7 + a measured lossy I9; a failed proof search is
+    never a refutation. Skips cleanly (exit 0) when Isabelle is not installed.
+    """
+    from ..adapters.boogie.lower import import_module as boogie_import
+    from ..adapters.isabelle.backend import (
+        PINNED_ISABELLE,
+        IsabelleNotInstalled,
+        IsabelleVersionMismatch,
+    )
+    from ..check.isabelle import check_isabelle as run_isabelle_check
+    from ..check.isabelle import record_isabelle
+
+    obligations = []
+    for file in files:
+        imported = boogie_import(file.read_text(encoding="utf-8"), filename=file.name)
+        for d in imported.diagnostics:
+            err.print(f"[red]I7 parse diagnostic[/red] {file}:{d.loc.line}: {d.native_message}")
+        if not imported.ok:
+            raise typer.Exit(code=1)
+        obligations.extend(imported.obligations)
+    if not obligations:
+        err.print("[red]error[/red] no obligations found in input")
+        raise typer.Exit(code=1)
+
+    try:
+        result = run_isabelle_check(obligations, check_timeout_s=timeout_s)
+    except IsabelleNotInstalled as e:
+        err.print(f"[yellow]skip[/yellow] Isabelle is not installed (pin: PINNED_ISABELLE): {e}")
+        raise typer.Exit(code=0) from None
+    except IsabelleVersionMismatch as e:
+        err.print(f"[red]version mismatch[/red] {e}")
+        raise typer.Exit(code=1) from e
+
+    store = ContentStore(_store_dir(state))
+    record_isabelle(result, store, _load_ledger(state))
+
+    assert result.run is not None
+    by_obligation = {p.obligation_ref: p for p in result.proofs}
+    table = Table(title=f"verdicts (isabelle-hol {PINNED_ISABELLE})")
+    table.add_column("obligation")
+    table.add_column("status")
+    table.add_column("ms")
+    table.add_column("kernel")
+    for verdict in result.run.verdicts:
+        proof = by_obligation.get(verdict.obligation_ref)
+        table.add_row(
+            verdict.obligation_ref.rsplit(":", 1)[-1][:16],
+            verdict.status,
+            str(verdict.time_ms) if verdict.time_ms is not None else "-",
+            (proof.backend.kernel_hash or "-")[:16] if proof else "-",
+        )
+    console.print(table)
+    downgrades = sum(1 for t in result.translations if t.soundness_discipline == "lossy")
+    attested = len(result.proofs)
+    typer.echo(
+        f"run stored; ledger {'G1' if attested else 'G0'} appended "
+        f"({attested} HOL-attested; {downgrades} measured downgrade(s))"
+    )
+
+
 @app.command()
 def shadows(
     spec_file: Path = typer.Argument(

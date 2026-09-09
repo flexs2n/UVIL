@@ -1,7 +1,10 @@
 # Byte-stability for hashes that commit to exact file bytes:
 # - corpora/lean kernel hashes cover the exact .lean bytes
+# - corpora/isabelle kernel hashes cover the exact .thy bytes
 # - tests/test_schemas.py freezes the checked-in schema files byte-identically
 # (their blobs are LF; eol=lf keeps every checkout - Windows included - in
 # agreement with the frozen digests).
 *.json text eol=lf
 *.lean text eol=lf
+*.thy text eol=lf
+
