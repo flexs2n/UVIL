@@ -71,16 +71,22 @@ def test_schemas_carry_version_in_title() -> None:
 # byte-identical to the M1 release (de740eb) - renderers, shadow evaluation, and
 # the round-trip service consume them as-is. Any change here is a schema-break
 # and must fail loudly, even if the models were re-exported consistently.
+#
+# The hashes are over the canonical LF bytes (what git committed - the blobs
+# were CRLF->LF-normalized at add time). The M2 dict originally froze Windows
+# working-copy bytes (CRLF), which made the guard fail on every LF checkout
+# (Linux/macOS CI); re-frozen to the platform-independent blob content with
+# `*.json text eol=lf` pinning checkouts (see .gitattributes).
 M1_SCHEMA_SHA256: dict[str, str] = {
-    "counterexample": "e697a01e3bad50ab3afb1e76040bdea6d897f938baa5dbeb95800fffa0fd4afc",
-    "diagnostic": "ece82434e35f85ac00fba98656d98376d9fe6679f03d821f21dca2a26fa107c6",
-    "intent": "f17814a32d1f8d7039afa260dce223873af2ae848d015a465d7091cc002ca72e",
-    "obligation": "5ae76b32e7ec258827ba0307286eb117aa6de08d7cac1e0253bcd879d3e53a9c",
-    "program": "8a49fda4e414c289e580a91a90e1c09697e175fbe3323c78e1c68565a094a5fe",
-    "proof": "da29ef102303a900029c8c823f7622005ea8a7b49cb5894dd0557ef330fd15a6",
-    "run": "a6486182ea5cccc0ea0a7f83d41d97a48712474e7813cd7ac4d7e59552682471",
-    "specification": "f8944a28a4da2fc6acdcf3375088befa433e00d2e189dc8fc920e13515ff4430",
-    "translation": "60b0f8b7b12bd34adf78a8433b504608bdf6005bc9f8851070e89627e96c6a72",
+    "counterexample": "3c7bcecfced966c79152fef254b8ef54715ba3abf6ec1a19e06e8c69f403496d",
+    "diagnostic": "571634e2f2f3d4e22031a48cae2f84f06da8718dc173ecd7017f102820d83ce3",
+    "intent": "c339d4967979c6efdccc56acf5a85c214f177c069d1f7e07cc119e921e5d0031",
+    "obligation": "17d29d026e508235b5e42fedeb47a51397cd7bd317f14be4b136b7b403ecb0ce",
+    "program": "2beb335c0e59e231485b51ed093b3286d6f867097ce5b24c3be6a88b31bdf6ca",
+    "proof": "23a01ce807fead512009bf24648031dd50feb5d511a31d3db1f032cb9efd29a8",
+    "run": "e9fcc2767f17fe8905511c374e1b08efb85f0a75fe2338561d8f47d63a26acd4",
+    "specification": "c2ddc4ccc563da335637cfdeeae3e3bf1f628951bfeb6b1838f30ef491b6b466",
+    "translation": "adb4f5b4010f848b7f715bd58c7179325731121f11601d115bf1a20e1026b356",
 }
 
 

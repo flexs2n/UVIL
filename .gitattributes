@@ -1,6 +1,7 @@
-# Byte-stability for kernel attestation: the slice's kernel hashes commit to
-# exact file bytes, so Lean sources must not be newline-translated anywhere.
-*.lean text eol=lf
+# Byte-stability for hashes that commit to exact file bytes:
+# - corpora/lean kernel hashes cover the exact .lean bytes
+# - tests/test_schemas.py freezes the checked-in schema files byte-identically
+# (their blobs are LF; eol=lf keeps every checkout - Windows included - in
+# agreement with the frozen digests).
 *.json text eol=lf
-*.toml text eol=lf
-*.bpl text eol=lf
+*.lean text eol=lf
