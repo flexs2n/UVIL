@@ -76,6 +76,28 @@ ESBMC_GOTO_V1 = SemanticsModelEntry(
 )
 
 
+STRATA_CORE_V1 = SemanticsModelEntry(
+    model_id="model:strata-core.v1",
+    name="strata-core",
+    version="v1",
+    description=(
+        "Strata Core dialect model (M4): Strata (github.com/strata-org/Strata) "
+        "unifies verification dialects toward a vendor Lean core. UVIL consumes "
+        "its artifacts as a FRONTEND, not a neutral peer - Strata's VC "
+        "generation is not UVIL's TCB (vendor-TCB caveat, recorded on every "
+        "imported artifact). Guarantees come only from UVIL's own backends "
+        "re-dispatching the shared-subset VCs; vendor verdicts are recorded as "
+        "opaque I5 payloads with checker.independent=False."
+    ),
+    theories=(
+        "uvil.core.int@1",
+        "uvil.core.bool@1",
+    ),
+    profiles=("uvil.strata-core@1",),
+    citation="Strata: layered verification dialects (Strata contributors, github.com/strata-org).",
+)
+
+
 class SemanticsModelRegistry:
     def __init__(self) -> None:
         self._models: dict[str, SemanticsModelEntry] = {}
@@ -98,3 +120,4 @@ class SemanticsModelRegistry:
 DEFAULT_REGISTRY = SemanticsModelRegistry()
 DEFAULT_REGISTRY.register(WHY3_MEMORY_V1)
 DEFAULT_REGISTRY.register(ESBMC_GOTO_V1)
+DEFAULT_REGISTRY.register(STRATA_CORE_V1)

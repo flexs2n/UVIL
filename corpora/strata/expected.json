@@ -1,0 +1,112 @@
+{
+  "expected": {
+    "generated/gen_add_comm.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "add_comm"
+      ]
+    },
+    "generated/gen_add_id.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "add_id"
+      ]
+    },
+    "generated/gen_assign_forward.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "assign_forward"
+      ]
+    },
+    "generated/gen_distrib.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "distrib"
+      ]
+    },
+    "generated/gen_refute_bound.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "refute_bound"
+      ]
+    },
+    "generated/gen_refute_double.st": {
+      "diagnostics": [],
+      "family": "generated",
+      "obligations": 1,
+      "procedures": [
+        "refute_double"
+      ]
+    },
+    "upstream/CFGSimple.core.st": {
+      "diagnostics": [
+        "parse"
+      ],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": []
+    },
+    "upstream/LoopSimple.core.st": {
+      "diagnostics": [
+        "parse"
+      ],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": []
+    },
+    "upstream/LoopSimple.csimp.st": {
+      "diagnostics": [
+        "parse"
+      ],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": []
+    },
+    "upstream/SafeBvOps.core.st": {
+      "diagnostics": [
+        "semantic-mismatch"
+      ],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": []
+    },
+    "upstream/SimpleProc.core.st": {
+      "diagnostics": [],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": [
+        "Test"
+      ]
+    },
+    "upstream/TypeError.core.st": {
+      "diagnostics": [
+        "semantic-mismatch"
+      ],
+      "family": "upstream",
+      "obligations": 0,
+      "procedures": []
+    }
+  },
+  "meta": {
+    "generated_count": 6,
+    "importer": "uvil.adapters.strata.importer",
+    "provenance": {
+      "commit": "90f211c49f9dcee6e291a9a0b667b382f7c25719",
+      "license": "Apache-2.0 / MIT (Strata contributors); upstream files copied verbatim",
+      "note": "upstream/*.st are verbatim artifacts of the pinned checkout; generated/*.st are deterministic in-subset harnesses. Strata's VC generation is NOT UVIL's TCB (vendor-TCB caveat): imported obligations carry guarantees only from UVIL's own backends.",
+      "repo": "https://github.com/strata-org/Strata",
+      "toolchain": "leanprover/lean4:v4.29.1"
+    },
+    "upstream_count": 6
+  }
+}

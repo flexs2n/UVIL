@@ -1,0 +1,58 @@
+# serializer version: 1
+# name: test_import_snapshot
+  dict({
+    'origin_backend': 'strata-import',
+    'program_notes': 'imported by uvil.adapters.strata (vendor-TCB caveat: Strata unifies toward a vendor Lean core; UVIL consumes its artifacts as a frontend and re-dispatches all verdicts through its own backends). M1 no-WP discipline: obligations come from asserts; assignments are forward-propagated into the sequents.',
+    'semantics_model': 'model:strata-core.v1',
+    'sequent': dict({
+      'context': list([
+      ]),
+      'goal': dict({
+        'args': list([
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  1,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'add',
+          }),
+          dict({
+            'args': list([
+              dict({
+                'args': list([
+                  'x',
+                ]),
+                'op': 'var',
+              }),
+              dict({
+                'args': list([
+                  1,
+                ]),
+                'op': 'const',
+              }),
+            ]),
+            'op': 'add',
+          }),
+        ]),
+        'op': 'ge',
+      }),
+      'var_sorts': dict({
+        'x': 'Int',
+      }),
+    }),
+    'target_profile': 'uvil.strata-core@1',
+    'theories': list([
+      'uvil.core.int@1',
+    ]),
+  })
+# ---

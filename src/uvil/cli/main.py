@@ -572,6 +572,96 @@ def check_esbmc_cmd(
     )
 
 
+@app.command("import-strata")
+def import_strata_cmd(
+    files: list[Path] = typer.Argument(
+        ..., exists=True, readable=True, help="Strata dialect artifacts (.st)."
+    ),
+    out: Path | None = typer.Option(None, "--out", help="Write artifact JSONs here."),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+    vendor_verify: bool = typer.Option(
+        False,
+        "--vendor-verify",
+        help=(
+            "Also run the pinned Strata-CLI (`UVIL_STRATA`) on each file and "
+            "record its verdict verbatim as opaque I5 payloads "
+            "(strata-verifier-result, independent=False - never a guarantee). "
+            "Skipped when UVIL_STRATA is unset."
+        ),
+    ),
+) -> None:
+    """Strata dialect artifacts -> I2/I3/I4 (import only; Strata is a frontend).
+
+    Vendor-TCB caveat: Strata unifies toward a vendor Lean core; its VC
+    generation is not UVIL's TCB. Imported obligations carry guarantees only
+    from UVIL's own backends (run `uvil check` on them).
+    """
+    from ..adapters.strata.importer import (
+        STRATA_ENV_VAR,
+        find_strata,
+        import_strata,
+        strata_verify,
+        vendor_result_proof,
+    )
+
+    if vendor_verify and find_strata() is None:
+        err.print(f"[yellow]skip[/yellow] {STRATA_ENV_VAR} is unset; vendor verify skipped")
+
+    store = ContentStore(_store_dir(state)) if out is None else None
+    if out is not None:
+        out.mkdir(parents=True, exist_ok=True)
+    any_procedure = False
+    for file in files:
+        result = import_strata(file.read_text(encoding="utf-8"), filename=file.name)
+        for d in result.diagnostics:
+            err.print(f"[red]I7 {d.kind} diagnostic[/red] {file}:{d.loc.line}: {d.native_message}")
+        if not result.procedures and result.diagnostics:
+            raise typer.Exit(code=1)
+        any_procedure = any_procedure or bool(result.procedures)
+
+        verify_result = None
+        if vendor_verify:
+            binary = find_strata()
+            if binary is not None:
+                verify_result = strata_verify(binary, file)
+
+        for proc in result.procedures.values():
+            for model in (proc.program, proc.spec, *proc.obligations):
+                if store is not None:
+                    typer.echo(store.put_artifact(model))
+                else:
+                    assert out is not None
+                    payload = {
+                        "uvil_type": model.uvil_type,
+                        "schema_version": model.schema_version,
+                        "artifact": model.model_dump(mode="json"),
+                    }
+                    name = f"{proc.name}.{model.uvil_type}.{len(list(out.iterdir()))}.json"
+                    text = json.dumps(payload, indent=2, sort_keys=True)
+                    (out / name).write_text(text, encoding="utf-8")
+                    console.print(f"wrote {out / name}")
+            if verify_result is not None:
+                for obl in proc.obligations:
+                    proof = vendor_result_proof(obl, verify_result)
+                    if store is not None:
+                        typer.echo(store.put_artifact(proof))
+                    else:
+                        assert out is not None
+                        payload = {
+                            "uvil_type": proof.uvil_type,
+                            "schema_version": proof.schema_version,
+                            "artifact": proof.model_dump(mode="json"),
+                        }
+                        name = f"{proc.name}.proof.{len(list(out.iterdir()))}.json"
+                        (out / name).write_text(
+                            json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8"
+                        )
+                        console.print(f"wrote {out / name}")
+    if not any_procedure:
+        err.print("[red]error[/red] no procedures imported")
+        raise typer.Exit(code=1)
+
+
 @app.command()
 def shadows(
     spec_file: Path = typer.Argument(
