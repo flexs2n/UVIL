@@ -245,6 +245,16 @@ def check(
     discipline: str = typer.Option(
         "none", "--discipline", help="Soundness discipline evidence: none or roundtrip."
     ),
+    incremental: bool = typer.Option(
+        False,
+        "--incremental",
+        help="Reuse cached discharged verdicts (M5 protocol); misses re-solve.",
+    ),
+    incremental_since: int | None = typer.Option(
+        None,
+        "--incremental-since",
+        help="With --incremental: treat only ledger entries <= N as known.",
+    ),
     state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
 ) -> None:
     """Boogie input -> obligations -> SMT check -> verdict table + ledger G1."""
@@ -266,23 +276,54 @@ def check(
     from ..check.core import record
 
     timeout_ms = int(timeout_s * 1000) if timeout_s is not None else None
-    checked = run_check(obligations, backend=backend, timeout_ms=timeout_ms, discipline=discipline)
-    record(checked, ContentStore(_store_dir(state)), _load_ledger(state))
+    store = ContentStore(_store_dir(state))
+    ledger = _load_ledger(state)
+    incremental_info: dict[str, object] | None = None
+    if incremental:
+        from ..protocol import check_incremental
 
-    assert checked.run is not None
+        checked = check_incremental(
+            obligations,
+            store,
+            ledger,
+            backend=backend,
+            timeout_ms=timeout_ms,
+            discipline=discipline,
+            incremental_since=incremental_since,
+        )
+        incremental_info = dict(checked.merkle)
+        incremental_info["reused"] = len(checked.reused)
+        incremental_info["recomputed"] = len(checked.recomputed)
+        checked_result = checked.result
+    else:
+        checked_result = run_check(
+            obligations, backend=backend, timeout_ms=timeout_ms, discipline=discipline
+        )
+        record(checked_result, store, ledger)
+
+    assert checked_result.run is not None
     table = Table(title=f"verdicts ({backend})")
     table.add_column("obligation")
     table.add_column("status")
     table.add_column("ms")
-    for verdict in checked.run.verdicts:
+    cached = set(checked_result.run.config.get("cached", []))
+    for verdict in checked_result.run.verdicts:
         table.add_row(
-            verdict.obligation_ref.rsplit(":", 1)[-1][:16],
+            verdict.obligation_ref.rsplit(":", 1)[-1][:16]
+            + (" (cached)" if verdict.obligation_ref in cached else ""),
             verdict.status,
             str(verdict.time_ms) if verdict.time_ms is not None else "-",
         )
+    if incremental_info is not None:
+        typer.echo(
+            f"incremental: {incremental_info['reused']} reused / "
+            f"{incremental_info['recomputed']} recomputed "
+            f"(merkle {str(incremental_info['old_root'])[:16]} -> "
+            f"{str(incremental_info['new_root'])[:16]})"
+        )
     console.print(table)
     counts: dict[str, int] = {}
-    for v in checked.run.verdicts:
+    for v in checked_result.run.verdicts:
         counts[v.status] = counts.get(v.status, 0) + 1
     summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items()))
     typer.echo(f"run stored; ledger G1 appended ({summary})")
