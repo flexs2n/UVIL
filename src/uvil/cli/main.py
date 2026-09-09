@@ -294,17 +294,22 @@ def check_lean_cmd(
         ..., exists=True, readable=True, help="Boogie files (.bpl)."
     ),
     timeout_s: float | None = typer.Option(None, "--timeout-s", help="Per-compile budget."),
+    warm: bool = typer.Option(
+        False, "--warm", help="Check through persistent Pantograph sessions (UVIL_PANTOGRAPH)."
+    ),
     state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
 ) -> None:
     """Boogie input -> obligations -> Lean twin -> pinned-kernel attestation.
 
-    Attested obligations become I5 proofs + ledger G1 (kernel attestation,
+    Attested obligations become I5 proofs + ledger G1/G2 (kernel attestation,
     offline-replayable via `uvil attest`); failed/unsupported obligations stay
     open with I7 diagnostics - a failed proof search is never a refutation.
-    Skips cleanly (exit 0) when elan is not installed.
+    Skips cleanly (exit 0) when elan is not installed; falls back to plain
+    batched compiles when the warm pool is not configured.
     """
     from ..adapters.boogie.lower import import_module as boogie_import
     from ..adapters.lean.backend import PINNED_LEAN, LeanNotInstalled, LeanVersionMismatch
+    from ..adapters.lean.pool import PantographNotInstalled
 
     obligations = []
     for file in files:
@@ -322,13 +327,19 @@ def check_lean_cmd(
     from ..check.lean import record_lean
 
     try:
-        result = run_lean_check(obligations, check_timeout_s=timeout_s)
+        result = run_lean_check(obligations, check_timeout_s=timeout_s, warm=warm)
     except LeanNotInstalled as e:
         err.print(f"[yellow]skip[/yellow] Lean is not installed (pin: PINNED_LEAN): {e}")
         raise typer.Exit(code=0) from None
     except LeanVersionMismatch as e:
         err.print(f"[red]version mismatch[/red] {e}")
         raise typer.Exit(code=1) from e
+    except PantographNotInstalled as e:
+        if warm:
+            err.print(f"[yellow]warm pool unavailable[/yellow] {e}; using plain compiles")
+            result = run_lean_check(obligations, check_timeout_s=timeout_s, warm=False)
+        else:  # pragma: no cover - only raised with warm=True
+            raise
 
     store = ContentStore(_store_dir(state))
     record_lean(result, store, _load_ledger(state))

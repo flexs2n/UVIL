@@ -35,6 +35,7 @@ from ..adapters.lean.backend import (
 )
 from ..adapters.lean.beq import statement_equivalence
 from ..adapters.lean.encode import UnsupportedTermError, to_lean_theorem
+from ..adapters.lean.pool import LeanSessionPool
 from ..artifacts import (
     Diagnostic,
     Obligation,
@@ -66,6 +67,7 @@ def check_lean(
     obligations: list[Obligation],
     check_timeout_s: float | None = None,
     beq: bool = False,
+    warm: bool = False,
 ) -> LeanCheckResult:
     """Encode obligations as Lean theorems and attest them with the pinned
     kernel. Raises `LeanNotInstalled` when elan is absent (skip-if-absent).
@@ -73,7 +75,12 @@ def check_lean(
     `beq=True` additionally runs the BEq statement-equivalence probe (R4) on
     every attested obligation: a kernel-accepted biconditional proves the
     recorded Lean statement faithful to the obligation sequent and is stored
-    as evidence (the G1 -> G2 upgrade path)."""
+    as evidence (the G1 -> G2 upgrade path).
+
+    `warm=True` checks through persistent Pantograph REPL sessions
+    (`LeanSessionPool`) instead of batched standalone compiles; raises
+    `PantographNotInstalled` when `UVIL_PANTOGRAPH` is unset. Verdict
+    semantics are identical on both paths."""
     if not obligations:
         raise ValueError("check_lean() requires at least one obligation")
     backend = LeanBackend(check_timeout_s=check_timeout_s)
@@ -90,11 +97,20 @@ def check_lean(
         except UnsupportedTermError as e:
             encode_errors[i] = e
 
-    # batch + compile (only obligations that encoded)
+    # batch + compile (only obligations that encoded); warm path swaps the
+    # transport (persistent REPL sessions) but not the verdict semantics
     checkable = [i for i in range(len(obligations)) if i not in encode_errors]
     verdict_map: dict[int, LeanVerdict] = {}
     if checkable:
-        raw = backend.check_batch([encoded[i] for i in checkable])
+        to_check = [encoded[i] for i in checkable]
+        if warm:
+            pool = LeanSessionPool()
+            try:
+                raw = [pool.submit(theorem) for theorem in to_check]
+            finally:
+                pool.close()
+        else:
+            raw = backend.check_batch(to_check)
         verdict_map = dict(zip(checkable, raw, strict=True))
 
     # assemble strictly in input order (the run's verdict list is the
@@ -190,6 +206,7 @@ def check_lean(
             "toolchain": TOOLCHAIN_ID,
             "check_timeout_s": check_timeout_s,
             "batch_size": LEAN_BATCH_SIZE,
+            "warm": warm,
         },
         verdicts=verdicts,
         resource_stats={
