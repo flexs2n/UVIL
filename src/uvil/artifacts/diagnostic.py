@@ -1,7 +1,10 @@
 """I7 - Failure Diagnostic: location, kind, verbatim backend message, LLM slot.
 
-Kinds: {unproved, vacuous, timeout, parse, semantic-mismatch, unknown} - aligned
-with Strata's VerificationModes taxonomy. The backend-native message is preserved
+Kinds: {unproved, vacuous, timeout, parse, semantic-mismatch, unknown} -
+inspired by Strata's verification-mode taxonomy (legacy VerificationModes.md
+doc, deprecated upstream; canonical: verso/TransformsDoc.lean) - not a
+structural alignment: `parse`/`semantic-mismatch` have no Strata counterpart
+(ADR 0006). The backend-native message is preserved
 verbatim for round-tripping. The `intent-level slot` for LLM explanations is
 permanently marked unverified: agents may consume it; downstream tools must never
 treat it as a guarantee.
