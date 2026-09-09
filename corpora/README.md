@@ -43,6 +43,17 @@ cvc5 arm re-checks the `smt/*` entries through `Cvc5Backend` when `UVIL_CVC5`
 is set (tests skip if absent). Timeout-family entries are isolated behind the
 pytest `slow` marker (`pytest -m slow`).
 
+## `lean/` — M3 Lean-twin slice (188 entries, ≥100 kernel-attested twins)
+
+The SMT-discharged obligations of the whitelisted LIA families
+(`arith-comm`, `divmod`, `minmax`, `abs-bound`), rendered as Lean twins and
+attested by the pinned kernel. `expected.json` records per entry
+`{file, family, boogie_file, proc, smt_status, lean_status, theorem,
+kernel_hash}` plus `meta` (pins, downgrade metrics). semantic-mismatch
+entries are the honest downgrades (measured in `meta.downgrade_rate`, never
+hidden). Offline replay: `pytest -m slow` or `uvil attest` on any committed
+proof file.
+
 ## `c/` — M4 C harness corpus (50 ESBMC harnesses)
 
 C verification harnesses checked by the pinned ESBMC binary (v8.5.0, release
@@ -72,9 +83,33 @@ idempotent, committed).
 is the pinned binary's model-checking verdict at generation time (a run
 record, never a deductive upgrade) and `import` declares what
 `uvil.adapters.esbmc.import_c` must do. Live re-verification:
-`uvil check-esbmc corpora/c/safe_*.c` (or the test suite with ESBMC on PATH).
+`uvil check-esbmc corpora/c/safe_000.c` (or the test suite with ESBMC on
+PATH).
+
+## `strata/` — M4 Strata dialect artifacts (12 entries)
+
+Real `.st` artifacts of the PINNED Strata checkout (commit in
+`meta.provenance`, toolchain recorded): `upstream/*.st` are verbatim copies
+(license: Apache-2.0/MIT, Strata contributors); `generated/*.st` are
+deterministic in-subset harnesses (safe + refutable). `expected.json`
+records per entry the import shape (procedures, obligations, I7 diagnostic
+kinds). The obligations are ordinary I4s: guarantees come only from UVIL's
+own backends (the vendor-TCB caveat — Strata's VC generation is NOT UVIL's
+TCB).
+
+## `isabelle/` — M4 Isabelle-twin slice (188 entries, pending attestation)
+
+The SAME whitelist families/discharge discipline as the Lean slice (the
+generator reuses its collection code): 183 rendered HOL twins + the same 5
+measured semantic-mismatch downgrades, `downgrade_rate = 0.5794` — identical
+to the Lean slice (the boundary policies agree). The pinned Isabelle2025
+bundle was NOT installed at generation time, so `isabelle_status` is
+`pending` — the committed manifest never fabricates an attestation;
+installing the bundle and running `tools/gen_isabelle_slice.py` +
+`pytest -m slow` converts pending → attested (ADR 0005).
 
 ## Deferred
 
 VeriContest artifact harvesting (Rust/Verus toolchain) is recorded as a corpus
-follow-up for M4. See the master plan, M1 §4 and M2 §2.
+follow-up for M5. Alethe/LFSC SMT-certificate checking is the G1 upgrade path
+(M5+, locked decision). See the master plan, M1 §4 and M2 §2.
