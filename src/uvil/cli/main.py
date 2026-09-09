@@ -369,6 +369,10 @@ def check_lean_cmd(
         f"run stored; ledger {'G1' if attested else 'G0'} appended "
         f"({attested} kernel-attested; {summary})"
     )
+    for proof in result.proofs:
+        typer.echo(
+            f"proof: {artifact_id(proof)}  (replay offline: uvil attest {artifact_id(proof)})"
+        )
 
 
 @app.command("attest")

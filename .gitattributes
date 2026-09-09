@@ -1,0 +1,6 @@
+# Byte-stability for kernel attestation: the slice's kernel hashes commit to
+# exact file bytes, so Lean sources must not be newline-translated anywhere.
+*.lean text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.bpl text eol=lf
