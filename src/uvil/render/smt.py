@@ -1,9 +1,10 @@
-"""Backend-native render: SMT-LIB model text (the only one we have until M4).
+"""Backend-native render: SMT-LIB model text (valuation witnesses).
 
 The model text travels verbatim from `backend_witness` (format
 `smt-lib2-model`) - it is never re-serialized, so nothing the backend printed
-is lost. Trace/Scenario backend renders arrive with the ESBMC/TLC adapters in
-M4; until then any other shape/witness combination fails loudly.
+is lost. Dispatch lives in `render/__init__` (M4): Trace witnesses render via
+`render/esbmc.py`; Scenario stays a loud NotImplemented until a TLC backend
+exists.
 """
 
 from __future__ import annotations

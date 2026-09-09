@@ -92,10 +92,26 @@ def test_smt_backend_render_is_verbatim_model_text() -> None:
     assert to_backend_render(cex) == model_text
 
 
-def test_smt_backend_render_fails_loudly_for_non_model_shapes() -> None:
-    for name in ("trace", "scenario", "counterspec"):
+def test_backend_render_dispatches_traces_to_esbmc_m4() -> None:
+    # M4: the ESBMC adapter produces kind="trace" I6s; their backend render
+    # is the verbatim report text (dispatch lives in uvil.render)
+    from uvil.adapters.esbmc.cex import ESBMC_TRACE_FORMAT
+
+    report = '[{"status": "violation", "steps": []}]'
+    cex = make_trace_counterexample("obl:x").model_copy(
+        update={
+            "trace": [],
+            "backend_witness": BackendWitness(format=ESBMC_TRACE_FORMAT, payload=report),
+        }
+    )
+    assert to_backend_render(cex) == report
+
+
+def test_backend_render_fails_loudly_without_backend_producer() -> None:
+    # scenario has no producer until a TLC adapter exists (M4 leaves it loud)
+    for name in ("scenario", "counterspec"):
         cex = I6_MAKERS[name]()
-        with pytest.raises(NotImplementedError, match="ESBMC/TLC"):
+        with pytest.raises(NotImplementedError, match="no backend render"):
             to_backend_render(cex)
 
 

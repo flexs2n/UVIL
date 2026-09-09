@@ -52,6 +52,30 @@ WHY3_MEMORY_V1 = SemanticsModelEntry(
 )
 
 
+ESBMC_GOTO_V1 = SemanticsModelEntry(
+    model_id="model:esbmc-goto.v1",
+    name="esbmc-goto",
+    version="v1",
+    description=(
+        "ESBMC GOTO/SSA harness model (M4): C verification harnesses checked "
+        "by the pinned ESBMC binary against real C semantics (32-bit two's "
+        "complement, its GOTO conversion, and its internal property checks for "
+        "overflow/division-by-zero/array-bounds/pointer misuse). Import-side "
+        "obligations use the documented bounded-integer harness abstraction "
+        "(uvil.adapters.esbmc.import_c): unbounded-Int/Euclidean div-mod "
+        "sequents over uvil.core.int@1 - C wraparound and ESBMC-internal "
+        "properties are intentionally NOT modeled in the sequents, which is "
+        "why model-checking verdicts never upgrade them (fail-loud R1)."
+    ),
+    theories=(
+        "uvil.core.int@1",
+        "uvil.core.bool@1",
+    ),
+    profiles=("uvil.esbmc-c@1",),
+    citation="Cordeiro, Fischer. ESBMC 2.0: Scalable Verilog/C Bounded Model Checking. TACAS 2014.",
+)
+
+
 class SemanticsModelRegistry:
     def __init__(self) -> None:
         self._models: dict[str, SemanticsModelEntry] = {}
@@ -73,3 +97,4 @@ class SemanticsModelRegistry:
 
 DEFAULT_REGISTRY = SemanticsModelRegistry()
 DEFAULT_REGISTRY.register(WHY3_MEMORY_V1)
+DEFAULT_REGISTRY.register(ESBMC_GOTO_V1)

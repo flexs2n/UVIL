@@ -477,6 +477,101 @@ def attest(
     typer.echo("attestation verified; the pinned kernel accepts this proof file offline")
 
 
+@app.command("check-esbmc")
+def check_esbmc_cmd(
+    files: list[Path] = typer.Argument(
+        ..., exists=True, readable=True, help="C harness files (.c)."
+    ),
+    timeout_s: float | None = typer.Option(
+        None,
+        "--timeout-s",
+        help="Per-harness subprocess budget (--timeout is unimplemented on Windows).",
+    ),
+    multi_property: bool = typer.Option(
+        False,
+        "--multi-property",
+        help=(
+            "Get a verdict on every property (v8.5 has no --bug-finding; this is "
+            "the documented multi-property mode)."
+        ),
+    ),
+    state: Path = typer.Option(DEFAULT_STATE, help="State directory."),
+) -> None:
+    """C harnesses -> ESBMC (pinned binary) -> I8 run + I6 traces + ledger.
+
+    The model-checking analogue of `uvil check`: C sources are imported into
+    obligations (documented subset; out-of-subset files fail loud with I7
+    parse diagnostics) and checked by the pinned ESBMC binary. Verdicts are
+    run records: they never discharge or refute a deductive obligation - a
+    violation carries an I6 trace, and the ledger entry is G1 (model-checking
+    run record) or G0. Skips cleanly (exit 0) when ESBMC is not installed.
+    """
+    from ..adapters.esbmc.backend import (
+        PINNED_ESBMC,
+        EsbmcNotInstalled,
+        EsbmcVersionMismatch,
+    )
+    from ..adapters.esbmc.import_c import import_c
+    from ..check.esbmc import CHarness, record_esbmc
+    from ..check.esbmc import check_esbmc as run_esbmc_check
+
+    harnesses: list[CHarness] = []
+    for file in files:
+        source = file.read_text(encoding="utf-8")
+        imported = import_c(source, filename=file.name)
+        for d in imported.diagnostics:
+            err.print(f"[red]I7 parse diagnostic[/red] {file}:{d.loc.line}: {d.native_message}")
+        if not imported.ok:
+            raise typer.Exit(code=1)
+        obligations = imported.obligations
+        if not obligations:
+            err.print(
+                f"[yellow]note[/yellow] {file}: imported with zero obligations "
+                "(no assertion calls in the subset)"
+            )
+        harnesses.append(CHarness(source=source, filename=file.name, obligations=obligations))
+    if not any(h.obligations for h in harnesses):
+        err.print("[red]error[/red] no obligations found in input")
+        raise typer.Exit(code=1)
+
+    try:
+        result = run_esbmc_check(harnesses, timeout_s=timeout_s, multi_property=multi_property)
+    except EsbmcNotInstalled as e:
+        err.print(f"[yellow]skip[/yellow] ESBMC is not installed (pin: PINNED_ESBMC): {e}")
+        raise typer.Exit(code=0) from None
+    except EsbmcVersionMismatch as e:
+        err.print(f"[red]version mismatch[/red] {e}")
+        raise typer.Exit(code=1) from e
+
+    store = ContentStore(_store_dir(state))
+    record_esbmc(result, store, _load_ledger(state))
+
+    assert result.run is not None
+    table = Table(title=f"verdicts (esbmc {PINNED_ESBMC}; model-checking run record)")
+    table.add_column("obligation")
+    table.add_column("status")
+    table.add_column("ms")
+    table.add_column("verdict")
+    by_ref = {v.obligation_ref: v for v in result.run.verdicts}
+    for obl in result.obligations:
+        v = by_ref[artifact_id(obl)]
+        table.add_row(
+            v.obligation_ref.rsplit(":", 1)[-1][:16],
+            v.status,
+            str(v.time_ms) if v.time_ms is not None else "-",
+            (v.note or "-").removeprefix("model-checking: "),
+        )
+    console.print(table)
+    traces = len(result.counterexamples)
+    counts: dict[str, int] = {}
+    for diag in result.diagnostics:
+        counts[diag.kind] = counts.get(diag.kind, 0) + 1
+    summary = ", ".join(f"{k}={v}" for k, v in sorted(counts.items())) or "no diagnostics"
+    typer.echo(
+        f"run stored; ledger G1 appended (model-checking run record; {traces} trace(s); {summary})"
+    )
+
+
 @app.command()
 def shadows(
     spec_file: Path = typer.Argument(

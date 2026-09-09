@@ -1,0 +1,11 @@
+#include <stdlib.h>
+#include <assert.h>
+
+int main(void) {
+  int s = 0;
+  for (int i = 0; i < 5; i++) {
+    s = s + 1;
+  }
+  assert(s == 5);
+  return 0;
+}

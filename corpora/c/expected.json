@@ -1,0 +1,318 @@
+{
+  "expected": {
+    "bounds_000": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_000.c",
+      "import": "out-of-subset"
+    },
+    "bounds_001": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_001.c",
+      "import": "out-of-subset"
+    },
+    "bounds_002": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_002.c",
+      "import": "out-of-subset"
+    },
+    "bounds_003": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_003.c",
+      "import": "out-of-subset"
+    },
+    "bounds_004": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_004.c",
+      "import": "out-of-subset"
+    },
+    "bounds_005": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_005.c",
+      "import": "out-of-subset"
+    },
+    "bounds_006": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_006.c",
+      "import": "out-of-subset"
+    },
+    "bounds_007": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_007.c",
+      "import": "out-of-subset"
+    },
+    "bounds_008": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_008.c",
+      "import": "out-of-subset"
+    },
+    "bounds_009": {
+      "expected": "violated",
+      "family": "bounds",
+      "file": "bounds_009.c",
+      "import": "out-of-subset"
+    },
+    "deep_000": {
+      "expected": "timeout",
+      "family": "deep",
+      "file": "deep_000.c",
+      "import": "out-of-subset"
+    },
+    "deep_001": {
+      "expected": "timeout",
+      "family": "deep",
+      "file": "deep_001.c",
+      "import": "out-of-subset"
+    },
+    "deep_002": {
+      "expected": "timeout",
+      "family": "deep",
+      "file": "deep_002.c",
+      "import": "out-of-subset"
+    },
+    "deep_003": {
+      "expected": "timeout",
+      "family": "deep",
+      "file": "deep_003.c",
+      "import": "out-of-subset"
+    },
+    "deep_004": {
+      "expected": "timeout",
+      "family": "deep",
+      "file": "deep_004.c",
+      "import": "out-of-subset"
+    },
+    "divzero_000": {
+      "expected": "violated",
+      "family": "div-zero",
+      "file": "divzero_000.c",
+      "import": "obligations"
+    },
+    "divzero_001": {
+      "expected": "violated",
+      "family": "div-zero",
+      "file": "divzero_001.c",
+      "import": "obligations"
+    },
+    "divzero_002": {
+      "expected": "violated",
+      "family": "div-zero",
+      "file": "divzero_002.c",
+      "import": "obligations"
+    },
+    "divzero_003": {
+      "expected": "violated",
+      "family": "div-zero",
+      "file": "divzero_003.c",
+      "import": "obligations"
+    },
+    "divzero_004": {
+      "expected": "violated",
+      "family": "div-zero",
+      "file": "divzero_004.c",
+      "import": "obligations"
+    },
+    "overflow_000": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_000.c",
+      "import": "obligations"
+    },
+    "overflow_001": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_001.c",
+      "import": "obligations"
+    },
+    "overflow_002": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_002.c",
+      "import": "obligations"
+    },
+    "overflow_003": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_003.c",
+      "import": "obligations"
+    },
+    "overflow_004": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_004.c",
+      "import": "obligations"
+    },
+    "overflow_005": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_005.c",
+      "import": "obligations"
+    },
+    "overflow_006": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_006.c",
+      "import": "obligations"
+    },
+    "overflow_007": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_007.c",
+      "import": "obligations"
+    },
+    "overflow_008": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_008.c",
+      "import": "obligations"
+    },
+    "overflow_009": {
+      "expected": "violated",
+      "family": "overflow",
+      "file": "overflow_009.c",
+      "import": "obligations"
+    },
+    "pointer_000": {
+      "expected": "verified",
+      "family": "pointer-heap",
+      "file": "pointer_000.c",
+      "import": "out-of-subset"
+    },
+    "pointer_001": {
+      "expected": "verified",
+      "family": "pointer-heap",
+      "file": "pointer_001.c",
+      "import": "out-of-subset"
+    },
+    "pointer_002": {
+      "expected": "verified",
+      "family": "pointer-heap",
+      "file": "pointer_002.c",
+      "import": "out-of-subset"
+    },
+    "pointer_003": {
+      "expected": "violated",
+      "family": "pointer-heap",
+      "file": "pointer_003.c",
+      "import": "out-of-subset"
+    },
+    "pointer_004": {
+      "expected": "violated",
+      "family": "pointer-heap",
+      "file": "pointer_004.c",
+      "import": "out-of-subset"
+    },
+    "safe_000": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_000.c",
+      "import": "obligations"
+    },
+    "safe_001": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_001.c",
+      "import": "obligations"
+    },
+    "safe_002": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_002.c",
+      "import": "obligations"
+    },
+    "safe_003": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_003.c",
+      "import": "obligations"
+    },
+    "safe_004": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_004.c",
+      "import": "obligations"
+    },
+    "safe_005": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_005.c",
+      "import": "obligations"
+    },
+    "safe_006": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_006.c",
+      "import": "obligations"
+    },
+    "safe_007": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_007.c",
+      "import": "obligations"
+    },
+    "safe_008": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_008.c",
+      "import": "obligations"
+    },
+    "safe_009": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_009.c",
+      "import": "obligations"
+    },
+    "safe_010": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_010.c",
+      "import": "obligations"
+    },
+    "safe_011": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_011.c",
+      "import": "obligations"
+    },
+    "safe_012": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_012.c",
+      "import": "obligations"
+    },
+    "safe_013": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_013.c",
+      "import": "obligations"
+    },
+    "safe_014": {
+      "expected": "verified",
+      "family": "safe-assert",
+      "file": "safe_014.c",
+      "import": "obligations"
+    }
+  },
+  "meta": {
+    "esbmc_pin": "8.5.0",
+    "families": {
+      "bounds": 10,
+      "deep": 5,
+      "div-zero": 5,
+      "overflow": 10,
+      "pointer-heap": 5,
+      "safe-assert": 15
+    },
+    "generator": "tools/gen_c_corpus.py",
+    "note": "`expected` is the pinned ESBMC binary's model-checking verdict at generation time (a run record, never a deductive upgrade); `import` records what uvil.adapters.esbmc.import_c must do (obligations in-subset, or an I7 parse diagnostic for out-of-subset families). deep entries expect a subprocess-budget timeout (observed: each exceeds 45s under the pin) and are behind the pytest `slow` marker.",
+    "release_tag": "v8.5"
+  }
+}
