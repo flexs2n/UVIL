@@ -1,15 +1,21 @@
-# Lake project for the warm-backend pool (M3 commit 4).
-# OPTIONAL: the M3 exit criterion uses only `lean` + `lean-toolchain` above;
-# this project builds the Pantograph REPL consumed by
-# src/uvil/adapters/lean/pool.py (enabled via UVIL_PANTOGRAPH).
-# Build:  cd lean && lake update && lake build
-# (Pantograph does not currently build on Windows; the pool is
-# skip-if-absent and the plain-lean path is unaffected.)
+# Lake project for the UVIL Lean workspace (M3 warm pool + M4 D1 translator).
+# - `UVIL` lean lib + `uvil-translate-prove` exe: the verified-translator
+#   groundwork (lean/UVIL/Core.lean: Term AST, encodeLia, preservation proof).
+#   Build:  cd lean && lake build UVIL uvil-translate-prove
+#   (no dependencies beyond the pinned toolchain; builds on Windows).
+# - The Pantograph require for the OPTIONAL warm-backend pool lives in the
+#   separate lean/pool/ project (see that lakefile): Pantograph does not
+#   currently build on Windows, and a broken/moved upstream dependency must
+#   not block the D1 targets.
 
-name = "uvil-pool"
+name = "uvil"
 version = "0.1.0"
 
-[[require]]
-name = "Pantograph"
-git = "https://github.com/streesha/pantograph.git"
-rev = "master"
+defaultTargets = ["UVIL", "uvil-translate-prove"]
+
+[[lean_lib]]
+name = "UVIL"
+
+[[lean_exe]]
+name = "uvil-translate-prove"
+root = "UVILTranslateProve"

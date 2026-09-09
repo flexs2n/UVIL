@@ -1,0 +1,17 @@
+# OPTIONAL Lake project for the warm-backend pool (M3 commit 4).
+
+# Separated from the root lean/ project in M4: Pantograph's upstream moved
+# (the old pin no longer resolves) and it does not currently build on
+# Windows - keeping it here means a broken/moved dependency never blocks the
+# D1 translator targets (lean/UVIL/, uvil-translate-prove).
+# Build:  cd lean/pool && lake update && lake build
+# The REPL binary lands under .lake/.../bin/pantograph-repl; point
+# UVIL_PANTOGRAPH at it, or wrap it in a script.
+
+name = "uvil-pool"
+version = "0.1.0"
+
+[[require]]
+name = "Pantograph"
+git = "https://github.com/streesha/pantograph.git"
+rev = "master"
