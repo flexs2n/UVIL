@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -142,8 +143,6 @@ def test_import_snapshot(snapshot: SnapshotAssertion) -> None:
 
 
 def test_regeneration_is_deterministic() -> None:
-    import sys
-
     sys.path.insert(0, str(REPO_ROOT / "tools"))
     import gen_strata_corpus
 
@@ -178,13 +177,28 @@ def test_redispatch_through_own_z3_safe_and_refuted(tmp_path) -> None:
 
 @pytest.fixture
 def strata_stub(tmp_path: Path) -> Path:
-    stub = tmp_path / "strata-stub.cmd"
-    stub.write_text(
-        "@echo off\r\n"
-        "echo Strata-CLI (stub) commit " + PINNED_STRATA_COMMIT[:12] + "\r\n"
-        "echo [verify] 1 task, 1 task completed: verification succeeded\r\n",
-        encoding="utf-8",
-    )
+    """A stub binary standing in for the pinned Strata-CLI.
+
+    Platform-aware: a `.cmd` batch file on Windows (CreateProcess runs it via
+    cmd.exe), a `#!/bin/sh` script with the exec bit on POSIX — `subprocess`
+    execs the binary directly (no shell), so a shebang-less `.cmd` would fail
+    there with `PermissionError` (CI: macOS/ubuntu). Both flavors emit the
+    same verbatim lines the vendor-verdict assertions consume."""
+    vendor_banner = "Strata-CLI (stub) commit " + PINNED_STRATA_COMMIT[:12]
+    verify_banner = "[verify] 1 task, 1 task completed: verification succeeded"
+    if sys.platform == "win32":
+        stub = tmp_path / "strata-stub.cmd"
+        stub.write_text(
+            f"@echo off\r\necho {vendor_banner}\r\necho {verify_banner}\r\n",
+            encoding="utf-8",
+        )
+    else:
+        stub = tmp_path / "strata-stub.sh"
+        stub.write_text(
+            f'#!/bin/sh\necho "{vendor_banner}"\necho "{verify_banner}"\n',
+            encoding="utf-8",
+        )
+        stub.chmod(0o755)
     return stub
 
 
