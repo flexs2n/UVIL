@@ -131,6 +131,6 @@ churn survival 0.500 (target ≥0.30, control excluded), partition fidelity
 
 ## Deferred
 
-VeriContest artifact harvesting (Rust/Verus toolchain) is recorded as a corpus
-follow-up for M5. Alethe/LFSC SMT-certificate checking is the G1 upgrade path
+VeriContest artifact harvesting (Rust/Verus toolchain) is deferred to M6
+(ADR 0007). Alethe/LFSC SMT-certificate checking is the G1 upgrade path
 (M5+, locked decision). See the master plan, M1 §4 and M2 §2.

@@ -98,6 +98,33 @@ STRATA_CORE_V1 = SemanticsModelEntry(
 )
 
 
+AENEAS_FUNCTIONAL_V1 = SemanticsModelEntry(
+    model_id="model:aeneas-functional.v1",
+    name="aeneas-functional",
+    version="v1",
+    description=(
+        "Aeneas-style functional translation semantics model (M5 seed): Rust "
+        "procedures translate into a PURE functional target - functions over "
+        "immutable mathematical values with explicit separation between the "
+        "speculative (return value) and erasive (modified locations) components "
+        "of the post-state. Obligations under this model are total-correctness "
+        "statements about the translated function, not stateful transition "
+        "assertions. Registry-only seed: no adapter consumes it yet - it makes "
+        "the semantics-model slot honest for future Rust/functional imports "
+        "(the deferred P1.3 follow-up; harvesting stays M6, ADR 0007)."
+    ),
+    theories=(
+        "uvil.core.int@1",
+        "uvil.core.bool@1",
+    ),
+    profiles=("uvil.rust@1",),
+    citation=(
+        "Correnson, Dosch, Hermant, Jourdan. Aeneas: Rust verification by "
+        "functional translation. ITP 2022."
+    ),
+)
+
+
 class SemanticsModelRegistry:
     def __init__(self) -> None:
         self._models: dict[str, SemanticsModelEntry] = {}
@@ -121,3 +148,4 @@ DEFAULT_REGISTRY = SemanticsModelRegistry()
 DEFAULT_REGISTRY.register(WHY3_MEMORY_V1)
 DEFAULT_REGISTRY.register(ESBMC_GOTO_V1)
 DEFAULT_REGISTRY.register(STRATA_CORE_V1)
+DEFAULT_REGISTRY.register(AENEAS_FUNCTIONAL_V1)
