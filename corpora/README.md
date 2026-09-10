@@ -15,9 +15,11 @@ Versioned corpora of obligations, failures, and expected verdicts.
   families (nonlinear unknowns, the timeout case) record exactly what the pinned z3
   (5.1.0) returned at generation time. Timeout-family entries never discharge.
 
-Corpus discipline: one assert per procedure (the obligation-identity tuple is
-per-procedure). Verdicts re-run with z3 under the corpus budgets (≤2s per obligation;
-timeout cases isolated behind the pytest `slow` marker, run with `pytest -m slow`).
+Corpus discipline: one assert per procedure (loop procedures additionally emit
+their WP initiation/preservation obligations, distinguished by the sequent
+component of the identity — ADR 0008). Verdicts re-run with z3 under the corpus
+budgets (≤2s per obligation; timeout cases isolated behind the pytest `slow`
+marker, run with `pytest -m slow`).
 
 Verify without solving: `uvil corpus verify corpora/boogie`.
 

@@ -10,10 +10,13 @@ Verdict provenance: "designed" families have verdicts by construction (proved
 identities, false assertions) and the generator fails if z3 disagrees within
 its budget; "observed" families (nonlinear unknown / timeout inducers) record
 exactly what the pinned z3 returns, so the corpus verifies solver stability.
+Under the WP VCG (ADR 0008) a loop procedure emits several obligations
+(initiation, preservation, per-assert); observation and the designed-verdict
+discipline are therefore per obligation (see `check_designed`).
 
-One assert per procedure (the M0 obligation-identity tuple
-`(spec, semantics_model, program_fragment, profile_version)` is per-procedure;
-one assert keeps identities collision-free). Every instantiation places its
+One assert per procedure keeps generated identities collision-free (loop
+procedures are the exception: their extra obligations are distinguished by the
+sequent component of the identity). Every instantiation places its
 literals inside the spec or fragment so identities stay distinct.
 """
 
@@ -29,8 +32,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from uvil.adapters.boogie.lower import ImportResult, import_module  # noqa: E402
-from uvil.check.core import SmtBackend  # noqa: E402
 from uvil.adapters.smt.backends import verdict_status  # noqa: E402
+from uvil.check.core import SmtBackend  # noqa: E402
 from uvil.store import obligation_identity  # noqa: E402
 
 CORPUS_DIR = REPO_ROOT / "corpora" / "boogie"
@@ -63,7 +66,9 @@ def build_generated_programs() -> list[CorpusProgram]:
     programs: list[CorpusProgram] = []
 
     def triple(count: int, lo: int, hi: int) -> list[tuple[int, int, int]]:
-        return [(rng.randint(lo, hi), rng.randint(lo, hi), rng.randint(lo, hi)) for _ in range(count)]
+        return [
+            (rng.randint(lo, hi), rng.randint(lo, hi), rng.randint(lo, hi)) for _ in range(count)
+        ]
 
     # 1. arithmetic commutativity, anchored by a bound literal
     for i, (a, b, k) in enumerate(triple(60, -1000, 1000)):
@@ -83,7 +88,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             CorpusProgram(
                 f"gen_distrib_{i:03d}",
                 _procedure(
-                    "p", "a: int, b: int, c: int", [f"c <= {c} && c >= {c}"],
+                    "p",
+                    "a: int, b: int, c: int",
+                    [f"c <= {c} && c >= {c}"],
                     "(a + b) * c == a * c + b * c",
                 ),
                 family="distrib",
@@ -98,7 +105,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             CorpusProgram(
                 f"gen_sq_sum_{i:03d}",
                 _procedure(
-                    "p", "x: int, y: int", [f"x >= {x} && y >= {y}"],
+                    "p",
+                    "x: int, y: int",
+                    [f"x >= {x} && y >= {y}"],
                     "(x + y) * (x + y) == x * x + 2 * x * y + y * y",
                 ),
                 family="sq-sum",
@@ -112,7 +121,9 @@ def build_generated_programs() -> list[CorpusProgram]:
         programs.append(
             CorpusProgram(
                 f"gen_abs_bound_{i:03d}",
-                _procedure("p", "x: int", [f"x >= -{k} && x <= {k}"], f"(if x < 0 then -x else x) <= {k}"),
+                _procedure(
+                    "p", "x: int", [f"x >= -{k} && x <= {k}"], f"(if x < 0 then -x else x) <= {k}"
+                ),
                 family="abs-bound",
                 expected="discharged",
             )
@@ -124,7 +135,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             CorpusProgram(
                 f"gen_minmax_{i:03d}",
                 _procedure(
-                    "p", "a: int, b: int", [f"a <= {a + m} && b <= {b + m}"],
+                    "p",
+                    "a: int, b: int",
+                    [f"a <= {a + m} && b <= {b + m}"],
                     f"(if a < b then a else b) <= {max(a, b) + m}",
                 ),
                 family="minmax",
@@ -138,7 +151,7 @@ def build_generated_programs() -> list[CorpusProgram]:
         programs.append(
             CorpusProgram(
                 f"gen_divmod_{i:03d}",
-                _procedure("p", "a: int, b: int", [f"b == {b}"], f"a / b * b + a % b == a"),
+                _procedure("p", "a: int, b: int", [f"b == {b}"], "a / b * b + a % b == a"),
                 family="divmod",
                 expected="discharged",
             )
@@ -158,7 +171,7 @@ def build_generated_programs() -> list[CorpusProgram]:
 
     # 8. refutable bounded (a witness below the bound always exists)
     for i, (n, _, _) in enumerate(triple(30, 3, 60)):
-        del _;
+        del _
         programs.append(
             CorpusProgram(
                 f"gen_refut_bound_{i:03d}",
@@ -187,7 +200,9 @@ def build_generated_programs() -> list[CorpusProgram]:
         programs.append(
             CorpusProgram(
                 f"gen_arr_store_other_{i:03d}",
-                _procedure("p", "a: [int]int", [f"{idx} != {j}"], f"a[{idx} := {v}][{j}] == a[{j}]"),
+                _procedure(
+                    "p", "a: [int]int", [f"{idx} != {j}"], f"a[{idx} := {v}][{j}] == a[{j}]"
+                ),
                 family="arr-store-other",
                 expected="discharged",
             )
@@ -195,7 +210,7 @@ def build_generated_programs() -> list[CorpusProgram]:
 
     # 11. quantified array bounds -> instance
     for i, (n, _, _) in enumerate(triple(35, 1, 40)):
-        del _;
+        del _
         programs.append(
             CorpusProgram(
                 f"gen_arr_quant_{i:03d}",
@@ -216,9 +231,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             CorpusProgram(
                 f"gen_seq_nth_{i:03d}",
                 _procedure(
-                    "p", "s: seq<int>",
-                    [f"|s| > {idx}",
-                     "forall j: int :: 0 <= j && j < |s| ==> s[j] >= 0"],
+                    "p",
+                    "s: seq<int>",
+                    [f"|s| > {idx}", "forall j: int :: 0 <= j && j < |s| ==> s[j] >= 0"],
                     f"s[{idx}] >= 0 && |s| >= {k % 2}",
                 ),
                 family="seq-nth",
@@ -226,9 +241,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             )
         )
 
-    # 13. loop invariants join the context (boogie-m1 approximation)
+    # 13. loop invariants are WP obligations (initiation/preservation/assert)
     for i, (n, _, _) in enumerate(triple(30, 1, 100)):
-        del _;
+        del _
         src = (
             f"procedure loop_sum_{i}(n: int)\n"
             f"  requires n >= {n}\n"
@@ -243,7 +258,9 @@ def build_generated_programs() -> list[CorpusProgram]:
             f"  assert i >= 0;\n"
             f"}}\n"
         )
-        programs.append(CorpusProgram(f"gen_loop_inv_{i:03d}", src, family="loop-inv", expected="discharged"))
+        programs.append(
+            CorpusProgram(f"gen_loop_inv_{i:03d}", src, family="loop-inv", expected="discharged")
+        )
 
     # 14. observed: nonlinear integer unknowns (records z3's actual verdict)
     for i, (x, y, _) in enumerate(triple(4, 7, 13)):
@@ -251,7 +268,9 @@ def build_generated_programs() -> list[CorpusProgram]:
         programs.append(
             CorpusProgram(
                 f"gen_nonlinear_{i:03d}",
-                _procedure("p", "x: int, y: int", [f"x >= {x} && y >= {y}"], "x * x * x == y * y * y + 1"),
+                _procedure(
+                    "p", "x: int, y: int", [f"x >= {x} && y >= {y}"], "x * x * x == y * y * y + 1"
+                ),
                 family="nonlinear-unknown",
                 expected=None,
             )
@@ -263,7 +282,9 @@ def build_generated_programs() -> list[CorpusProgram]:
         CorpusProgram(
             "gen_timeout_000",
             _procedure(
-                "p", "x: int, y: int, z: int", ["x >= 1 && y >= 1 && z >= 1"],
+                "p",
+                "x: int, y: int, z: int",
+                ["x >= 1 && y >= 1 && z >= 1"],
                 "x * x * x * x * x + y * y * y * y * y != z * z * z * z * z",
             ),
             family="timeout",
@@ -302,34 +323,59 @@ CURATED: dict[str, dict[str, object]] = {
 }
 
 
+def identity_of(proc, obl) -> str:
+    """The identity of one obligation within its procedure."""
+    return obligation_identity(
+        spec=obl.spec_ref,
+        semantics_model=obl.semantics_model,
+        program_fragment=proc.program.fragment or proc.name,
+        profile_version=obl.target_profile.rsplit("@", 1)[-1],
+        sequent=obl.sequent,
+    )
+
+
 def identities_for(result: ImportResult) -> dict[str, str]:
-    """Obligation identity -> procedure name (procedures carry exactly one assert)."""
+    """Obligation identity -> procedure name (WP emits several per loop procedure)."""
     out: dict[str, str] = {}
     for proc in result.procedures.values():
-        assert len(proc.obligations) == 1, (
-            f"corpus discipline violated: procedure {proc.name} has "
-            f"{len(proc.obligations)} asserts (one per procedure required)"
-        )
-        obl = proc.obligations[0]
-        obl_id = obligation_identity(
-            spec=obl.spec_ref,
-            semantics_model=obl.semantics_model,
-            program_fragment=proc.program.fragment or proc.name,
-            profile_version=obl.target_profile.rsplit("@", 1)[-1],
-        )
-        out[obl_id] = proc.name
+        for obl in proc.obligations:
+            out[identity_of(proc, obl)] = proc.name
     return out
 
 
-def observe(program: CorpusProgram) -> str:
-    """Run z3 on every obligation; returns the observed I4 status (all must agree)."""
+def check_designed(name: str, designed: str, statuses: set[str]) -> None:
+    """Designed-verdict discipline under WP (ADR 0008): a loop procedure emits
+    several obligations with per-obligation verdicts. 'discharged' means every
+    obligation discharges (a single refutation is a soundness regression);
+    'refuted' means the program is refuted (at least one obligation is)."""
+    if designed == "discharged":
+        if statuses != {"discharged"}:
+            raise SystemExit(f"{name}: designed discharged but z3 returned {statuses}")
+    elif designed == "refuted":
+        if "refuted" not in statuses:
+            raise SystemExit(f"{name}: designed refuted but z3 returned {statuses}")
+    else:
+        raise SystemExit(f"{name}: unknown designed verdict {designed!r}")
+
+
+def observe(program: CorpusProgram) -> dict[str, str]:
+    """Run z3 on every obligation; returns identity -> observed I4 status."""
     result = import_module(program.source, f"{program.name}.bpl")
     assert result.ok, [d.native_message for d in result.diagnostics]
     engine = SmtBackend("z3")
-    statuses = {verdict_status(engine.run(obl, budget=program.budget_ms)) for obl in result.obligations}
-    if len(statuses) > 1:
-        raise SystemExit(f"{program.name}: mixed verdicts {statuses}")
-    return statuses.pop()
+    return {
+        obl_id: verdict_status(
+            engine.run(
+                next(
+                    o
+                    for o in result.procedures[p].obligations
+                    if identity_of(result.procedures[p], o) == obl_id
+                ),
+                budget=program.budget_ms,
+            )
+        )
+        for obl_id, p in identities_for(result).items()
+    }
 
 
 def generate(target_dir: Path) -> dict[str, object]:
@@ -354,14 +400,14 @@ def generate(target_dir: Path) -> dict[str, object]:
         source = path.read_text(encoding="utf-8")
         result = import_module(source, path.name)
         assert result.ok, [d.native_message for d in result.diagnostics]
-        status = observe(CorpusProgram(path.name, source, family, None, budget))
-        if designed is not None and status != str(designed):
-            raise SystemExit(f"{path.name}: designed {designed} but z3 returned {status}")
+        statuses = observe(CorpusProgram(path.name, source, family, None, budget))
+        if designed is not None:
+            check_designed(path.name, str(designed), set(statuses.values()))
         for obl_id, proc_name in identities_for(result).items():
             expected[obl_id] = {
                 "file": path.name,
                 "family": family,
-                "expected": status,
+                "expected": statuses[obl_id],
                 "proc": proc_name,
             }
 
@@ -376,16 +422,16 @@ def generate(target_dir: Path) -> dict[str, object]:
             # manifest and the files on disk stay 1:1
             out.unlink(missing_ok=True)
             continue
-        status = observe(program)
-        if program.expected is not None and status != program.expected:
-            raise SystemExit(f"{program.name}: designed {program.expected} but z3 returned {status}")
+        statuses = observe(program)
+        if program.expected is not None:
+            check_designed(program.name, program.expected, set(statuses.values()))
         out.write_text(program.source, encoding="utf-8")
         for obl_id, proc_name in ids.items():
             seen_ids.add(obl_id)
             expected[obl_id] = {
                 "file": f"generated/{out.name}",
                 "family": program.family,
-                "expected": status,
+                "expected": statuses[obl_id],
                 "proc": proc_name,
             }
 
@@ -397,8 +443,10 @@ def generate(target_dir: Path) -> dict[str, object]:
             "budget_ms_timeout": TIMEOUT_BUDGET_MS,
             "note": (
                 "expected statuses were observed with the pinned z3 at generation "
-                "time; designed families additionally match their by-construction "
-                "verdicts. timeout-family entries never discharge (scheduler-"
+                "time, per obligation (the WP VCG emits initiation/preservation/"
+                "assert obligations per loop procedure, ADR 0008); designed "
+                "families additionally match their by-construction verdicts. "
+                "timeout-family entries never discharge (scheduler-"
                 "dependent whether z3 reports timeout or plain unknown)."
             ),
         },

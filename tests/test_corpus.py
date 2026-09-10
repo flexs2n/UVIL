@@ -13,6 +13,7 @@ sys.path.insert(0, str(REPO_ROOT / "tools"))
 
 from gen_corpus import CURATED, build_generated_programs, identities_for  # noqa: E402
 
+from tests.fixtures import make_obligation  # noqa: E402
 from uvil.adapters.boogie.lower import import_module  # noqa: E402
 from uvil.adapters.smt.backends import verdict_status  # noqa: E402
 from uvil.check.core import SmtBackend  # noqa: E402
@@ -60,7 +61,20 @@ def test_corpus_verdict_matches_expected(obl_id: str) -> None:
     assert obl_id in ids, f"identity {obl_id} not found in {path.name}"
     proc_name = ids[obl_id]
     proc = result.procedures[proc_name]
-    (obl,) = proc.obligations
+    # a loop procedure emits several WP obligations; the identity pins the sequent
+    matches = [
+        o
+        for o in proc.obligations
+        if obligation_identity(
+            spec=o.spec_ref,
+            semantics_model=o.semantics_model,
+            program_fragment=proc.program.fragment or proc.name,
+            profile_version=o.target_profile.rsplit("@", 1)[-1],
+            sequent=o.sequent,
+        )
+        == obl_id
+    ]
+    (obl,) = matches
     engine = SmtBackend("z3")
     status = verdict_status(engine.run(obl, budget=_budget_ms(entry)))
     assert status == entry["expected"], f"{entry['file']}/{entry['proc']}"
@@ -73,7 +87,19 @@ def test_timeout_family_never_discharges() -> None:
     for obl_id in timeout_ids:
         entry = ENTRIES[obl_id]
         result = _import_file(CORPUS_DIR / entry["file"])
-        (obl,) = list(result.obligations)
+        matches = [
+            o
+            for o in result.obligations
+            if obligation_identity(
+                spec=o.spec_ref,
+                semantics_model=o.semantics_model,
+                program_fragment=o.program_ref,
+                profile_version=o.target_profile.rsplit("@", 1)[-1],
+                sequent=o.sequent,
+            )
+            == obl_id
+        ]
+        (obl,) = matches
         engine = SmtBackend("z3")
         status = verdict_status(engine.run(obl, budget=_budget_ms(entry)))
         assert status in ("timeout", "open"), f"{entry['file']}: {status}"
@@ -99,7 +125,13 @@ def test_corpus_regeneration_is_deterministic() -> None:
 
 
 def test_identity_function_is_stable() -> None:
-    kwargs = {"spec": "s", "semantics_model": "m", "program_fragment": "f", "profile_version": "1"}
+    kwargs = {
+        "spec": "s",
+        "semantics_model": "m",
+        "program_fragment": "f",
+        "profile_version": "1",
+        "sequent": make_obligation().sequent,
+    }
     a = obligation_identity(**kwargs)
     b = obligation_identity(**kwargs)
     assert a == b

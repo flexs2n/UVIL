@@ -145,8 +145,8 @@ def test_identity_change_forces_miss(tmp_path: Path) -> None:
     assert first.recomputed
 
     # spec churn: a different spec artifact ref is a different identity. (The
-    # sequent alone is NOT part of the identity - spec/code/library churn all
-    # move the I2/I3 artifact refs.)
+    # sequent's CANONICAL form is part of the identity - ADR 0008 - but spec/
+    # code/library churn all move the I2/I3 artifact refs regardless.)
     churned = obl.model_copy(
         update={
             "spec_ref": "uvil:specification@1:"
@@ -250,12 +250,14 @@ def test_check_incremental_rejects_bad_inputs(tmp_path: Path) -> None:
 
 def test_cache_identity_matches_m0_tuple() -> None:
     # the protocol identity IS the M0 identity over the obligation's tuple
+    # plus its canonical sequent (ADR 0008: multi-VC procedures)
     (obl,) = _obligations(PROVABLE_SRC)
     assert obligation_cache_identity(obl) == obligation_identity(
         spec=obl.spec_ref,
         semantics_model=obl.semantics_model,
         program_fragment=obl.program_ref,
         profile_version=obl.target_profile.rsplit("@", 1)[-1],
+        sequent=obl.sequent,
     )
 
 

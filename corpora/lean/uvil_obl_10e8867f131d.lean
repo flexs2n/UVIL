@@ -1,0 +1,1 @@
+theorem uvil_obl_10e8867f131d : ∀ (a : Int) (b : Int), ((a ≤ 234) ∧ (b ≤ 335)) → ((if (a < b) then a else b) ≤ 335) := by omega

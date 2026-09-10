@@ -1,6 +1,6 @@
 # serializer version: 1
 # name: test_divmod_corpus_family_encodes_via_pin_propagation
-  'theorem uvil_obl_02d3bb73a9bc : ∀ (a : Int), (7 = 7) → ((((a / 7) * 7) + (a % 7)) = a) := by omega'
+  'theorem uvil_obl_1f55f71a8c0a : ∀ (a : Int), (7 = 7) → ((((a / 7) * 7) + (a % 7)) = a) := by omega'
 # ---
 # name: test_golden_fixture_obligation
   'theorem uvil_obl_80a30e8dc47e : ∀ (cap : Int) (len : Int), (cap ≥ 0) → (len ≤ cap) → (len < cap) → ((len + 1) ≤ cap) := by omega'

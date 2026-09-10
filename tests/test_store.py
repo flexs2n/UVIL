@@ -78,33 +78,95 @@ def test_merkle_rejects_non_leaf() -> None:
 
 
 def test_obligation_identity_stability() -> None:
+    sequent = make_obligation().sequent
     a = obligation_identity(
         spec="spec:cap",
         semantics_model="model:why3-memory.v1",
         program_fragment="push",
         profile_version="1",
+        sequent=sequent,
     )
     b = obligation_identity(
         spec="spec:cap",
         semantics_model="model:why3-memory.v1",
         program_fragment="push",
         profile_version="1",
+        sequent=sequent,
     )
     c = obligation_identity(
         spec="spec:cap",
         semantics_model="model:why3-memory.v1",
         program_fragment="push",
         profile_version="2",
+        sequent=sequent,
     )
     assert a == b and a != c and a.startswith("oblid:")
+
+
+def test_obligation_identity_sequent_component() -> None:
+    """The canonical sequent is part of the identity (ADR 0008): a context
+    REORDER (no-op formatting churn) does not move the identity, while a
+    different sequent does."""
+    from uvil.artifacts.obligation import Sequent
+
+    base = make_obligation()
+    reordered = base.model_copy(
+        update={
+            "sequent": Sequent(
+                context=list(reversed(base.sequent.context)),
+                goal=base.sequent.goal,
+                var_sorts=base.sequent.var_sorts,
+            )
+        }
+    )
+    kw = {
+        "spec": "spec:cap",
+        "semantics_model": "model:why3-memory.v1",
+        "program_fragment": "push",
+        "profile_version": "1",
+    }
+    assert obligation_identity(sequent=base.sequent, **kw) == obligation_identity(
+        sequent=reordered.sequent, **kw
+    )
+    flipped_goal = base.model_copy(
+        update={
+            "sequent": Sequent(
+                context=base.sequent.context,
+                goal=base.sequent.goal,
+                var_sorts=base.sequent.var_sorts,
+            )
+        }
+    )
+    del flipped_goal
+    # a genuinely different sequent (goal + one context term swapped for another)
+    other = base.model_copy(
+        update={
+            "sequent": Sequent(
+                context=[base.sequent.context[0]],
+                goal=base.sequent.goal,
+                var_sorts=base.sequent.var_sorts,
+            )
+        }
+    )
+    assert obligation_identity(sequent=base.sequent, **kw) != obligation_identity(
+        sequent=other.sequent, **kw
+    )
 
 
 @given(st.integers(min_value=0, max_value=10**9), st.integers(min_value=0, max_value=10**9))
 def test_obligation_hash_injective_enough(a: int, b: int) -> None:
     i1 = obligation_identity(
-        spec=f"s{a}", semantics_model="m", program_fragment="p", profile_version="1"
+        spec=f"s{a}",
+        semantics_model="m",
+        program_fragment="p",
+        profile_version="1",
+        sequent=make_obligation().sequent,
     )
     i2 = obligation_identity(
-        spec=f"s{b}", semantics_model="m", program_fragment="p", profile_version="1"
+        spec=f"s{b}",
+        semantics_model="m",
+        program_fragment="p",
+        profile_version="1",
+        sequent=make_obligation().sequent,
     )
     assert (i1 == i2) == (a == b)

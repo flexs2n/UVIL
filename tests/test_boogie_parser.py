@@ -74,20 +74,21 @@ def test_import_obligation_counts() -> None:
     result = import_module(FULL_MODULE, "full.bpl")
     assert result.ok, [d.native_message for d in result.diagnostics]
     counts = {name: len(p.obligations) for name, p in result.procedures.items()}
-    assert counts == {"clamp": 4, "arrays": 1, "seqs": 1, "quantified": 1}
+    # clamp: 4 asserts + loop initiation + loop preservation (WP VCG)
+    assert counts == {"clamp": 6, "arrays": 1, "seqs": 1, "quantified": 1}
 
 
-def test_import_m1_markers_and_budget() -> None:
+def test_import_wp_markers_and_budget() -> None:
     result = import_module(FULL_MODULE, "full.bpl")
     obl = result.procedures["clamp"].obligations[0]
-    assert obl.origin_backend == "boogie-m1"
+    assert obl.origin_backend == "boogie-wp"
     assert obl.target_profile == "uvil.boogie@1"
     assert obl.cost_budget.solver_ms == 2000
     assert result.procedures["clamp"].program.language == "boogie"
     assert result.procedures["clamp"].program.semantics_model == "model:why3-memory.v1"
 
 
-def test_context_is_assumes_pre_and_invariants() -> None:
+def test_context_is_path_and_invariant_frames() -> None:
     result = import_module(FULL_MODULE, "full.bpl")
     clamps = result.procedures["clamp"].obligations
 
@@ -101,12 +102,13 @@ def test_context_is_assumes_pre_and_invariants() -> None:
     # 3: `assert ... by` context carries the block's assume
     ctx3 = [str(c) for c in clamps[2].sequent.context]
     assert any("x" in c and "1" in c for c in ctx3)
-    # 4th assert runs after the loop, so the loop invariant is in context
-    last = clamps[3].sequent.context
-    assert last
+    # 5th obligation (post-loop assert): the exit frame (invariant + negated
+    # guard over the fresh value) is in context
+    last = clamps[5].sequent.context
+    assert any("!" in str(c) for c in last), last
 
 
-def test_havoc_drops_assumptions() -> None:
+def test_havoc_renames_the_goal_side() -> None:
     src = """
 procedure h(x: int)
 {
@@ -119,8 +121,13 @@ procedure h(x: int)
     obl = result.procedures["h"].obligations[0]
     from uvil.artifacts import to_smt
 
-    rendered = [to_smt(c) for c in obl.sequent.context]
-    assert not any(">= 5" in r and "x" in r for r in rendered), rendered
+    ctx = [to_smt(c) for c in obl.sequent.context]
+    goal = to_smt(obl.sequent.goal)
+    # the pre-havoc antecedent stays (about the OLD x); the goal is over the
+    # fresh havoc'd value, so the old assumption cannot discharge it
+    assert "(>= x 5)" in ctx
+    assert goal.startswith("(>= x!")
+    assert "!0" in goal
 
 
 def test_assumes_join_the_context() -> None:

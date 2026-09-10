@@ -926,17 +926,18 @@ def corpus_verify(
             problems += 1
             continue
         for proc in result.procedures.values():
-            (obl,) = proc.obligations
-            obl_id = obligation_identity(
-                spec=obl.spec_ref,
-                semantics_model=obl.semantics_model,
-                program_fragment=proc.program.fragment or proc.name,
-                profile_version=obl.target_profile.rsplit("@", 1)[-1],
-            )
-            seen.add(obl_id)
-            if obl_id not in expected:
-                err.print(f"[red]unknown identity[/red] {path}/{proc.name}")
-                problems += 1
+            for obl in proc.obligations:
+                obl_id = obligation_identity(
+                    spec=obl.spec_ref,
+                    semantics_model=obl.semantics_model,
+                    program_fragment=proc.program.fragment or proc.name,
+                    profile_version=obl.target_profile.rsplit("@", 1)[-1],
+                    sequent=obl.sequent,
+                )
+                seen.add(obl_id)
+                if obl_id not in expected:
+                    err.print(f"[red]unknown identity[/red] {path}/{proc.name}")
+                    problems += 1
     for obl_id in expected:
         if obl_id not in seen:
             err.print(f"[red]stale manifest entry[/red] {obl_id}")

@@ -3,13 +3,17 @@
 `check_incremental` is the M5 incremental protocol around `check/core.py`:
 
 - Each obligation gets an identity via `store.identity.obligation_identity`
-  over `(spec_ref, semantics_model, program_ref, profile_version)`: the spec
-  and program artifact refs are content hashes of the I2/I3 artifacts, so the
-  M0 identity tuple is fully determined by the obligation (the program
-  fragment travels inside its artifact hash). A no-op change (context reorder
-  or formatting that leaves the I2/I3 artifacts untouched) keeps the identity
-  and hits the cache; any real spec/code/library churn changes some component
-  and misses.
+   over `(spec_ref, semantics_model, program_ref, profile_version,
+   canonical-sequent)` (the sequent component is ADR 0008: one procedure
+   yields multiple WP obligations sharing the M0 tuple, and the canonical
+   sequent - context order normalized - distinguishes them without breaking
+   the no-op formatting-churn hit). The spec and program artifact refs are
+   content hashes of the I2/I3 artifacts, so the M0 tuple is fully determined
+   by the obligation (the program fragment travels inside its artifact hash).
+   A no-op change (context reorder or formatting that leaves the I2/I3
+   artifacts and the sequent's canonical form untouched) keeps the identity
+   and hits the cache; any real spec/code/library churn changes some
+   component and misses.
 - Hits are reused with no solver call (their verdicts enter the I8 run with
   `time_ms=None`; `Run.config["cached"]` lists the reused refs). Misses go
   through plain `check()`; only freshly `discharged` misses update the cache.
@@ -52,12 +56,13 @@ class IncrementalResult:
 
 
 def obligation_cache_identity(obl: Obligation) -> str:
-    """The cache identity of an obligation artifact (M0 identity tuple)."""
+    """The cache identity of an obligation artifact (M0 identity tuple + sequent)."""
     return obligation_identity(
         spec=obl.spec_ref,
         semantics_model=obl.semantics_model,
         program_fragment=obl.program_ref,
         profile_version=obl.target_profile.rsplit("@", 1)[-1],
+        sequent=obl.sequent,
     )
 
 

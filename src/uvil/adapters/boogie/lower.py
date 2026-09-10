@@ -1,10 +1,11 @@
 """Lowering: parse results -> I2/I3/I4 artifacts (+ I7 diagnostics, fail-loud).
 
-One I3 Program and one I2 Specification per procedure; one I4 Obligation per
-`assert` (the M1 VC approximation documented in `parser.py`, recorded as
-`origin_backend="boogie-m1"`). Anything outside the subset surfaces as an I7
-`parse` diagnostic preserving the verbatim source line - out-of-subset input is
-never silently skipped.
+One I3 Program and one I2 Specification per procedure; the I4 Obligations are
+the WP verification conditions computed by `vcgen.wp_procedure` (sound weakest
+preconditions over the accepted subset, recorded as `origin_backend="boogie-wp"`,
+ADR 0008). Anything outside the subset surfaces as an I7 `parse` diagnostic
+preserving the verbatim source line - out-of-subset input is never silently
+skipped.
 """
 
 from __future__ import annotations
@@ -19,20 +20,16 @@ from ...artifacts.terms import Term, TermArg, term_vars  # term_vars re-exported
 from ...semmodels.registry import WHY3_MEMORY_V1
 from .parser import (
     BOOGIE_TARGET_PROFILE,
-    AssertStmt,
-    AssignStmt,
-    AssumeStmt,
     BoogieModule,
     BoogieParseError,
     FunctionDecl,
-    HavocStmt,
     ProcedureDecl,
-    ReturnStmt,
-    Stmt,
     VarStmt,
-    WhileStmt,
     parse_module_tolerant,
 )
+from .vcgen import substitute, wp_procedure
+
+__all__ = ["ImportResult", "ProcedureImport", "import_module", "substitute", "term_vars"]
 
 DEFAULT_SOLVER_MS = 2000
 
@@ -51,31 +48,6 @@ _SORT_SMT = {
     "array": "(Array Int Int)",
     "seq": "(Seq Int)",
 }
-
-
-def substitute(term: Term, mapping: dict[str, Term]) -> Term:
-    """Substitute variables by name; quantifier-bound names shadow the mapping."""
-    op = term.op
-    args = term.args
-    if op == "var":
-        name = args[0]
-        if isinstance(name, str) and name in mapping:
-            return mapping[name]
-        return term
-    if op in ("forall", "exists"):
-        name = args[0] if args and isinstance(args[0], str) else None
-        body = args[2] if len(args) > 2 else None
-        inner = {k: v for k, v in mapping.items() if k != name}
-        new_body = substitute(body, inner) if isinstance(body, Term) else body
-        return Term(op=op, args=[args[0], args[1], new_body])
-    new_args: list[TermArg] = []
-    for a in args:
-        new_args.append(substitute(a, mapping) if isinstance(a, Term) else a)
-    return Term(op=op, args=new_args)
-
-
-def _mentions(term: Term, names: set[str]) -> bool:
-    return bool(term_vars(term) & names)
 
 
 @dataclass
@@ -176,22 +148,17 @@ def _lower_procedure(
     requires = [resolve_calls(r) for r in proc.requires]
     ensures = [resolve_calls(e) for e in proc.ensures]
 
-    assumptions: list[Term] = []
-    invariants: list[Term] = []
-    goals: list[AssertStmt] = []
-    _collect_context(proc.body, assumptions, invariants, goals)
-
-    context: list[Term] = []
+    # entry context: axioms, const definitions, preconditions (the WP walk
+    # folds assumes/loop frames into per-obligation contexts from here)
+    base_context: list[Term] = []
     for ax in module.axioms:
-        context.append(resolve_calls(ax.term))
+        base_context.append(resolve_calls(ax.term))
     for c in module.consts:
         if c.definition is not None:
-            context.append(
+            base_context.append(
                 resolve_calls(Term(op="eq", args=[Term(op="var", args=[c.name]), c.definition]))
             )
-    context.extend(requires)
-    context.extend(resolve_calls(a) for a in assumptions)
-    context.extend(resolve_calls(i) for i in invariants)
+    base_context.extend(requires)
 
     fragment = source[proc.source_span[0] : proc.source_span[1]].strip()
     program = Program(
@@ -200,7 +167,7 @@ def _lower_procedure(
         symbol=proc.name,
         fragment=fragment,
         semantics_model=WHY3_MEMORY_V1.model_id,
-        notes="imported by uvil.adapters.boogie (M1 invariant-context approximation)",
+        notes="imported by uvil.adapters.boogie (WP VCG, boogie-wp)",
     )
 
     theories: list[str] = []
@@ -222,29 +189,9 @@ def _lower_procedure(
     spec_aid = artifact_id(spec)
     program_aid = artifact_id(program)
     obligations: list[Obligation] = []
-    for g in goals:
-        goal = resolve_calls(g.term)
-        seq_context = list(context)
-        if g.by_body:
-            by_assumes: list[Term] = []
-            by_invariants: list[Term] = []
-            nested_goals: list[AssertStmt] = []
-            _collect_context(g.by_body, by_assumes, by_invariants, nested_goals)
-            seq_context.extend(resolve_calls(a) for a in by_assumes)
-            for nested in nested_goals:
-                obligations.append(
-                    _make_obligation(
-                        spec_aid,
-                        program_aid,
-                        seq_context,
-                        resolve_calls(nested.term),
-                        sorts,
-                        theories,
-                        filename,
-                    )
-                )
+    for wp in wp_procedure(proc, base_context, sorts, resolve_calls):
         obligations.append(
-            _make_obligation(spec_aid, program_aid, seq_context, goal, sorts, theories, filename)
+            _make_obligation(spec_aid, program_aid, wp.context, wp.goal, sorts, theories, filename)
         )
     return ProcedureImport(name=proc.name, program=program, spec=spec, obligations=obligations)
 
@@ -275,35 +222,5 @@ def _make_obligation(
         target_profile=BOOGIE_TARGET_PROFILE,
         status="open",
         cost_budget=CostBudget(solver_ms=DEFAULT_SOLVER_MS),
-        origin_backend="boogie-m1",
+        origin_backend="boogie-wp",
     )
-
-
-def _collect_context(
-    stmts: list[Stmt],
-    assumptions: list[Term],
-    invariants: list[Term],
-    goals: list[AssertStmt],
-) -> None:
-    """Forward walk: gather assumes, loop invariants, and asserts in program order.
-
-    The M1 approximation drops assumptions mentioning havoc'd variables and
-    treats assignments as no-ops (no weakest-precondition computation; that is
-    Boogie's real VCG, deferred). Assignments remain in the I3 fragment so the
-    program text is preserved.
-    """
-    for stmt in stmts:
-        match stmt:
-            case AssumeStmt(term=term):
-                assumptions.append(term)
-            case HavocStmt(names=names):
-                assumptions[:] = [a for a in assumptions if not _mentions(a, set(names))]
-            case WhileStmt(invariants=invs, body=body):
-                invariants.extend(invs)
-                _collect_context(body, assumptions, invariants, goals)
-            case AssertStmt():
-                goals.append(stmt)
-            case VarStmt() | ReturnStmt() | AssignStmt():
-                pass
-            case _:  # pragma: no cover - all subset statements are handled above
-                raise AssertionError(f"unhandled statement: {stmt!r}")

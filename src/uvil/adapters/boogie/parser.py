@@ -21,11 +21,8 @@ Accepted subset:
   `forall/exists x: T :: {triggers} E` (trigger sets are parsed and ignored).
 - Comments: `//`, `/* */`. Attributes `{:...}` are parsed and ignored.
 
-M1 VC approximation (recorded as `origin_backend="boogie-m1"`, NOT Boogie's real
-pass42 VCG): obligations are per-assert goals; the context is the conjunction of
-procedure preconditions, global axioms/const definitions, explicit `assume`s
-(with assumptions mentioning havoc'd variables dropped), and loop `invariant`s
-declared so far. Assignments do not contribute to the context.
+This module is syntax only: the verification conditions are computed by
+`vcgen.py` (sound WP, `origin_backend="boogie-wp"`, ADR 0008).
 """
 
 from __future__ import annotations

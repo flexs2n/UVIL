@@ -1,4 +1,4 @@
-// loop-invariant sum family (M1 invariant-context approximation)
+// loop-invariant sum family (WP VCG: initiation/preservation/assert obligations)
 procedure loop_sum(n: int)
   requires n >= 1
 {

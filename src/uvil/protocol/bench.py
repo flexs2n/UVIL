@@ -7,15 +7,15 @@ reused/recomputed partition per mutation family:
 
 - `no-op-reorder` (the 100%-hit control group): the churned obligations are
   artifact-level context reorderings - nothing in the identity tuple
-  `(spec_ref, semantics_model, program_ref, profile_version)` moves, so every
-  obligation must be reused.
+  `(spec_ref, semantics_model, program_ref, profile_version, canonical-sequent)`
+  moves (the sequent's canonical form normalizes context order away, ADR 0008),
+  so every obligation must be reused.
 - `spec-churn`: a deterministic literal precondition is added to the I2
   contract (mutated procedures only) - the spec artifact ref moves, so those
   obligations must recompute; untouched procedures must still hit.
 - `code-churn`: the I3 fragment text is rewritten for mutated procedures -
-  the program artifact ref moves (in the M1 VC approximation the obligation
-  sequent is invariant to body statements, so the measured effect is exactly
-  the identity move: protocol mechanics, not toolchain-evolution fidelity).
+  the program artifact ref moves (the measured effect is exactly the
+  identity move: protocol mechanics, not toolchain-evolution fidelity).
 - `library-churn`: the target profile version is bumped on every obligation
   (a semantics-library upgrade) - the whole set must recompute.
 
