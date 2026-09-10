@@ -62,22 +62,22 @@ def test_corpus_verdict_matches_expected(obl_id: str) -> None:
     proc_name = ids[obl_id]
     proc = result.procedures[proc_name]
     # a loop procedure emits several WP obligations; the identity pins the sequent
-    matches = [
-        o
-        for o in proc.obligations
-        if obligation_identity(
-            spec=o.spec_ref,
-            semantics_model=o.semantics_model,
-            program_fragment=proc.program.fragment or proc.name,
-            profile_version=o.target_profile.rsplit("@", 1)[-1],
-            sequent=o.sequent,
-        )
-        == obl_id
-    ]
+    matches = [o for o in proc.obligations if _identity_of(proc, o) == obl_id]
     (obl,) = matches
     engine = SmtBackend("z3")
     status = verdict_status(engine.run(obl, budget=_budget_ms(entry)))
     assert status == entry["expected"], f"{entry['file']}/{entry['proc']}"
+
+
+def _identity_of(proc, o) -> str:
+    """The generator's identity computation for one obligation."""
+    return obligation_identity(
+        spec=o.spec_ref,
+        semantics_model=o.semantics_model,
+        program_fragment=proc.program.fragment or proc.name,
+        profile_version=o.target_profile.rsplit("@", 1)[-1],
+        sequent=o.sequent,
+    )
 
 
 @pytest.mark.slow
@@ -89,15 +89,9 @@ def test_timeout_family_never_discharges() -> None:
         result = _import_file(CORPUS_DIR / entry["file"])
         matches = [
             o
-            for o in result.obligations
-            if obligation_identity(
-                spec=o.spec_ref,
-                semantics_model=o.semantics_model,
-                program_fragment=o.program_ref,
-                profile_version=o.target_profile.rsplit("@", 1)[-1],
-                sequent=o.sequent,
-            )
-            == obl_id
+            for p in result.procedures.values()
+            for o in p.obligations
+            if _identity_of(p, o) == obl_id
         ]
         (obl,) = matches
         engine = SmtBackend("z3")

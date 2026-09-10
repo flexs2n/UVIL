@@ -142,7 +142,7 @@
       'symbol': None,
     }),
     'native_message': 'backend z3 returned timeout within budget 300ms',
-    'obligation_ref': 'uvil:obligation@1:2aa177409ec2902865e6166d26fdfcc9f2366692dd488c9a36797003f5de2817',
+    'obligation_ref': 'uvil:obligation@1:28fb520c613e01d25e26b0bdb325d9188a6d0e15ee563880033af33f7c63dedc',
     'uvil_type': 'diagnostic',
   })
 # ---
