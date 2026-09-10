@@ -217,7 +217,13 @@ def generate() -> dict[str, object]:
         if stale.name not in current:
             stale.unlink()
 
-    expected = {e.rel: {"family": "upstream" if e.rel.startswith("upstream/") else "generated", **e.expected} for e in build_entries()}
+    expected = {
+        e.rel: {
+            "family": "upstream" if e.rel.startswith("upstream/") else "generated",
+            **e.expected,
+        }
+        for e in build_entries()
+    }
     meta = {
         "provenance": {
             "repo": "https://github.com/strata-org/Strata",
