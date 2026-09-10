@@ -14,6 +14,13 @@ hook (aligned with the plan's R2 wording):
   error: `SpecWeakeningError`, not a marker.
 - If every clause is preserved, the discipline is `shadow-validated` (the
   strength check itself is the shadow evidence available in M1).
+
+M5 upgrade: syntactically-unmatched clauses are no longer automatically
+missing - they go through `strength.check_spec_strength_semantic`, an SMT
+implication probe over the LIA shared-theory subset (z3 settles `unsat` ⇒
+preserved, `sat` ⇒ missing, `unknown`/timeout ⇒ conservative lossy + residual,
+never silently passed). Added `requires` clauses remain a hard
+`SpecWeakeningError` unless the source provably implies them.
 """
 
 from __future__ import annotations
@@ -54,17 +61,43 @@ def _added_requires(source: Specification, lowered: Specification) -> list[Term]
 
 
 def check_spec_strength(source: Specification, lowered: Specification) -> Translation:
-    """Assert source contract strength survives the lowering; R2 enforcement."""
-    added = _added_requires(source, lowered)
-    if added:
-        rendered = "; ".join(_canonical(t) for t in added)
-        raise SpecWeakeningError(f"{_WEAKENING_MESSAGE}: {rendered}")
+    """Assert source contract strength survives the lowering; R2 enforcement.
 
-    missing_ensures = _missing_clauses(source.contracts.ensures, lowered.contracts.ensures)
-    missing_invariants = _missing_clauses(source.contracts.invariants, lowered.contracts.invariants)
+    M5 dispatch: the syntactic fast path (canonical clause match, zero solver
+    calls) returns immediately; only syntactically-unmatched clauses go to the
+    semantic LIA probe (`strength.check_spec_strength_semantic`), which accepts
+    syntactically-different-but-equivalent clauses and conservatively downgrades
+    anything the probe cannot settle.
+    """
+    from .strength import check_spec_strength_semantic
+
+    if (
+        not _added_requires(source, lowered)
+        and not _missing_clauses(source.contracts.ensures, lowered.contracts.ensures)
+        and not _missing_clauses(source.contracts.invariants, lowered.contracts.invariants)
+    ):
+        return _strength_translation(
+            source,
+            lowered,
+            missing_ensures=[],
+            missing_invariants=[],
+            dropped_notes=[],
+            semantic=False,
+        )
+    return check_spec_strength_semantic(source, lowered)
+
+
+def _strength_translation(
+    source: Specification,
+    lowered: Specification,
+    *,
+    missing_ensures: list[Term],
+    missing_invariants: list[Term],
+    dropped_notes: list[str],
+    semantic: bool,
+) -> Translation:
     residuals = missing_ensures + missing_invariants
-
-    if residuals:
+    if residuals or dropped_notes:
         discipline: SoundnessDiscipline = "lossy"
     else:
         discipline = "shadow-validated"
@@ -81,28 +114,52 @@ def check_spec_strength(source: Specification, lowered: Specification) -> Transl
         soundness_discipline=discipline,
         residuals=Residuals(
             assumptions_added=[],
-            dropped_fragments=[],
+            dropped_fragments=dropped_notes,
             residual_obligations=[
-                artifact_id(o) for o in emit_residual_obligations(source, lowered)
+                artifact_id(o)
+                for o in emit_residual_obligations(
+                    source,
+                    lowered,
+                    missing_ensures=missing_ensures,
+                    missing_invariants=missing_invariants,
+                )
             ],
         ),
         notes=(
-            "R2 strength check (M1 hook): missing clause counterparts become open "
+            "R2 strength check ("
+            + ("M5 semantic LIA probe" if semantic else "M1 hook")
+            + "): missing clause counterparts become open "
             "residual obligations (reproducible via emit_residual_obligations); "
             "added requires clauses raise SpecWeakeningError."
         ),
     )
 
 
-def emit_residual_obligations(source: Specification, lowered: Specification) -> list[Obligation]:
-    """Open I4 obligations for every missing clause counterpart (deterministic)."""
-    pairs: tuple[tuple[str, list[Term], list[Term]], ...] = (
-        ("ensures", source.contracts.ensures, lowered.contracts.ensures),
-        ("invariants", source.contracts.invariants, lowered.contracts.invariants),
+def emit_residual_obligations(
+    source: Specification,
+    lowered: Specification,
+    missing_ensures: list[Term] | None = None,
+    missing_invariants: list[Term] | None = None,
+) -> list[Obligation]:
+    """Open I4 obligations for every missing clause counterpart (deterministic).
+
+    The missing-clause lists default to the syntactic counterparts; the M5
+    semantic path passes its probe-determined lists explicitly (same
+    obligation shape, so ids stay reproducible from the clause lists).
+    """
+    if missing_ensures is None:
+        missing_ensures = _missing_clauses(source.contracts.ensures, lowered.contracts.ensures)
+    if missing_invariants is None:
+        missing_invariants = _missing_clauses(
+            source.contracts.invariants, lowered.contracts.invariants
+        )
+    pairs: tuple[tuple[str, list[Term]], ...] = (
+        ("ensures", missing_ensures),
+        ("invariants", missing_invariants),
     )
     obligations: list[Obligation] = []
-    for _label, source_clauses, target_clauses in pairs:
-        for clause in _missing_clauses(source_clauses, target_clauses):
+    for _label, missing in pairs:
+        for clause in missing:
             obligations.append(
                 Obligation(
                     spec_ref=artifact_id(source),
