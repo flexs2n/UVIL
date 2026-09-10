@@ -29,13 +29,18 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "src"))
 sys.path.insert(0, str(REPO_ROOT / "tools"))
 
-from gen_lean_slice import collect_whitelisted, _corpus_meta, _reverify_smt, _obligation_for  # noqa: E402
+from gen_lean_slice import (  # noqa: E402
+    _corpus_meta,
+    _obligation_for,
+    _reverify_smt,
+    collect_whitelisted,
+)
+
 from uvil.adapters.isabelle.backend import (  # noqa: E402
     ISABELLE_VERSION_ID,
     PINNED_ISABELLE,
     IsabelleBackend,
     IsabelleNotInstalled,
-    kernel_hash,
 )
 from uvil.adapters.isabelle.encode import (  # noqa: E402
     UnsupportedTermError,

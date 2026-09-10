@@ -169,11 +169,21 @@ def _deep_entries() -> list[Entry]:
     # the pin's observed budgets); loop bounds exceed the unroll budget, so
     # import is out-of-subset
     bodies = [
-        ("  int a = __VERIFIER_nondet_int();\n  int s = 7;\n  for (int i = 0; i < 30; i++) {\n    s = (s * 31 + a) % 1000003;\n  }\n  assert(s != 42);\n  return 0;\n"),
-        ("  int a = __VERIFIER_nondet_int();\n  int s = 3;\n  for (int i = 0; i < 28; i++) {\n    s = (s * 37 + a) % 999983;\n  }\n  assert(s != 7);\n  return 0;\n"),
-        ("  int a = __VERIFIER_nondet_int();\n  int s = 13;\n  for (int i = 0; i < 32; i++) {\n    s = (s * 29 + a) % 7919;\n  }\n  assert(s != 5);\n  return 0;\n"),
-        ("  int a = __VERIFIER_nondet_int();\n  int s = 1;\n  for (int i = 0; i < 26; i++) {\n    s = (s * 41 + a * a) % 1000003;\n  }\n  assert(s != 11);\n  return 0;\n"),
-        ("  int a = __VERIFIER_nondet_int();\n  int s = 9;\n  for (int i = 0; i < 24; i++) {\n    s = (s * 53 + a) % 2147483647;\n  }\n  assert(s != 100);\n  return 0;\n"),
+        (
+            "  int a = __VERIFIER_nondet_int();\n  int s = 7;\n  for (int i = 0; i < 30; i++) {\n    s = (s * 31 + a) % 1000003;\n  }\n  assert(s != 42);\n  return 0;\n"
+        ),
+        (
+            "  int a = __VERIFIER_nondet_int();\n  int s = 3;\n  for (int i = 0; i < 28; i++) {\n    s = (s * 37 + a) % 999983;\n  }\n  assert(s != 7);\n  return 0;\n"
+        ),
+        (
+            "  int a = __VERIFIER_nondet_int();\n  int s = 13;\n  for (int i = 0; i < 32; i++) {\n    s = (s * 29 + a) % 7919;\n  }\n  assert(s != 5);\n  return 0;\n"
+        ),
+        (
+            "  int a = __VERIFIER_nondet_int();\n  int s = 1;\n  for (int i = 0; i < 26; i++) {\n    s = (s * 41 + a * a) % 1000003;\n  }\n  assert(s != 11);\n  return 0;\n"
+        ),
+        (
+            "  int a = __VERIFIER_nondet_int();\n  int s = 9;\n  for (int i = 0; i < 24; i++) {\n    s = (s * 53 + a) % 2147483647;\n  }\n  assert(s != 100);\n  return 0;\n"
+        ),
     ]
     return [
         Entry(f"deep_{i:03d}", "deep", "timeout", "out-of-subset", _harness(p))

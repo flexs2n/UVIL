@@ -27,7 +27,6 @@ Discipline (mirrors gen_corpus.py):
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -41,15 +40,14 @@ from uvil.adapters.lean.backend import (  # noqa: E402
     TOOLCHAIN_ID,
     LeanBackend,
     LeanNotInstalled,
-    kernel_hash,
 )
 from uvil.adapters.lean.encode import (
     UnsupportedTermError,
     theorem_name,
     to_lean_theorem,
-)  # noqa: E402
-from uvil.check.core import SmtBackend  # noqa: E402
+)
 from uvil.adapters.smt.backends import verdict_status  # noqa: E402
+from uvil.check.core import SmtBackend  # noqa: E402
 
 BOOGIE_CORPUS = REPO_ROOT / "corpora" / "boogie"
 LEAN_CORPUS = REPO_ROOT / "corpora" / "lean"
@@ -212,7 +210,9 @@ def generate() -> dict[str, object]:
     try:
         entries = attest_slice(entries)
     except LeanNotInstalled:
-        print("lean not installed: writing rendered twins with lean_status=pending", file=sys.stderr)
+        print(
+            "lean not installed: writing rendered twins with lean_status=pending", file=sys.stderr
+        )
     LEAN_CORPUS.mkdir(parents=True, exist_ok=True)
 
     current: dict[str, SliceEntry] = {}

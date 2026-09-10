@@ -64,11 +64,7 @@ MUTATED_PROC = "p0"  # partial mutations touch exactly one of the 4 procedures
 def _template(j: int, n: int) -> str:
     """The four LIA procedure shapes (all pinned z3-dischargeable)."""
     if j % PROCS_PER_SCENARIO == 0:
-        return (
-            f"procedure p0(x: int)\n"
-            f"  requires x >= {n}\n"
-            "{\n  assert x + 0 == x;\n}\n"
-        )
+        return f"procedure p0(x: int)\n  requires x >= {n}\n{{\n  assert x + 0 == x;\n}}\n"
     if j % PROCS_PER_SCENARIO == 1:
         return (
             f"procedure p1(x: int, y: int)\n"
@@ -77,15 +73,9 @@ def _template(j: int, n: int) -> str:
         )
     if j % PROCS_PER_SCENARIO == 2:
         return (
-            f"procedure p2(x: int)\n"
-            f"  requires 0 <= x && x <= {n}\n"
-            "{\n  assert x + x >= 0;\n}\n"
+            f"procedure p2(x: int)\n  requires 0 <= x && x <= {n}\n{{\n  assert x + x >= 0;\n}}\n"
         )
-    return (
-        "procedure p3(a: int, b: int)\n"
-        "  requires b == 3\n"
-        "{\n  assert (a + b) % b == a % b;\n}\n"
-    )
+    return "procedure p3(a: int, b: int)\n  requires b == 3\n{\n  assert (a + b) % b == a % b;\n}\n"
 
 
 def build_churn_scenarios() -> list[tuple[str, str, str, tuple[str, ...], list[str]]]:
