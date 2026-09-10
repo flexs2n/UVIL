@@ -1,0 +1,15 @@
+{
+  "fetched_on": "2026-09-10",
+  "license": "MIT (LICENSE.txt: Copyright (c) Microsoft Corporation)",
+  "scan": {
+    "files_scanned": 765,
+    "in_subset_files": 50,
+    "in_subset_obligations": "recorded per file in expected.json",
+    "note": "the in-subset selection is the importer's honest outcome over the full upstream test set - every file that imports cleanly and yields obligations is committed verbatim; the out-of-subset downgrade is measured, not hidden, and its first sorted sample is committed with pinned loud outcomes.",
+    "out_of_subset_files": 637,
+    "out_of_subset_sample": 10,
+    "root": "Test/**/*.bpl"
+  },
+  "upstream_commit": "bb44ad35387110bf4223b20f240ef6150f069842",
+  "upstream_url": "https://github.com/boogie-org/boogie"
+}

@@ -33,6 +33,15 @@ class SmtVerdict:
     time_ms: int | None
 
 
+class SmtProcessError(ValueError):
+    """The solver could not process the obligation (e.g. an ill-sorted script).
+
+    A ValueError so `check()`'s existing I7 handler records the failure and
+    keeps the obligation open - externally-authored input must fail loud, not
+    crash the run.
+    """
+
+
 def verdict_status(verdict: SmtVerdict) -> ObligationStatus:
     """The single verdict->status mapping point. Unknown/timeout never discharge.
 
@@ -70,17 +79,25 @@ class Z3Backend:
         solver = z3.Solver()
         if solver_ms is not None:
             solver.set("timeout", solver_ms)
-        solver.from_string(assertions)
-        result = solver.check()
+        try:
+            solver.from_string(assertions)
+            result = solver.check()
+            model = str(solver.model().sexpr()) if result == z3.sat else None
+            if result == z3.sat:
+                reason = ""
+            else:
+                reason = str(solver.reason_unknown())
+        except z3.Z3Exception as e:
+            # ill-sorted/out-of-theory scripts (external input) fail loud here
+            # and map to an I7 in check(); the obligation never crashes a run
+            raise SmtProcessError(str(e)) from e
         elapsed_ms = int((time.perf_counter() - start) * 1000)
         if result == z3.sat:
             status: VerdictStatus = "sat"
         elif result == z3.unsat:
             status = "unsat"
         else:
-            reason = str(solver.reason_unknown())
             status = "timeout" if "timeout" in reason.lower() else "unknown"
-        model = str(solver.model().sexpr()) if status == "sat" else None
         return SmtVerdict(
             status=status,
             model=model,
