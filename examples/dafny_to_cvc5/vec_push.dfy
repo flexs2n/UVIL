@@ -4,7 +4,7 @@
 method VecPush(len: int, cap: int) returns (len': int)
   requires len < cap
   ensures len' == len + 1
-  ensures len' <= cap
 {
   len' := len + 1;
+  assert len' <= cap;
 }

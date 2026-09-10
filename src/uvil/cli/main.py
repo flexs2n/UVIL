@@ -188,10 +188,18 @@ def translate(
 ) -> None:
     """Dafny -> Boogie text (pinned wrapper) -> I2/I4 artifacts.
 
-    Skips with a clear message (exit 0) when Dafny is not installed; hard-fails
-    on a version mismatch with PINNED_DAFNY (ADR 0002).
+    Runs the pinned Dafny (legacy `/print` CLI, ADR 0002), extracts the
+    user-procedure subset slice (the memory-model boilerplate is dropped and
+    COUNTED - measured, never hidden), and imports it through the same parser
+    as `.bpl` input. Skips with a clear message (exit 0) when Dafny is not
+    installed; hard-fails on a version mismatch with PINNED_DAFNY (ADR 0002).
     """
-    from ..adapters.boogie.dafny import DafnyFrontend, DafnyNotInstalled, DafnyVersionMismatch
+    from ..adapters.boogie.dafny import (
+        DafnyFrontend,
+        DafnyNotInstalled,
+        DafnyVersionMismatch,
+        subset_slice,
+    )
 
     frontend = DafnyFrontend()
     try:
@@ -206,7 +214,13 @@ def translate(
         err.print(f"[red]translate failed[/red] {e}")
         raise typer.Exit(code=1) from e
 
-    result = import_module(boogie_text, filename=file.name)
+    sliced, dropped = subset_slice(boogie_text)
+    if dropped:
+        console.print(
+            f"[yellow]note[/yellow] subset slice dropped {dropped} memory-model "
+            "boilerplate line(s) (measured, never hidden)"
+        )
+    result = import_module(sliced, filename=file.name)
     _emit_import(result, out, state)
 
 

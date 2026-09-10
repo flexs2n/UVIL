@@ -1,0 +1,6 @@
+# serializer version: 1
+# name: test_full_dafny_pipeline
+  list([
+    '{"spec_ref":"uvil:specification@1:bff7883afed8af0eec6aca057f39e04657732de9c0e9f586dcc1f16292cc6b32","program_ref":"uvil:program@1:c81c2d303b3f1c3ac8a7d1d1e754b6d027de446ac3ef8f696e995786c4d87efd","semantics_model":"model:why3-memory.v1","sequent":{"context":[{"op":"lt","args":[{"op":"var","args":["len_0"]},{"op":"var","args":["cap_0"]}]},{"op":"const","args":[true]},{"op":"const","args":[true]},{"op":"const","args":[true]}],"goal":{"op":"le","args":[{"op":"add","args":[{"op":"var","args":["len_0"]},{"op":"const","args":[1]}]},{"op":"var","args":["cap_0"]}]},"var_sorts":{"cap_0":"Int","len_0":"Int"}},"theories":["uvil.core.int@1","uvil.core.bool@1"],"target_profile":"uvil.boogie@1","status":"open","cost_budget":{"solver_ms":2000,"kernel_ms":null},"origin_backend":"boogie-wp"}',
+  ])
+# ---

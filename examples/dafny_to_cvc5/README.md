@@ -12,9 +12,11 @@ obligations *not authored in its home format* end-to-end:
   z3 (pinned 5.1.0) in-process. No external tools needed.
 - `vec_push.dfy` — the same obligation authored in Dafny. When Dafny is installed
   at the pinned version (`PINNED_DAFNY` in `uvil/adapters/boogie/dafny.py`), it is
-  translated to Boogie text (`dafny translate boogie --no-verify`) and fed through
+  translated to Boogie text (the legacy `/print` CLI - Dafny 4.9 has no
+  `translate boogie` subcommand), the user-procedure subset slice is extracted
+  (memory-model boilerplate dropped and counted), and the slice is fed through
   the *same* parser. Without Dafny, this path skips cleanly; with a wrong version
-  it fails loudly (I7 `semantic-mismatch`, ADR 0002).
+  it fails loudly (ADR 0002).
 
 ## Run the z3 path
 
@@ -50,9 +52,14 @@ dotnet tool install --global Dafny --version 4.9.0   # once; see ADR 0002
 uvil translate examples/dafny_to_cvc5/vec_push.dfy --out examples/dafny_to_cvc5/out/
 ```
 
-Real Dafny output frequently falls outside the documented M1 Boogie subset; when
-it does, the CLI prints I7 `parse` diagnostics preserving the verbatim source
-line — the fail-loud contract, never a silent skip.
+The pinned Dafny 4.9.0 emits Boogie through the legacy CLI (`/noVerify
+/compile:0 /print:<file> /pretty:1`); the wrapper extracts the user-procedure
+subset slice (the Dafny heap/memory-model boilerplate is dropped and the
+dropped-line count is printed - measured, never hidden). Out-of-subset
+residue surfaces as I7 `parse` diagnostics preserving the verbatim source
+line - the fail-loud contract, never a silent skip. With the pinned toolchain
+the live pipeline records a z3 `discharged` verdict for the in-bounds push
+(pinned in `tests/test_dafny_wrapper.py`).
 
 ## Corpus
 
