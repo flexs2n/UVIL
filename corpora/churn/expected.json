@@ -1,0 +1,780 @@
+{
+  "meta": {
+    "corpus_version": 1,
+    "family_cycle": [
+      "no-op-reorder",
+      "no-op-reorder",
+      "no-op-reorder",
+      "spec-churn",
+      "code-churn",
+      "library-churn"
+    ],
+    "mutated_proc": "p0",
+    "note": "All baseline obligations are pinned-z3 discharged (observed at generation time, by-construction LIA families). Mutations are artifact-level identity moves applied by the bench harness (uvil.protocol.bench): spec-churn adds a deterministic literal precondition to the I2; code-churn rewrites the I3 fragment text; library-churn bumps the target profile version on every obligation; no-op-reorder reverses the sequent context (the 100%-hit control). The measured claim is protocol mechanics under churn.",
+    "procedures_per_scenario": 4,
+    "seed": 20260909,
+    "z3_pin": "5.1.0"
+  },
+  "scenarios": {
+    "s000": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s000.bpl",
+      "mutate": []
+    },
+    "s001": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s001.bpl",
+      "mutate": []
+    },
+    "s002": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s002.bpl",
+      "mutate": []
+    },
+    "s003": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s003.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s004": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s004.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s005": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s005.bpl",
+      "mutate": []
+    },
+    "s006": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s006.bpl",
+      "mutate": []
+    },
+    "s007": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s007.bpl",
+      "mutate": []
+    },
+    "s008": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s008.bpl",
+      "mutate": []
+    },
+    "s009": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s009.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s010": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s010.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s011": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s011.bpl",
+      "mutate": []
+    },
+    "s012": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s012.bpl",
+      "mutate": []
+    },
+    "s013": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s013.bpl",
+      "mutate": []
+    },
+    "s014": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s014.bpl",
+      "mutate": []
+    },
+    "s015": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s015.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s016": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s016.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s017": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s017.bpl",
+      "mutate": []
+    },
+    "s018": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s018.bpl",
+      "mutate": []
+    },
+    "s019": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s019.bpl",
+      "mutate": []
+    },
+    "s020": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s020.bpl",
+      "mutate": []
+    },
+    "s021": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s021.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s022": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s022.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s023": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s023.bpl",
+      "mutate": []
+    },
+    "s024": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s024.bpl",
+      "mutate": []
+    },
+    "s025": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s025.bpl",
+      "mutate": []
+    },
+    "s026": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s026.bpl",
+      "mutate": []
+    },
+    "s027": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s027.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s028": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s028.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s029": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s029.bpl",
+      "mutate": []
+    },
+    "s030": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s030.bpl",
+      "mutate": []
+    },
+    "s031": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s031.bpl",
+      "mutate": []
+    },
+    "s032": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s032.bpl",
+      "mutate": []
+    },
+    "s033": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s033.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s034": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s034.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s035": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s035.bpl",
+      "mutate": []
+    },
+    "s036": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s036.bpl",
+      "mutate": []
+    },
+    "s037": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s037.bpl",
+      "mutate": []
+    },
+    "s038": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s038.bpl",
+      "mutate": []
+    },
+    "s039": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s039.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s040": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s040.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s041": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s041.bpl",
+      "mutate": []
+    },
+    "s042": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s042.bpl",
+      "mutate": []
+    },
+    "s043": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s043.bpl",
+      "mutate": []
+    },
+    "s044": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s044.bpl",
+      "mutate": []
+    },
+    "s045": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s045.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s046": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s046.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s047": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s047.bpl",
+      "mutate": []
+    },
+    "s048": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s048.bpl",
+      "mutate": []
+    },
+    "s049": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s049.bpl",
+      "mutate": []
+    },
+    "s050": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s050.bpl",
+      "mutate": []
+    },
+    "s051": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s051.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s052": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s052.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s053": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s053.bpl",
+      "mutate": []
+    },
+    "s054": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s054.bpl",
+      "mutate": []
+    },
+    "s055": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s055.bpl",
+      "mutate": []
+    },
+    "s056": {
+      "expected": {
+        "p0": "reused",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "no-op-reorder",
+      "file": "scenarios/s056.bpl",
+      "mutate": []
+    },
+    "s057": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "spec-churn",
+      "file": "scenarios/s057.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s058": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "reused",
+        "p2": "reused",
+        "p3": "reused"
+      },
+      "expected_status": "discharged",
+      "family": "code-churn",
+      "file": "scenarios/s058.bpl",
+      "mutate": [
+        "p0"
+      ]
+    },
+    "s059": {
+      "expected": {
+        "p0": "recomputed",
+        "p1": "recomputed",
+        "p2": "recomputed",
+        "p3": "recomputed"
+      },
+      "expected_status": "discharged",
+      "family": "library-churn",
+      "file": "scenarios/s059.bpl",
+      "mutate": []
+    }
+  }
+}

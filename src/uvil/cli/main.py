@@ -776,6 +776,66 @@ def check_isabelle_cmd(
     )
 
 
+@app.command("bench")
+def bench_cmd(
+    corpus: Path = typer.Option(
+        Path("corpora/churn"), "--corpus", help="Churn corpus directory (expected.json)."
+    ),
+    state: Path = typer.Option(
+        Path(".uvil-bench"), "--state", help="Bench state directory (cache + ledger)."
+    ),
+    backend: str = typer.Option("z3", "--backend", help="SMT backend: z3 or cvc5."),
+    json_out: bool = typer.Option(False, "--json", help="Print the metrics JSON only."),
+) -> None:
+    """Run the M5 churn benchmark: incremental-protocol metrics, deterministically.
+
+    Primes the verdict cache with each committed baseline scenario, measures
+    the churned run, and reports the count-based metrics (cache-hit rate,
+    churn survival, control-group hit rate, partition fidelity, downgrade
+    rate). Exits 1 if the recorded targets are missed.
+    """
+    from ..protocol.bench import results_markdown, run_benchmark, targets_met
+
+    if not (corpus / "expected.json").exists():
+        err.print(f"[red]error[/red] missing {corpus / 'expected.json'}")
+        raise typer.Exit(code=1)
+    result = run_benchmark(corpus, state, backend=backend)
+    if json_out:
+        typer.echo(json.dumps(result.metrics, sort_keys=True, indent=2))
+    else:
+        table = Table(title=f"churn benchmark ({backend}, {result.metrics['scenarios']} scenarios)")
+        table.add_column("metric")
+        table.add_column("value")
+        table.add_column("target")
+        rows: list[tuple[str, str, str]] = [
+            ("obligations (churned runs)", str(result.metrics["obligations"]), "-"),
+            ("reused", str(result.metrics["reused"]), "-"),
+            ("recomputed", str(result.metrics["recomputed"]), "-"),
+            (
+                "cache-hit rate",
+                f"{result.metrics['cache_hit_rate']:.3f}",
+                f">= {result.metrics['cache_hit_target']}",
+            ),
+            ("no-op control hit rate", f"{result.metrics['no_op_hit_rate']:.3f}", "== 1.0"),
+            (
+                "churn survival",
+                f"{result.metrics['churn_survival']:.3f}",
+                f">= {result.metrics['churn_survival_target']}",
+            ),
+            ("partition fidelity", f"{result.metrics['fidelity']:.3f}", "== 1.0"),
+            ("downgrade rate", f"{result.metrics['downgrade_rate']:.3f}", "== 0.0"),
+        ]
+        for metric, value, target in rows:
+            table.add_row(metric, value, target)
+        console.print(table)
+        typer.echo(results_markdown(result.metrics))
+    if not targets_met(result.metrics):
+        err.print("[red]FAILED[/red] benchmark targets not met")
+        raise typer.Exit(code=1)
+    if not json_out:
+        typer.echo("bench ok: targets met")
+
+
 @app.command()
 def shadows(
     spec_file: Path = typer.Argument(
