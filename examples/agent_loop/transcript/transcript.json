@@ -1,0 +1,80 @@
+{
+  "final": {
+    "all_discharged": true
+  },
+  "iterations": [
+    {
+      "agent_reply": {
+        "program": "// repair 1: saturate the increment at k (the I6 witness had x == k)\nprocedure clamp_ok(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  assert y >= -k && y <= k;\n}\n\nprocedure clamp_step(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  y := (if x + 1 > k then k else x + 1);\n  assert y <= k;\n}\n"
+      },
+      "feedback": [
+        {
+          "backend_witness": {
+            "format": "smt-lib2-model"
+          },
+          "counter_spec": null,
+          "kind": "valuation",
+          "obligation_ref": "uvil:obligation@1:f673e573835dd8b791b73936f829b2ebd5824f4494003b464b0eac32c385558a",
+          "scenario": null,
+          "trace": null,
+          "uvil_type": "counterexample",
+          "valuation": {
+            "k": {
+              "args": [
+                1
+              ],
+              "op": "const"
+            },
+            "x": {
+              "args": [
+                1
+              ],
+              "op": "const"
+            }
+          }
+        },
+        {
+          "kind": "unproved",
+          "llm_explanation": null,
+          "loc": {
+            "col": null,
+            "file": null,
+            "line": null,
+            "symbol": null
+          },
+          "native_message": "obligation refuted: backend z3 satisfied the negated goal; a counterexample valuation (I6) accompanies this diagnostic",
+          "obligation_ref": "uvil:obligation@1:f673e573835dd8b791b73936f829b2ebd5824f4494003b464b0eac32c385558a",
+          "uvil_type": "diagnostic"
+        }
+      ],
+      "iteration": 1,
+      "obligations": 2,
+      "program": "// The agent-loop repair target (WI-4 demo).\nprocedure clamp_ok(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  assert y >= -k && y <= k;\n}\n\nprocedure clamp_step(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  y := y + 1;\n  assert y <= k;\n}\n",
+      "recomputed": 2,
+      "reused": 0,
+      "verdicts": {
+        "67e1b6c969f9c061": "discharged",
+        "f673e573835dd8b7": "refuted"
+      }
+    },
+    {
+      "agent_reply": null,
+      "feedback": [],
+      "iteration": 2,
+      "obligations": 2,
+      "program": "// repair 1: saturate the increment at k (the I6 witness had x == k)\nprocedure clamp_ok(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  assert y >= -k && y <= k;\n}\n\nprocedure clamp_step(x: int, k: int)\n  requires k >= 1 && x >= -k && x <= k\n{\n  var y: int;\n  y := x;\n  y := (if x + 1 > k then k else x + 1);\n  assert y <= k;\n}\n",
+      "recomputed": 1,
+      "reused": 1,
+      "verdicts": {
+        "1e66578686b87b08": "discharged",
+        "67e1b6c969f9c061": "discharged"
+      }
+    }
+  ],
+  "meta": {
+    "agent": "DemoRepairAgent",
+    "program": "program.bpl",
+    "protocol": "uvil incremental check (M5) via check_incremental",
+    "z3_pin": "5.1.0"
+  }
+}
