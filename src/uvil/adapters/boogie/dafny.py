@@ -200,9 +200,7 @@ def _rename_dafny_identifiers(line: str) -> str:
 # `// ----- assignment statement ----- C:\...\vec_push.dfy(8,8)` — the absolute
 # source path is machine-local; it is stripped so the slice (and its artifact
 # hashes) stay reproducible across machines and pytest tmp_path reuse.
-_LOCATION_COMMENT = re.compile(
-    r"^(?P<indent>\s*//\s*-----[^-]+-----)\s+\S+\(\d+,\d+\)\s*$"
-)
+_LOCATION_COMMENT = re.compile(r"^(?P<indent>\s*//\s*-----[^-]+-----)\s+\S+\(\d+,\d+\)\s*$")
 
 
 def _normalize(line: str) -> str:
