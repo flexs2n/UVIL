@@ -37,16 +37,22 @@ lake build Pantograph repl
 ```
 
 Build-probe status (2026-09-09): the pinned Pantograph dev head builds
-cleanly on Windows under the shared `v4.33.1` toolchain, but the pool is
-NOT yet wired end-to-end:
+cleanly on Windows under the shared `v4.33.1` toolchain, and the pool is
+wired end-to-end (M5):
 
 - the binary is `.lake/packages/Pantograph/.lake/build/bin/repl.exe`
   (named `repl`, not `pantograph-repl`); on Windows, put
   `~/.elan/toolchains/leanprover--lean4---v4.33.1/bin` on `PATH` first
-  (the exe needs `libleanshared.dll`).
-- wire-protocol drift: REPL 0.3.19 speaks `goal.start` / `goal.tactic` /
-  `goal.print`; `pool.py` pins protocol v1 (`setup` / `proof_start` /
-  `goals`), which matches no upstream release. Until `pool.py` adopts the
-  current command names (M5 candidate), the live pool arm stays
-  skip-if-absent: do not set `UVIL_PANTOGRAPH` to this binary and expect
-  the live tests to pass.
+  (the exe needs `libleanshared.dll`) — the live-arm tests set this
+  themselves.
+- `pool.py` speaks **protocol v2** (discovery-pinned on the wire, 2026-09-09):
+  launch with the `Init` import argument (a bare REPL environment is empty);
+  the REPL prints a `ready.` banner; commands are
+  `{"cmd": ..., "payload": {...}}` JSON lines (`stat` liveness; `goal.start`
+  takes a statement TERM, not a full theorem source; `goal.tactic` runs the
+  single-tactic body; success = `nextStateId` present + empty `goals` +
+  `hasSorry`/`hasUnsafe` false + `rootHasSorry` false).
+- **Live-arm outcome (2026-09-09):** `tests/test_lean_pool.py` run with
+  `UVIL_PANTOGRAPH` pointed at the built binary passes 16/16 — the pool
+  attests a real theorem through the pinned kernel and the sorry gate
+  correctly fails a `sorry`-tainted proof (never attested).
