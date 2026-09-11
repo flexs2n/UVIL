@@ -1,0 +1,1079 @@
+{
+  "expected": {
+    "generated/gen_add_comm": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": "discharged"
+    },
+    "generated/gen_add_id": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": "discharged"
+    },
+    "generated/gen_bound_chain": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": "discharged"
+    },
+    "generated/gen_distrib": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": "discharged"
+    },
+    "generated/gen_refute_bound": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 0 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": "refuted"
+    },
+    "generated/gen_refute_double": {
+      "agreement": "agree",
+      "family": "generated",
+      "import_detail": "1",
+      "import_kind": "procedures",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 0 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": "refuted"
+    },
+    "upstream/lc1004": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1006": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 15 verified, 2 errors",
+      "native_status": "failed",
+      "z3_status": null
+    },
+    "upstream/lc1007": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1009": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 18 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1010": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 14 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1011": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 14 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1013": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 8 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1014": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 2 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1015": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1018": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 6 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1025": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 9 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1033": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1035": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 17 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1037": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1039": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 37 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1040": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1049": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 13 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1051": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 13 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1052": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1053": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 8 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1073": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 22 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1094": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 12 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1095": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 6 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc11": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 12 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1103": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1105": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 24 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1109": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 13 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1122": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 19 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1128": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1137": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1140": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 34 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1144": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1155": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 17 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1157": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1160": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 9 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc118": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc119": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 8 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc120": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1200": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc121": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 2 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1217": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc122": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1222": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1223": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 29 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc123": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 17 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1232": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1238": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 17 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1250": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1252": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 26 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1260": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 9 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1262": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 17 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1266": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1269": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 9 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1276": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 1 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1277": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": null,
+      "native_status": "unsupported-locally",
+      "z3_status": null
+    },
+    "upstream/lc1281": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 12 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1283": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 19 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1287": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1288": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1289": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 40 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1291": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1295": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1299": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1300": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1310": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1313": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 6 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1314": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 20 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1318": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1326": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 6 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": null
+    },
+    "upstream/lc1330": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 6 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1333": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 8 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1335": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1337": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 12 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc134": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1340": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 36 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1342": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1343": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 11 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1346": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc135": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1351": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1356": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1359": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc136": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 33 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1365": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 15 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1385": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1389": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 6 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1390": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 60 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": null
+    },
+    "upstream/lc1395": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1399": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 30 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1401": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 7 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1406": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1411": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 4 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1413": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 5 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1420": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 71 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1423": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 10 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1424": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 45 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1431": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 3 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1437": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 0,
+      "native_results_line": "verification results:: 2 verified, 0 errors",
+      "native_status": "verified",
+      "z3_status": null
+    },
+    "upstream/lc1438": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 12 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": null
+    },
+    "upstream/lc1439": {
+      "agreement": null,
+      "family": "upstream",
+      "import_detail": "semantic-mismatch",
+      "import_kind": "diagnostic",
+      "native_exit_code": 1,
+      "native_results_line": "verification results:: 56 verified, 1 errors",
+      "native_status": "failed",
+      "z3_status": null
+    }
+  },
+  "meta": {
+    "disagreements": [],
+    "in_subset_agreement": "6/6",
+    "in_subset_entries": 6,
+    "native_runs_completed": 106,
+    "note": "the ground-truth arm is the pinned Verus release on the committed bytes (run records with exit codes + verbatim results lines - native verdicts are run records, never I5 proofs); the import arm re-dispatches the in-subset sequents through UVIL's own pinned z3 (unbounded-Int harness abstraction - the native verdict never upgrades an obligation). ALL sampled upstream tasks are out of the scalar-contract subset, so the downgrade rate is the honest headline (1.000 on this sample) and the in-subset agreement metric is carried by the generated harnesses; a disagreement would be a finding recorded here, never papered over.",
+    "sample_size": 100,
+    "upstream_downgrade_rate": 1.0,
+    "upstream_downgraded": 100,
+    "verus_commit": "8dea4a2196ebf99449fe2f141a2fb30acae3f17c",
+    "verus_tag": "release/0.2026.09.06.8dea4a2",
+    "verus_toolchain": "1.98.0-x86_64-pc-windows-msvc",
+    "verus_z3_pin": "4.16.0",
+    "z3_pin": "5.1.0"
+  }
+}

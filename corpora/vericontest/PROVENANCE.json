@@ -1,0 +1,13 @@
+{
+  "fetched_on": "2026-09-11",
+  "license": "CC BY 4.0 (VeriContest-authored benchmark artifacts, DATA_LICENSE.md); problem statements/platform metadata remain under the LeetCode/Codeforces source terms",
+  "sample": {
+    "benchmark_total": 1007,
+    "family": "leetcode",
+    "note": "each task dir is copied VERBATIM (description.md, code.rs, code_spec.rs, spec.rs, verified.rs, tags); the harvest's ground-truth arm runs the pinned Verus on committed verified.rs files; the import arm runs uvil.adapters.verus.import_verus on the same committed bytes - all 1007 upstream verified.rs files are out of the scalar-contract import subset (Seq/quantifier/loop/struct fragments; scanned at fetch time), so the measured downgrade rate IS the headline and the in-subset agreement metric is carried by the UVIL-authored generated harnesses (corpora/vericontest/generated/, the strata-corpus precedent).",
+    "sampled": 100,
+    "selection_rule": "first 100 task dirs of benchmark/leetcode in sorted stable-id order (no randomness)"
+  },
+  "upstream_commit": "b9657edf33b68dbd4992b501967730b30883a04e",
+  "upstream_url": "https://github.com/HIPREL-Group/VeriContest"
+}

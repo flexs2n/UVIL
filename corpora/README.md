@@ -163,6 +163,35 @@ churn survival 0.500 (target ≥0.30, control excluded), partition fidelity
 
 ## Deferred
 
-VeriContest artifact harvesting (Rust/Verus toolchain) is deferred to M6
-(ADR 0007). Alethe/LFSC SMT-certificate checking is the G1 upgrade path
-(M5+, locked decision). See the master plan, M1 §4 and M2 §2.
+Alethe/LFSC SMT-certificate checking is the G1 upgrade path (M5+, locked
+decision). See the master plan, M1 §4 and M2 §2.
+
+## `vericontest/` — M6 VeriContest harvest (100 upstream + 6 generated)
+
+The closed ADR 0007 deferral (ADR 0009): `upstream/<task>/` are the first
+100 `benchmark/leetcode` task dirs (sorted stable-id order, no randomness)
+of `HIPREL-Group/VeriContest` @ `b9657edf`, copied VERBATIM with
+`PROVENANCE.json` (benchmark data CC BY 4.0; problem statements remain
+under their source terms). `generated/*.rs` are 6 UVIL-authored in-subset
+harnesses (4 safe + 2 refutable, one fn per file) — the strata-corpus
+precedent.
+
+Measured at generation time (2026-09-11, all real runs — 106 native Verus
+invocations of the pinned release `0.2026.09.06.8dea4a2`):
+
+- **Ground truth (native arm)**: 98 verified / 7 failed / 1
+  unsupported-locally, with exit codes + verbatim `verification results::`
+  lines recorded per task in `expected.json` (run records, never I5).
+- **The honest headline (import arm)**: ALL 100 sampled upstream tasks are
+  out of the scalar-contract import subset — `downgrade_rate = 1.000`
+  (every upstream proof is Seq/quantifier/loop/struct-shaped; fail-loud I7
+  per task). Competitive-programming proofs are exactly the fragment where
+  the systems do NOT trivially agree; the slice boundary records it.
+- **Backend-invariance (the comparison)**: native Verus vs UVIL z3 on the
+  in-subset harnesses: **6/6 agreement** (4× verified/discharged, 2×
+  failed/refuted). The upstream in-subset set is empty, so the agreement
+  metric is carried entirely by the generated arm.
+
+Offline replay: `tests/test_vericontest.py` re-imports the committed bytes
+(no Verus, no network); the native arm re-runs with `UVIL_VERUS` pointing
+at the pinned binary.

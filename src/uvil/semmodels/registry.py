@@ -111,7 +111,7 @@ AENEAS_FUNCTIONAL_V1 = SemanticsModelEntry(
         "statements about the translated function, not stateful transition "
         "assertions. Registry-only seed: no adapter consumes it yet - it makes "
         "the semantics-model slot honest for future Rust/functional imports "
-        "(the deferred P1.3 follow-up; harvesting stays M6, ADR 0007)."
+        "(the deferred P1.3 follow-up)."
     ),
     theories=(
         "uvil.core.int@1",
@@ -121,6 +121,35 @@ AENEAS_FUNCTIONAL_V1 = SemanticsModelEntry(
     citation=(
         "Correnson, Dosch, Hermant, Jourdan. Aeneas: Rust verification by "
         "functional translation. ITP 2022."
+    ),
+)
+
+
+VERUS_SUBSET_V1 = SemanticsModelEntry(
+    model_id="model:verus-subset.v1",
+    name="verus-subset",
+    version="v1",
+    description=(
+        "Verus scalar-contract harness model (M6, VeriContest harvest): Verus "
+        "(github.com/verus-lang/verus) fn procedures with scalar integer/bool "
+        "parameters, requires/ensures clauses, and straight-line bodies, "
+        "imported from the committed verbatim artifacts. Sequents are "
+        "unbounded-Int over uvil.core.int@1 (the ESBMC harness-abstraction "
+        "precedent): Verus's bounded two's-complement machine semantics and "
+        "its own VC generation/solving are intentionally NOT modeled - which "
+        "is why the native Verus verdict never upgrades an imported "
+        "obligation; UVIL re-dispatches every sequent through its own pinned "
+        "z3 and the native verdict is the COMPARISON arm, not a guarantee."
+    ),
+    theories=(
+        "uvil.core.int@1",
+        "uvil.core.bool@1",
+    ),
+    profiles=("uvil.verus-subset@1",),
+    citation=(
+        "VeriContest: A Competitive-Programming Benchmark for Verifiable Code "
+        "Generation (Xie, Pawagi, Liu, Rai, Shao, Berberian, Che, Wang; "
+        "arXiv:2605.08553)."
     ),
 )
 
@@ -149,3 +178,4 @@ DEFAULT_REGISTRY.register(WHY3_MEMORY_V1)
 DEFAULT_REGISTRY.register(ESBMC_GOTO_V1)
 DEFAULT_REGISTRY.register(STRATA_CORE_V1)
 DEFAULT_REGISTRY.register(AENEAS_FUNCTIONAL_V1)
+DEFAULT_REGISTRY.register(VERUS_SUBSET_V1)
