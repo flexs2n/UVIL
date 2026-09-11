@@ -77,11 +77,15 @@ def check_isabelle(
     verdicts: list[Verdict] = []
     theory_digests: list[str] = []
 
-    encoded: list[str] = []
+    # encoded[i] stays None exactly when obligation i is outside the HOL-facing
+    # boundary - the list stays aligned with `obligations` by position (an
+    # encode-error-compressed list misindexes every obligation after the first
+    # failure; live-corpus discovery, 2026-09-11)
+    encoded: list[str | None] = [None] * len(obligations)
     encode_errors: dict[int, UnsupportedTermError] = {}
     for i, obl in enumerate(obligations):
         try:
-            encoded.append(to_hol_theorem(obl))
+            encoded[i] = to_hol_theorem(obl)
         except UnsupportedTermError as e:
             encode_errors[i] = e
 
@@ -89,7 +93,7 @@ def check_isabelle(
     checkable = [i for i in range(len(obligations)) if i not in encode_errors]
     verdict_map: dict[int, IsabelleVerdict] = {}
     if checkable:
-        to_check = [encoded[i] for i in checkable]
+        to_check = [t for i in checkable if (t := encoded[i]) is not None]
         raw = backend.check_batch(to_check)
         verdict_map = dict(zip(checkable, raw, strict=True))
 
@@ -125,6 +129,7 @@ def check_isabelle(
             continue
 
         theorem = encoded[i]
+        assert theorem is not None  # i is not in encode_errors
         verdict = verdict_map[i]
         status = isabelle_status(verdict)
         verdicts.append(
