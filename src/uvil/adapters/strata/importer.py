@@ -616,11 +616,17 @@ def find_strata() -> str | None:
 
 def strata_verify(executable: str, file: Path, timeout_s: float = 120) -> StrataVerifyResult:
     """Run `strata verify` on one artifact; the output is consumed VERBATIM
-    only - never screen-scraped into verdicts (discovery-first discipline)."""
+    only - never screen-scraped into verdicts (discovery-first discipline).
+    Decoded as UTF-8 with replacement (live discovery, 2026-09-11: the pinned
+    CLI emits UTF-8 symbols on Windows consoles that default to the ANSI
+    codepage; strict cp1252 decoding raises inside the reader thread and
+    loses the captured output entirely)."""
     proc = subprocess.run(
         [executable, "verify", str(file)],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         check=False,
         timeout=timeout_s,
     )

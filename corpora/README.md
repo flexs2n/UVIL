@@ -99,6 +99,27 @@ kinds). The obligations are ordinary I4s: guarantees come only from UVIL's
 own backends (the vendor-TCB caveat — Strata's VC generation is NOT UVIL's
 TCB).
 
+**Live probe record (2026-09-11, first real run).** The `strata verify`
+CLI lives in a SEPARATE repo (`strata-org/Strata-CLI`); the coherent pin is
+Strata-CLI `83dbf6f` — its `lake-manifest.json` pins Strata at exactly the
+UVIL-pinned `90f211c4` — built with `lake build` under the pinned toolchain
+`leanprover/lean4:v4.29.1` (elan-fetched, Windows x64, 650 jobs exit-0).
+Invoked as `strata verify <file> --solver z3` (z3 5.1.0, the UVIL pin; the
+CLI default is cvc5). Observed surface, pinned BEFORE consumption: exit 0 =
+all goals pass, exit 2 = a goal failed (counterexample), exit 3 = pipeline
+error (missing solver, CFG bodies, parse/type errors); output is UTF-8
+(`✅`/`❌` per goal) — strict cp1252 decoding crashes inside the reader
+thread and loses the capture, so `strata_verify` now decodes UTF-8 with
+replacement (fail-loud preserved: output is still consumed verbatim only).
+Per-file outcomes: the 4 safe generated harnesses exit 0, the 2 refutable
+ones exit 2, `SimpleProc.core.st` exits 0 (2 goals), `LoopSimple{,.csimp}`
+exit 0 (8 goals each — Strata inserts its own loop invariants), and
+`CFGSimple`/`SafeBvOps`/`TypeError` exit 2/3 with verbatim diagnostics.
+The live arm (`uvil import-strata --vendor-verify` with `UVIL_STRATA`,
+skip-if-absent; `tests/test_strata.py`) recorded the vendor verdicts as
+opaque I5 payloads (`format="strata-verifier-result"`, `independent=False`,
+verbatim output + exit code).
+
 ## `isabelle/` — M4 Isabelle-twin slice (188 entries, kernel-attested)
 
 The SAME whitelist families/discharge discipline as the Lean slice (the
