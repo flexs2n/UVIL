@@ -12,16 +12,18 @@ Live walkthrough: `examples/forge_on_uvil/`.
 | **Forge** | 3 (model checking / deduction / proving) | hand-built, pipeline-specific: each stage re-implements artifact plumbing + statement translation for its leg; none reusable outside the pipeline |
 | **UVIL** | ≤1 per backend, to a common core | each adapter maps ONE external tool's surface onto the shared artifact models (I1–I9); any pipeline over the same backends reuses them |
 
-UVIL backends and adapters (per-adapter Python LoC, `src/uvil/adapters/*`):
+UVIL backends and adapters (per-adapter Python LoC, `src/uvil/adapters/*`;
+recounted 2026-09-11 at M6 completion):
 
 | Adapter | LoC | Role | Capability notes |
 |---|---|---|---|
-| `boogie/` | 1206 | import frontend | documented Boogie subset parser + pinned Dafny wrapper; M1 no-WP obligation discipline (assert-position obligations); common import shapes (`ImportResult`) REUSED by the Strata adapter |
-| `smt/` | 543 | backend | in-process z3 (pinned) + optional cvc5; total verdict mapping (unknown/timeout never discharge); I6 valuation counterexamples; R2 hook + D2 round-trip |
-| `lean/` | 787 | second backend (ITP) | omega-subset encoder, pinned-kernel attestation (offline replay), BEq statement-faithfulness probe (G2), optional Pantograph warm pool |
-| `esbmc/` | 1233 | backend (model checking, cross-language) | pinned release binary; total `esbmc_status` mapping — model-checking verdicts NEVER discharge/refute deductive obligations; JSON-report → I6 Trace (M2 pre-registered `esbmc-trace` format); documented C harness subset (obligation extraction only — ESBMC compiles the real source, untrusted); pointer/heap corpus families verified via ESBMC's own semantics (no Boogie lowering exists) |
-| `strata/` | 625 | import frontend (vendor-TCB caveat) | real pinned-checkout artifacts; reuses the boogie import shapes; vendor verdicts recorded verbatim as opaque I5 payloads (`independent=False`), never trusted for guarantees |
-| `isabelle/` | 503 | backend (ITP) | HOL-facing boundary (the provably-agreeing fragment, structurally mirroring the Lean encoder); `isabelle build` session attestation; measured downgrade rate (lossy I9s), identical to the Lean slice |
+| `boogie/` | 1657 | import frontend | documented Boogie subset parser + pinned Dafny wrapper; WP VCG (ADR 0008) joined the M1 assert-position discipline (`origin_backend` distinguishes them); common import shapes (`ImportResult`) REUSED by the Strata and Verus adapters |
+| `smt/` | 899 | backend | in-process z3 (pinned) + optional cvc5; total verdict mapping (unknown/timeout never discharge); I6 valuation counterexamples; R2 hook + D2 round-trip |
+| `lean/` | 1090 | second backend (ITP) | omega-subset encoder, pinned-kernel attestation (offline replay), BEq statement-faithfulness probe (G2), Pantograph warm pool (protocol v2) |
+| `esbmc/` | 1410 | backend (model checking, cross-language) | pinned release binary; total `esbmc_status` mapping — model-checking verdicts NEVER discharge/refute deductive obligations; JSON-report → I6 Trace (M2 pre-registered `esbmc-trace` format); documented C harness subset (obligation extraction only — ESBMC compiles the real source, untrusted); pointer/heap corpus families verified via ESBMC's own semantics (no Boogie lowering exists) |
+| `strata/` | 703 | import frontend (vendor-TCB caveat) | real pinned-checkout artifacts; reuses the boogie import shapes; vendor verdicts recorded verbatim as opaque I5 payloads (`independent=False`), never trusted for guarantees; live-CLI probe exercised (2026-09-11) |
+| `isabelle/` | 613 | backend (ITP) | HOL-facing boundary (the provably-agreeing fragment, structurally mirroring the Lean encoder); `isabelle build` session attestation; measured downgrade rate (lossy I9s), identical to the Lean slice; slice kernel-attested live (183/188, 2026-09-11) |
+| `verus/` | 770 | import frontend (vendor-TCB caveat) | VeriContest scalar-contract subset (M6, ADR 0009); reuses the boogie import shapes; the NATIVE Verus verdict is the comparison arm recorded in `corpora/vericontest/expected.json` (run records, never I5); unbounded-Int harness abstraction (the ESBMC precedent) |
 
 Common core (shared by ALL adapters, written once): the I1–I9 artifact
 models, the canonical hashing/CAS/Merkle store, the guarantee ledger
