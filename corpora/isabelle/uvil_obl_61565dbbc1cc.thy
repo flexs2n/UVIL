@@ -1,1 +1,1 @@
-theorem uvil_obl_61565dbbc1cc: "⋀a::int. ⋀b::int. ((a ≥ 753) ∧ (b ≥ (- 609))) ⟹ ((a + b) = (b + a))" by arith
+theorem uvil_obl_61565dbbc1cc: "\<And>a::int. \<And>b::int. ((a \<ge> 753) \<and> (b \<ge> (- 609))) \<Longrightarrow> ((a + b) = (b + a))" by arith

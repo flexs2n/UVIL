@@ -41,6 +41,7 @@ from uvil.adapters.isabelle.backend import (  # noqa: E402
     PINNED_ISABELLE,
     IsabelleBackend,
     IsabelleNotInstalled,
+    kernel_hash,
 )
 from uvil.adapters.isabelle.encode import (  # noqa: E402
     UnsupportedTermError,
@@ -126,8 +127,10 @@ def render_slice() -> tuple[list[SliceEntry], dict[str, object]]:
             "pinned bundle's verdict at generation time, or 'pending' when "
             "the bundle is not installed on the generating machine - the "
             "committed manifest never fabricates an attestation. kernel_hash "
-            "= sha256(theory bytes + Isabelle version id); replay: run the "
-            "pinned isabelle build on the committed session."
+            "= sha256(committed .thy bytes + Isabelle version id); replay: "
+            "the digest verifies against the committed bytes, and the batched "
+            "committed theorems re-attest exit-0 under the pinned isabelle "
+            "build (tests/test_isabelle_slice.py slow arm). "
         ),
     }
     return entries, meta
@@ -141,7 +144,12 @@ def _corpus_meta_entrant_entries() -> list[dict[str, str]]:
 
 def attest_slice(entries: list[SliceEntry]) -> list[SliceEntry]:
     """Run the pinned bundle over each rendered twin; fills
-    isabelle_status/hashes. Entries without a theorem pass through."""
+    isabelle_status/hashes. Entries without a theorem pass through.
+
+    failed/timeout verdicts keep the status but DROP theorem/file/hash: the
+    committed manifest carries a theorem payload only when the bundle attested
+    it (or when it is honestly pending) - an unattested twin is recorded as a
+    measured downgrade, never committed as if it were a twin."""
     if not entries:
         return entries
     backend = IsabelleBackend()
@@ -151,18 +159,37 @@ def attest_slice(entries: list[SliceEntry]) -> list[SliceEntry]:
             attested.append(entry)
             continue
         verdict = backend.check_batch([entry.theorem])[0]
-        attested.append(
-            SliceEntry(
-                oblid=entry.oblid,
-                family=entry.family,
-                boogie_file=entry.boogie_file,
-                proc=entry.proc,
-                thy_file=entry.thy_file,
-                theorem=entry.theorem,
-                isabelle_status=verdict.status,  # attested | failed | timeout
-                kernel_hash=entry.theorem and verdict.theory_digest,
+        if verdict.status == "attested":
+            attested.append(
+                SliceEntry(
+                    oblid=entry.oblid,
+                    family=entry.family,
+                    boogie_file=entry.boogie_file,
+                    proc=entry.proc,
+                    thy_file=entry.thy_file,
+                    theorem=entry.theorem,
+                    isabelle_status="attested",
+                    # hash over the EXACT committed bytes (the .thy payload is
+                    # `theorem + "\n"`, byte-identical to what is hashed) so
+                    # the offline replay digest verifies without the session
+                    # wrapper; the wrapper itself is deterministic from the
+                    # theorem line (adapters/isabelle/encode.theory_file)
+                    kernel_hash=kernel_hash(entry.theorem + "\n"),
+                )
             )
-        )
+        else:
+            attested.append(
+                SliceEntry(
+                    oblid=entry.oblid,
+                    family=entry.family,
+                    boogie_file=entry.boogie_file,
+                    proc=entry.proc,
+                    thy_file=None,
+                    theorem=None,
+                    isabelle_status=verdict.status,  # failed | timeout
+                    kernel_hash=None,
+                )
+            )
     return attested
 
 

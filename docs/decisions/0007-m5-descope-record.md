@@ -39,6 +39,13 @@ resolved on 2026-09-09.
    **Isabelle bundle** live path and the **Strata-CLI** live path remain the
    two open live-verification debts (both skip-if-absent, recorded in
    `corpora/README.md`), to be closed in M6 or later.
+
+   *Update 2026-09-11:* the **Isabelle live debt is CLOSED** — the pinned
+   bundle attested the full slice (183/188; see ADR 0005 errata and
+   `corpora/README.md`). The Strata-CLI live debt was exercised the same
+   day: the pinned commit's CLI (`strata verify`, z3 5.1.0) ran on all 12
+   committed artifacts with verdicts recorded verbatim as opaque I5
+   payloads (`corpora/README.md` strata section).
 5. **Aeneas semantics-model seed: registered.** `model:aeneas-functional.v1`
    joins the registry as a registry-only seed (no adapter consumes it yet) so
    the semantics-model slot is honest for future Rust/functional imports

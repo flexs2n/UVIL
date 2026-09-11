@@ -1,1 +1,1 @@
-theorem uvil_obl_260816146e2e: "⋀a::int. ⋀b::int. ⋀m::int. ((a ≥ m) ∧ (b ≥ m)) ⟹ ((if (a < b) then b else a) ≥ m)" by auto
+theorem uvil_obl_260816146e2e: "\<And>a::int. \<And>b::int. \<And>m::int. ((a \<ge> m) \<and> (b \<ge> m)) \<Longrightarrow> ((if (a < b) then b else a) \<ge> m)" by auto

@@ -67,3 +67,25 @@ agree, and disagreements must be measured, not hidden.
   cross-upgrade), so downstream consumers treat the two ITPs identically.
 - `*.thy` files are byte-stable (`.gitattributes`), because kernel hashes
   commit to exact bytes.
+
+## Errata (2026-09-11 — completion record)
+
+The pinned bundle was installed (`Isabelle2025`, Windows x64) and the slice
+regenerated live: **183/188 kernel-attested**, 5 semantic-mismatch (the same
+five as the Lean slice), `downgrade_rate = 0.6335`. Two live discoveries:
+
+1. The recorded `0.5794` above was stale (generated before the WI corpus
+   updates; the Lean manifest had moved to `0.6335` while the Isabelle one
+   stayed pending). The boundary-agreement test now enforces the rates match
+   by value as well as by construction.
+2. The Windows bundle's `isabelle build` reads `.thy` files through the
+   platform codepage — literal multibyte UTF-8 symbols mangle to `?` (live
+   lexical errors, reproduced from a pure Cygwin shell). The renderer emits
+   canonical ASCII escapes (`\<And>`, `\<le>`, ...) instead: identical
+   symbols, bundle-portable bytes. The tactic set (`arith`/`auto`) held on
+   every rendered twin — no provisional-tactic surprises.
+
+The slow suite (`pytest -m slow tests/test_isabelle_slice.py`) passes: one
+batched exit-0 build (re-)attests all 183 committed twins, and the offline
+digest replay verifies every recorded `kernel_hash` against the committed
+bytes.

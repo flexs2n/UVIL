@@ -1,1 +1,1 @@
-theorem uvil_obl_cda9ef01508b: "⋀x::int. ((x ≥ (- 77)) ∧ (x ≤ 77)) ⟹ ((if (x < 0) then (- x) else x) ≤ 77)" by auto
+theorem uvil_obl_cda9ef01508b: "\<And>x::int. ((x \<ge> (- 77)) \<and> (x \<le> 77)) \<Longrightarrow> ((if (x < 0) then (- x) else x) \<le> 77)" by auto

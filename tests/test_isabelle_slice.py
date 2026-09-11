@@ -150,14 +150,18 @@ def test_regeneration_is_deterministic() -> None:
 def test_exit_criterion_smt_discharged_implies_hol_attested() -> None:
     backend = IsabelleBackend()
     expected = _manifest()["expected"]
+    rendered = [e for e in expected.values() if e["file"] is not None]
+    assert rendered, "no rendered twins"
+    # every rendered twin carries a bundle verdict (never pending once the
+    # bundle was live at generation time)
+    pending = [e for e in rendered if e["isabelle_status"] == "pending"]
+    if not pending:
+        assert all(e["isabelle_status"] == "attested" for e in rendered), [
+            e["isabelle_status"] for e in rendered if e["isabelle_status"] != "attested"
+        ]
     # the committed theorem lines batch into ONE theory file (startup
-    # amortization); a single exit-0 build attests every twin
-    theorems = [
-        (ISABELLE_CORPUS / e["file"]).read_text(encoding="utf-8").strip()
-        for e in expected.values()
-        if e["isabelle_status"] == "pending"
-    ]
-    assert theorems, "no pending twins to attest"
+    # amortization); a single exit-0 build (re-)attests every twin
+    theorems = [(ISABELLE_CORPUS / e["file"]).read_text(encoding="utf-8").strip() for e in rendered]
     import tempfile
     from pathlib import Path as P
 

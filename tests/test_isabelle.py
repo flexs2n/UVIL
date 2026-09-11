@@ -108,7 +108,7 @@ def test_hol_encoder_agrees_with_lean_boundary() -> None:
     lean_name = lean.split(" :")[0].removeprefix("theorem ")
     assert hol_name == lean_name
     assert hol.endswith("by arith")
-    assert "⋀x::int." in hol
+    assert "\\<And>x::int." in hol
 
     (real_obl,) = _obligations(
         "procedure q(x: int, r: real)\n  requires r >= 0.5\n{\n  assert x >= -1;\n}\n"

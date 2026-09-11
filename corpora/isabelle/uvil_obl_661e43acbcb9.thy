@@ -1,1 +1,1 @@
-theorem uvil_obl_661e43acbcb9: "⋀x::int. ((x ≥ (- 320)) ∧ (x ≤ 320)) ⟹ ((if (x < 0) then (- x) else x) ≤ 320)" by auto
+theorem uvil_obl_661e43acbcb9: "\<And>x::int. ((x \<ge> (- 320)) \<and> (x \<le> 320)) \<Longrightarrow> ((if (x < 0) then (- x) else x) \<le> 320)" by auto

@@ -1,1 +1,1 @@
-theorem uvil_obl_28140725a8ac: "⋀k::int. ⋀x::int. ((k ≥ 1) ∧ (x ≥ (- k)) ∧ (x ≤ k)) ⟹ ((if (x < 0) then 0 else (if (x > k) then k else x)) ≤ k)" by auto
+theorem uvil_obl_28140725a8ac: "\<And>k::int. \<And>x::int. ((k \<ge> 1) \<and> (x \<ge> (- k)) \<and> (x \<le> k)) \<Longrightarrow> ((if (x < 0) then 0 else (if (x > k) then k else x)) \<le> k)" by auto

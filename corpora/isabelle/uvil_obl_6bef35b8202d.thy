@@ -1,1 +1,1 @@
-theorem uvil_obl_6bef35b8202d: "⋀a::int. ⋀b::int. ((a ≤ 456) ∧ (b ≤ 573)) ⟹ ((if (a < b) then a else b) ≤ 573)" by auto
+theorem uvil_obl_6bef35b8202d: "\<And>a::int. \<And>b::int. ((a \<le> 456) \<and> (b \<le> 573)) \<Longrightarrow> ((if (a < b) then a else b) \<le> 573)" by auto

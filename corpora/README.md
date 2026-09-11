@@ -99,16 +99,25 @@ kinds). The obligations are ordinary I4s: guarantees come only from UVIL's
 own backends (the vendor-TCB caveat — Strata's VC generation is NOT UVIL's
 TCB).
 
-## `isabelle/` — M4 Isabelle-twin slice (188 entries, pending attestation)
+## `isabelle/` — M4 Isabelle-twin slice (188 entries, kernel-attested)
 
 The SAME whitelist families/discharge discipline as the Lean slice (the
 generator reuses its collection code): 183 rendered HOL twins + the same 5
-measured semantic-mismatch downgrades, `downgrade_rate = 0.5794` — identical
-to the Lean slice (the boundary policies agree). The pinned Isabelle2025
-bundle was NOT installed at generation time, so `isabelle_status` is
-`pending` — the committed manifest never fabricates an attestation;
-installing the bundle and running `tools/gen_isabelle_slice.py` +
-`pytest -m slow` converts pending → attested (ADR 0005).
+measured semantic-mismatch downgrades, `downgrade_rate = 0.6335` — identical
+to the Lean slice (the boundary policies agree; the 2026-09-11 regeneration
+also fixed the stale 0.5794 recorded before the WI corpus updates — the two
+manifests now agree by construction AND by value). The pinned Isabelle2025
+bundle attested all 183 rendered twins live at generation time
+(2026-09-11, Windows x64): `isabelle_status = attested` with
+`kernel_hash = sha256(committed .thy bytes + version id)` per entry —
+`pending` never appears without the kernel actually having run. The exit
+criterion (SMT-discharged ⇒ HOL-attested) and the offline digest replay are
+enforced by `pytest -m slow tests/test_isabelle_slice.py`; the offline
+`isabelle build` on the committed bytes involves no UVIL code. Rendered
+symbols use the canonical ASCII escapes (`\<And>`, `\<le>`, ...) — the
+Windows bundle's `isabelle build` reads .thy files through the platform
+codepage and mangles literal multibyte characters (live discovery,
+2026-09-11); the escapes are bundle-portable and denote identical symbols.
 
 ## `churn/` — M5 incremental-protocol churn benchmark (60 scenarios)
 

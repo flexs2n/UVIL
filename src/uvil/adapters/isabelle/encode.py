@@ -12,6 +12,11 @@ Documented boundary (mirrors the Lean encoder's discovery-pinned subset):
 - linear Int arithmetic with `arith`; `ite` on Int via HOL's
   `(if ... then ... else ...)` (tactic `auto` - provisional until the live
   discovery tests pin the tactic set against the pinned bundle);
+- rendered symbols use the canonical ASCII escapes (`\\<And>`, `\\<le>`, ...)
+  rather than literal UTF-8: the pinned Isabelle2025 Windows bundle's
+  `isabelle build` reads .thy files through the platform codepage and mangles
+  literal multibyte characters (live discovery, 2026-09-11), while the
+  escapes are bundle-portable and denote the identical symbols;
 - div/mod ONLY with positive constant divisors (constant-pin propagation of
   context equalities `var == K`, shared with the Lean encoder) - Isabelle's
   `div`/`mod` on `int` are floored and agree with SMT-LIB Euclidean
@@ -193,8 +198,8 @@ class _HolEncoder:
             if len(parts) != len(args) or not parts:
                 raise _unsupported(f"{op!r} requires term operands", t)
             if op == "not":
-                return f"(¬ {parts[0]})"
-            sep = {"and": " ∧ ", "or": " ∨ ", "implies": " ⟶ "}[op]
+                return f"(\\<not> {parts[0]})"
+            sep = {"and": " \\<and> ", "or": " \\<or> ", "implies": " \\<longrightarrow>"}[op]
             return "(" + sep.join(parts) + ")"
 
         if op in ("eq", "neq", "lt", "le", "gt", "ge"):
@@ -221,7 +226,7 @@ class _HolEncoder:
                 )
             inner = _HolEncoder({**self._sorts, name: sort})
             binder = {"int": f"{name}::int", "bool": f"{name}::bool"}[sort]
-            return f"(⋀{binder}. {inner.prop(body)})"
+            return f"(\\<And>{binder}. {inner.prop(body)})"
 
         raise _unsupported(f"operator {op!r} has no HOL proposition encoding", t)
 
@@ -234,7 +239,14 @@ class _HolEncoder:
         (b_text, b_sort) = self.term(operands[1])
         if a_sort != b_sort:
             raise _unsupported(f"relational {op!r} over mixed sorts", t)
-        symbol = {"lt": "<", "le": "≤", "gt": ">", "ge": "≥", "eq": "=", "neq": "≠"}[op]
+        symbol = {
+            "lt": "<",
+            "le": "\\<le>",
+            "gt": ">",
+            "ge": "\\<ge>",
+            "eq": "=",
+            "neq": "\\<noteq>",
+        }[op]
         return f"({a_text} {symbol} {b_text})"
 
 
@@ -276,8 +288,8 @@ def hol_statement(obl: Obligation) -> tuple[str, str]:
 
     body = goal_prop
     for hyp in reversed(hypothesis_props):
-        body = f"{hyp} ⟹ {body}"
-    quantified = "".join(f"⋀{b}. " for b in binders)
+        body = f"{hyp} \\<Longrightarrow> {body}"
+    quantified = "".join(f"\\<And>{b}. " for b in binders)
     statement = f"{quantified}{body}"
 
     sorts_of_names = {n: encoder.sort_of(n) for n in names}
